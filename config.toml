@@ -1,0 +1,34 @@
+baseURL = "https://mute1997.github.io"
+languageCode = "en-us"
+title = "メモ帳"
+theme = "anubis"
+paginate = 5
+
+[author]
+  name = "Naoya Miyaguchi"
+
+[params]
+   author = "Naoya Miyaguchi"
+   dateFormat = "2006-01-02"
+   style = "dark-without-switcher"
+
+[menu]
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 2
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[markup.goldmark.renderer]
+unsafe = true

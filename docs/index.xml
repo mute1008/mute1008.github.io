@@ -6,10 +6,72 @@
     <description>メモ帳</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://mute1997.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>preenyを利用したサーバーのファジング</title>
+      <link>https://mute1997.github.io/post/fuzz-app-that-use-sockets/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/fuzz-app-that-use-sockets/</guid>
+      <description>&lt;p&gt;最近AFLを利用していろんなソフトウェアのファジングをしています。
+AFLとは、テスト手法であるファジングの一種でgreybox-fuzzingに分類されるものです。
+詳しい使い方や詳細は以下を参照してください。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/google/AFL&#34;&gt;https://github.com/google/AFL&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このAFLでは標準入力、もしくは引数からファイルとして受け取り、処理をした後に即座に終了するというアプリケーションが期待されます。
+nginxなどのWebサーバーはイベントループがあり、ソケットを利用するためにAFLをそのまま利用することが出来ません。&lt;/p&gt;
+&lt;p&gt;イベントループは自分で即座にbreakすることですぐに終了することが出来ますが、ソケットの問題はpreenyで解決出来ます。&lt;/p&gt;
+&lt;h1 id=&#34;preenyとは&#34;&gt;preenyとは&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/zardus/preeny&#34;&gt;https://github.com/zardus/preeny&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;preenyとは、LD_PRELOADでライブラリ関数を上書きするものです。
+いくつかモジュールがありますが、desockというものを利用することで&lt;code&gt;socket()&lt;/code&gt;、&lt;code&gt;bind()&lt;/code&gt;、&lt;code&gt;listen()&lt;/code&gt;、&lt;code&gt;accept()&lt;/code&gt;あたりが上書きされるようです。
+これを利用することで、ソケット操作はstdin、stdoutを読み書きするようになるので、AFLで利用することができます。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;shadowsocksで試してみる&#34;&gt;shadowsocksで試してみる&lt;/h1&gt;
+&lt;p&gt;nginxとかでやろうと思ったんですが同じことをやっている英語記事を書いている途中に見つけてしまったのでshadowsocksでやります。&lt;/p&gt;
+&lt;p&gt;shadowsocksは中国で開発されたプロキシツールです。
+オリジナルは中国政府から削除を要請されたようで、今は以下のレポジトリで開発が進んでいます。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/shadowsocks/shadowsocks-libev&#34;&gt;https://github.com/shadowsocks/shadowsocks-libev&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;イベントループを止める&#34;&gt;イベントループを止める&lt;/h2&gt;
+&lt;p&gt;shadowsocksはlibevを使ってイベントループを処理しています。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;server.c&lt;/code&gt;にエントリーポイントがあるのでここから読み進めていきます。
+読み進めていくと, &lt;code&gt;server_recv_cb()&lt;/code&gt;という関数で受信処理をしているようです。
+この関数をラップして, この関数の終了時にイベントループを終わらせるようにします。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;server_recv_once_cb&lt;/span&gt;(EV_P_ ev_io &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;w, &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; revents) {
+  server_recv_cb(loop, w, revents);
+  ev_break(EV_A_ EVBREAK_ONE);
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; server_t &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;new_server&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; fd, listen_ctx_t &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;listener)
+{
+    ...
+
+    ev_io_init(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;server&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;recv_ctx&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt;io, server_recv_once_cb, fd, EV_READ);
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;こうすることで, リクエストを１つ受け取ったら終了するようになりました。&lt;/p&gt;
+&lt;h2 id=&#34;afl-gccでコンパイルするように変更&#34;&gt;afl-gccでコンパイルするように変更&lt;/h2&gt;
+&lt;p&gt;src/Makefileを編集してgccと書いてあるところをafl-gccにしていきます。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;...
+CC = afl-gcc
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;コンパイルします。
+コンパイル途中に&lt;code&gt;Instrumented n locations&lt;/code&gt;みたいな表示が出てきたらAFLを利用して, コンパイル出来ています。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ make
+afl-cc 2.57b by &amp;lt;lcamtuf@google.com&amp;gt;
+afl-as 2.57b by &amp;lt;lcamtuf@google.com&amp;gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;+&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; Instrumented &lt;span style=&#34;color:#ae81ff&#34;&gt;794&lt;/span&gt; locations &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;64-bit, non-hardened mode, ratio 100%&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;ld_preloadで上書き&#34;&gt;LD_PRELOADで上書き&lt;/h2&gt;
+&lt;p&gt;ここまで来ると後は実行するだけです。&lt;/p&gt;
+&lt;p&gt;preenyをセットアップ, 適当なconfigファイルを用意して実行します。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ LD_PRELOAD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/path/to/desock.so afl-fuzz -i in -o out ss-server -c config.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;終わり。&lt;/p&gt;
+&lt;p&gt;クラッシュするのを待ちましょう。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>About</title>

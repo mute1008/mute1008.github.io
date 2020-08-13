@@ -3,13 +3,41 @@
   <channel>
     <title>Tags on メモ帳</title>
     <link>https://mute1997.github.io/tags/</link>
-    <description>メモ帳 (Tags)</description>
+    <description>Recent content in Tags on メモ帳</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
     <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
     
-    <atom:link href="https://mute1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mute1997.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>paper</title>
+      <link>https://mute1997.github.io/tags/paper/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/tags/paper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>security</title>
+      <link>https://mute1997.github.io/tags/security/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/tags/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>keyboard</title>
+      <link>https://mute1997.github.io/tags/keyboard/</link>
+      <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/tags/keyboard/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

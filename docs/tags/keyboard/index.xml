@@ -3,12 +3,13 @@
   <channel>
     <title>keyboard on メモ帳</title>
     <link>https://mute1997.github.io/tags/keyboard/</link>
-    <description>メモ帳 (keyboard)</description>
+    <description>Recent content in keyboard on メモ帳</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
     <lastBuildDate>Sun, 04 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-    <atom:link href="https://mute1997.github.io/tags/keyboard/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mute1997.github.io/tags/keyboard/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -17,86 +18,18 @@
       <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/nyquist-keyboard-build-log-rev1.5/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;./images/nyquist.jpg&#34; alt=&#34;nyquist&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Nyquistキーボードを作ったので僕の失敗談を交えつつBuild logを書いていこうと思います。&lt;/p&gt;
-&lt;p&gt;これを読んだ皆さんはしょうもないことでミスって基板を書い直さなくて良いようにBuild logを穴が開くほど読んでください。&lt;/p&gt;
-&lt;p&gt;それと僕は入ってないんですが自作キーボードDiscordなるものがあるらしいのでわからなくなったらそういうところで質問するのもいいと思います。&lt;/p&gt;
-&lt;p&gt;それではどうぞ。&lt;/p&gt;
-&lt;h2 id=&#34;準備&#34;&gt;準備&lt;/h2&gt;
-&lt;h3 id=&#34;必要な部品&#34;&gt;必要な部品&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;キートップ (aliexpress)&lt;/li&gt;
-&lt;li&gt;キースイッチ(aliexpress)&lt;/li&gt;
-&lt;li&gt;基板, ケース (keeb.io)&lt;/li&gt;
-&lt;li&gt;ProMicro x 2 (keeb.io)&lt;/li&gt;
-&lt;li&gt;TRRSケーブル x 1 (amazon)&lt;/li&gt;
-&lt;li&gt;Micro USBケーブル x 1 (keeb.io)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;あったら良いものとか&#34;&gt;あったら良いものとか&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;クッションゴム&lt;/li&gt;
-&lt;li&gt;セメダイン (ProMicroの端子固定用)&lt;/li&gt;
-&lt;li&gt;4.7kΩの抵抗(I2C用)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;作るに当たって必要になる道具&#34;&gt;作るに当たって必要になる道具&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;半田ごて一式&lt;/li&gt;
-&lt;li&gt;ハンダ吸い取り線&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;ハマりポイント&#34;&gt;ハマりポイント&lt;/h3&gt;
-&lt;p&gt;ここからが重要なハマりポイントの説明になります。僕がハマったポイント、調べてるときによく見かけたハマりポイントを列挙して説明するので8億回くらい読んでください。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ダイオードの向き&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;電気電子の人からしたら何言ってるんだという感じかもしれませんがダイオードは向きがあります。ダイオードのカソード（黒い帯がついてる方）はNyquistの基板のパターンが四角になってる方に実装しないといけないです。ダイオードを取り外すのはそこまで難しくないですが、なにぶん数が多いので間違って実装すると面倒です。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ProMicroをつける順番&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;これは僕がハマったやつです。ちゃんとBuild Log読んでたら絶対起こり得ないことだとは思うんですが抵抗なくしてクソーっていいながら作業してたら間違えました。これはProMicroの方を先につけてしまうとキースイッチをつけられなくなってしまうという簡単なことです。ただこれを間違えるとProMicroの取り外しとかいう地獄みたいな作業が待ってるので絶対にミスしないことをおすすめします。ちなみに僕はProMicroのピンヘッダ取るの諦めて基板を書い直しました。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./images/nyquist-with-keyswitch.jpg&#34; alt=&#34;nyquist-board-with-keyswitch&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ProMicroの端子&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;調べてるときに結構もげてる画像を見かけました。先ほど説明したようにProMicroのピンヘッダの取り外しは本当に地獄なので端子がとれてProMicroの交換をしなくていいように接着剤で固めるのをおすすめします。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ProMicroのJ1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;僕のProMicroはそうではなかったのですがたまにProMicroのJ1がブリッジされててうまく動作しないことがあるようです。ブリッジされてるようならハンダ吸い取り線などで取ってください。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ProMicroの裏表&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;両方同じ向きで実装しちゃダメらしいです。(自分はミスしてないので両方同じ向きで実装するとどうなるのかわかってない)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ハンダの盛りすぎ&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;これは他の人が書いているのは見たことはないけど自分が少し困ったこと。ハンダを盛りすぎていてキースイッチが奥まで押し込めなかった。（隙間からハンダ入れて少し吸った）キースイッチの実装をする前に基板全体のハンダ盛りすぎているところをチェックすると良いと思います。&lt;/p&gt;
-&lt;h2 id=&#34;how-to-build&#34;&gt;How to build&lt;/h2&gt;
-&lt;p&gt;簡単な作業ログです。
-作ってる途中にあんまり写真取ってなくて画像が少ないのですがご了承ください。&lt;/p&gt;
-&lt;h3 id=&#34;ダイオードの取り付け&#34;&gt;ダイオードの取り付け&lt;/h3&gt;
-&lt;p&gt;まずはダイオードの取り付けです。ここで注意すべきは先ほど説明したダイオードの向きです。必ず黒い方をパターンが四角になっているところに実装しましょう。
-&lt;img src=&#34;./images/nyquist-board.jpg&#34; alt=&#34;nyquist-board&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;trrs-ピンヘッダリセットスイッチの取り付け&#34;&gt;TRRS, ピンヘッダ、リセットスイッチの取り付け&lt;/h3&gt;
-&lt;p&gt;画像がなくて申し訳ないんですがパパっと実装するだけという感じです。気をつける点としては同じ向きに実装してしまわないということくらいですかね。&lt;/p&gt;
-&lt;h3 id=&#34;キースイッチの取り付け&#34;&gt;キースイッチの取り付け&lt;/h3&gt;
-&lt;p&gt;!!! ProMicroの取り付け前に必ず行ってください。
-この作業自体で特に注意することはないです。四隅から実装して浮かないように実装していくだけです。&lt;/p&gt;
-&lt;h3 id=&#34;promicroの取り付け&#34;&gt;ProMicroの取り付け&lt;/h3&gt;
-&lt;p&gt;ここまでくればもうほとんど終わったようなものです。ここで注意するのはProMicroの裏表です。同じ向きに実装してしまわないように気をつけて画像のように実装しましょう。
-&lt;img src=&#34;./images/nyquist-with-micropro.jpg&#34; alt=&#34;nyquist-with-micropro&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;promicroにqmkを書き込む&#34;&gt;ProMicroにqmkを書き込む&lt;/h3&gt;
-&lt;p&gt;今回はarchlinuxについてのみ説明します。Mac, Ubuntuとかは公式のドキュメントに従うだけなのでドキュメントよんでください。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;$ git clone &lt;a href=&#34;https://github.com/qmk/qmk_firmware.git&#34;&gt;https://github.com/qmk/qmk_firmware.git&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;$ pacman -S &amp;ndash;noconfirm base-devel avr-gcc avr-binutils arv-libc dfu-util arm-none-eabi-gcc arm-none-eabi-binutils arm-none-eabi-newlib git diffutils avrdude&lt;/p&gt;
-&lt;p&gt;$ cd qmk_firmware&lt;/p&gt;
-&lt;p&gt;$ sudo make nyquist:default:avrdude&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;だいたいこんな感じです。最後のコマンドの実行時にリセットを求められるので取り付けたボタンを押してください。ここまでの作業で問題がなければ無事書き込まれるはずです。
-あとはqmk_firmware/keyboards/nyquistにあるプロファイルをいじってお好きなキー配置を楽しんでください。&lt;/p&gt;
-&lt;h2 id=&#34;最後に&#34;&gt;最後に&lt;/h2&gt;
-&lt;p&gt;初の自作キーボード、失敗したりもしましたが総じて楽しかったです。他にも色々種類があるようなので作ってみたさがある。&lt;/p&gt;
-&lt;p&gt;そういえば調べているときにHoltite Socketなるものを見つけて気になっているので次回作る機会があればこういうのにも挑戦してみたい。&lt;/p&gt;</description>
+      <description>Nyquistキーボードを作ったので僕の失敗談を交えつつBuild logを書いていこうと思います。
+これを読んだ皆さんはしょうもないことでミスって基板を書い直さなくて良いようにBuild logを穴が開くほど読んでください。
+それと僕は入ってないんですが自作キーボードDiscordなるものがあるらしいのでわからなくなったらそういうところで質問するのもいいと思います。
+それではどうぞ。
+準備 必要な部品  キートップ (aliexpress) キースイッチ(aliexpress) 基板, ケース (keeb.io) ProMicro x 2 (keeb.io) TRRSケーブル x 1 (amazon) Micro USBケーブル x 1 (keeb.io)  あったら良いものとか  クッションゴム セメダイン (ProMicroの端子固定用) 4.7kΩの抵抗(I2C用)  作るに当たって必要になる道具  半田ごて一式 ハンダ吸い取り線  ハマりポイント ここからが重要なハマりポイントの説明になります。僕がハマったポイント、調べてるときによく見かけたハマりポイントを列挙して説明するので8億回くらい読んでください。
+ ダイオードの向き  電気電子の人からしたら何言ってるんだという感じかもしれませんがダイオードは向きがあります。ダイオードのカソード（黒い帯がついてる方）はNyquistの基板のパターンが四角になってる方に実装しないといけないです。ダイオードを取り外すのはそこまで難しくないですが、なにぶん数が多いので間違って実装すると面倒です。
+ ProMicroをつける順番  これは僕がハマったやつです。ちゃんとBuild Log読んでたら絶対起こり得ないことだとは思うんですが抵抗なくしてクソーっていいながら作業してたら間違えました。これはProMicroの方を先につけてしまうとキースイッチをつけられなくなってしまうという簡単なことです。ただこれを間違えるとProMicroの取り外しとかいう地獄みたいな作業が待ってるので絶対にミスしないことをおすすめします。ちなみに僕はProMicroのピンヘッダ取るの諦めて基板を書い直しました。
+ ProMicroの端子  調べてるときに結構もげてる画像を見かけました。先ほど説明したようにProMicroのピンヘッダの取り外しは本当に地獄なので端子がとれてProMicroの交換をしなくていいように接着剤で固めるのをおすすめします。
+ ProMicroのJ1  僕のProMicroはそうではなかったのですがたまにProMicroのJ1がブリッジされててうまく動作しないことがあるようです。ブリッジされてるようならハンダ吸い取り線などで取ってください。
+ ProMicroの裏表  両方同じ向きで実装しちゃダメらしいです。(自分はミスしてないので両方同じ向きで実装するとどうなるのかわかってない)
+ ハンダの盛りすぎ  これは他の人が書いているのは見たことはないけど自分が少し困ったこと。ハンダを盛りすぎていてキースイッチが奥まで押し込めなかった。（隙間からハンダ入れて少し吸った）キースイッチの実装をする前に基板全体のハンダ盛りすぎているところをチェックすると良いと思います。
+How to build 簡単な作業ログです。 作ってる途中にあんまり写真取ってなくて画像が少ないのですがご了承ください。</description>
     </item>
     
   </channel>

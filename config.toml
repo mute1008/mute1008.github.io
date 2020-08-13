@@ -5,7 +5,7 @@ theme = "devise"
 relativeURLs = true
 enableEmoji = true
 copyright = "&copy; Copyright 2020, Naoya Miyaguchi"
-publishdir = "doc"
+publishdir = "docs"
 
 [menu]
   [[menu.main]]

@@ -1,112 +1,77 @@
-<!DOCTYPE html>
-
-
-    
-
-<html lang="en-us" data-theme="dark">
-<head>
-    
-        
-<meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer-when-downgrade">
-
-<title>Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs - メモ帳</title>
-<meta name="description" content="">
-
-<link rel="icon" type="image/x-icon" href="https://mute1997.github.io/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="https://mute1997.github.io/favicon.png">
-
-<link rel="stylesheet" href="https://mute1997.github.io/css/light.css?rnd=1597351861" />
-<style>
-
-    :root {
-        --font-color: #eee;
---bg-color: #212121;
-
---link-color:#599ada;
---link-state-color:#ff5858;
---link-state-border-color: rgba(238, 54, 54, 0.5);
-
---thead-bg-color: #343a40;
---table-border-color: lightgrey;
-
---pre-color: #333;
---pre-bg-color: #f1f1f1;
-
---bq-color: #ccc;
---hr-color: #333;
-
---pagination-bg-color: #373737;
---pagination-link-color: #b6b6b6;
-
---post-info-color: grey;
-
---switcher-color: #333;
---switcher-bg-color: #fff;
-
-    }
-
-</style>
-
-<link rel="stylesheet" href="https://mute1997.github.io/css/style.css?rnd=1597351861" />
-
-
-
-
-
-<meta property="og:title" content="Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://mute1997.github.io/post/memory-safety-challenge-considered-solved/" />
-<meta property="article:published_time" content="2020-08-08T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-08-08T00:00:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs"/>
-<meta name="twitter:description" content=""/>
-
-
-
-
-
-
-
-
+<!doctype html>
+<html lang="en"><head>
+    <title>Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
     
 </head>
 <body>
-    <a class="skip-main" href="#main">Skip to main content</a>
-    <div class="container">
-        <header class="common-header"> 
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        src="../../images/avatar.png"
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Naoya Miyaguchi
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../tags/" title="Tags">Tags</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/mute1997" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</h3>
             
-                <h1 class="site-title">
-    <a href="/">メモ帳</a>
-</h1>
-<nav>
-    
-    
-    <a class="" href="https://mute1997.github.io/about/" title="">About</a>
-    
-    <a class="" href="https://mute1997.github.io/tags/" title="">Tags</a>
-    
-</nav>
+            <small class="text-muted">Published August 8, 2020</small>
+        </div>
 
-            
-        </header>
-        <main id="main" tabindex="-1"> 
-            
-    
-    
-    <article class="post">
-        <header class="post-header">
-            <h1 class="post-title">Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</h1>
-        </header>
-        <div class="content">
+        <article>
             <p>ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。
 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？
-その辺りがちょっと気になっていた所、この論文を見つけたので読みました。
+その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。
 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。</p>
 <p>この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。
 リストは以下の２つ。</p>
@@ -114,7 +79,7 @@
 <p><a href="https://github.com/rust-fuzz/trophy-case">Trophy-cases</a></p>
 <p>このリストを調査したところ、Rustによってuse-after-free, double-freeの問題を新たに引き起こしてしまう場合があるということを言っている。</p>
 <p>今回はUse-After-Free, Double-Free辺りの問題を見てみる。</p>
-<h1 id="use-after-free">Use-After-Free</h1>
+<h4 id="use-after-free">Use-After-Free</h4>
 <p>コンストラクタにunsafeを使った場合にUse-After-Freeが発生するということを言ってる。</p>
 <p>例として以下のコードを考える。</p>
 <p>このコードでは、コンストラクタではポインタの引数をdereferenceして参照を返す。
@@ -132,7 +97,7 @@
   <span style="color:#66d9ef">let</span> v <span style="color:#f92672">=</span> test();
   assert_eq<span style="color:#f92672">!</span>(<span style="color:#e6db74">&#39;l&#39;</span> <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">u8</span>, v[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">/*fail*/</span>
 }
-</code></pre></div><h1 id="double-free">Double-Free</h1>
+</code></pre></div><h4 id="double-free">Double-Free</h4>
 <p>Double-Freeはいろいろ起こりうるシチュエーションはあるみたいだけど、とりあえず以下のコードを考える。
 srcがfun1のスコープを抜けるときに開放され、mainのスコープを抜けるときにfooの開放をしようとしてdouble-freeが発生する。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">impl</span> Drop <span style="color:#66d9ef">for</span> Foo {
@@ -172,66 +137,26 @@ srcがfun1のスコープを抜けるときに開放され、mainのスコープ
 <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
     <span style="color:#66d9ef">let</span> foo <span style="color:#f92672">=</span> fun1();
 }
-</code></pre></div><h1 id="まとめ">まとめ</h1>
-<p>この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[1]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。</p>
+</code></pre></div><h4 id="まとめ">まとめ</h4>
+<p>この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[2]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。</p>
 <p>1番初めの問いである、Rustプロジェクトではファジングによって脆弱性が見つからないか、というのはNoと言えそう。</p>
 <hr>
-<hr>
-<p>[1] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. &ldquo;Is Rust Used Safely by Software Developers?.&rdquo; arXiv preprint arXiv:2007.00752 (2020).</p>
-        </div>
-        
+<p>[1] Xu, Hui, et al. &ldquo;Memory-Safety Challenge Considered Solved? An Empirical Study with All Rust CVEs.&rdquo; arXiv preprint arXiv:2003.03296 (2020).</p>
+<p>[2] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. &ldquo;Is Rust Used Safely by Software Developers?.&rdquo; arXiv preprint arXiv:2007.00752 (2020).</p>
 
-    
-
-
-<div class="post-info">
-    
-        <div class="post-date">2020-08-08</div>
-    
-    <div class="post-taxonomies">
-        
-            
-                <ul class="post-tags">
-                    
-                        <li><a href="https://mute1997.github.io/tags/paper">#paper</a></li>
-                    
-                        <li><a href="https://mute1997.github.io/tags/security">#security</a></li>
-                    
-                </ul>
-        
-    </div>
-</div>
-
-    </article>
-
-    
-
-    
-
-
-        </main>
-        
-            <footer class="common-footer">
-    
-    
-
-    <div class="common-footer-bottom">
-        <div class="copyright">
-            <p>© Naoya Miyaguchi, 2020<br>
-            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.
-            </p>  
-        </div> 
+        </article>
     </div>
 
-    
-
-    
-
-
-    
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2020, Naoya Miyaguchi
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
 </footer>
-
-        
-    </div>
 </body>
 </html>

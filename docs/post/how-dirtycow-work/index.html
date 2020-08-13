@@ -1,117 +1,82 @@
-<!DOCTYPE html>
-
-
-    
-
-<html lang="en-us" data-theme="dark">
-<head>
-    
-        
-<meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer-when-downgrade">
-
-<title>Dirtycowはどのように動くか - メモ帳</title>
-<meta name="description" content="">
-
-<link rel="icon" type="image/x-icon" href="https://mute1997.github.io/favicon.ico">
-<link rel="apple-touch-icon-precomposed" href="https://mute1997.github.io/favicon.png">
-
-<link rel="stylesheet" href="https://mute1997.github.io/css/light.css?rnd=1597351861" />
-<style>
-
-    :root {
-        --font-color: #eee;
---bg-color: #212121;
-
---link-color:#599ada;
---link-state-color:#ff5858;
---link-state-border-color: rgba(238, 54, 54, 0.5);
-
---thead-bg-color: #343a40;
---table-border-color: lightgrey;
-
---pre-color: #333;
---pre-bg-color: #f1f1f1;
-
---bq-color: #ccc;
---hr-color: #333;
-
---pagination-bg-color: #373737;
---pagination-link-color: #b6b6b6;
-
---post-info-color: grey;
-
---switcher-color: #333;
---switcher-bg-color: #fff;
-
-    }
-
-</style>
-
-<link rel="stylesheet" href="https://mute1997.github.io/css/style.css?rnd=1597351861" />
-
-
-
-
-
-<meta property="og:title" content="Dirtycowはどのように動くか" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://mute1997.github.io/post/how-dirtycow-work/" />
-<meta property="article:published_time" content="2018-08-11T00:00:00+00:00" />
-<meta property="article:modified_time" content="2018-08-11T00:00:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Dirtycowはどのように動くか"/>
-<meta name="twitter:description" content=""/>
-
-
-
-
-
-
-
-
+<!doctype html>
+<html lang="en"><head>
+    <title>Dirtycowはどのように動くか</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
     
 </head>
 <body>
-    <a class="skip-main" href="#main">Skip to main content</a>
-    <div class="container">
-        <header class="common-header"> 
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        src="../../images/avatar.png"
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Naoya Miyaguchi
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../tags/" title="Tags">Tags</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/mute1997" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">Dirtycowはどのように動くか</h3>
             
-                <h1 class="site-title">
-    <a href="/">メモ帳</a>
-</h1>
-<nav>
-    
-    
-    <a class="" href="https://mute1997.github.io/about/" title="">About</a>
-    
-    <a class="" href="https://mute1997.github.io/tags/" title="">Tags</a>
-    
-</nav>
+            <small class="text-muted">Published August 11, 2018</small>
+        </div>
 
-            
-        </header>
-        <main id="main" tabindex="-1"> 
-            
-    
-    
-    <article class="post">
-        <header class="post-header">
-            <h1 class="post-title">Dirtycowはどのように動くか</h1>
-        </header>
-        <div class="content">
+        <article>
             <p>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。</p>
 <p>rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。</p>
-<h1 id="dirtycowについて">DirtyCowについて</h1>
+<h4 id="dirtycowについて">DirtyCowについて</h4>
 <p>DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。
 CVEではCVE-2016-5195として管理されています。
 [https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]</p>
-<h1 id="前提知識など">前提知識など</h1>
-<h2 id="mmap">mmap</h2>
+<h4 id="前提知識など">前提知識など</h4>
+<h5 id="mmap">mmap</h5>
 <p>mmapはファイルやデバイスをメモリにマッピングするためのものです。</p>
 <p>readやwriteを使うとカーネル空間からユーザープロセスへのコピーが発生しますが、mmapはマッピングしたアドレスを返すだけでユーザー空間へのコピーが発生しません。</p>
 <p>そのためreadやwriteを使うよりも効率期にファイルの読み書きが可能になるようです。</p>
@@ -156,13 +121,13 @@ CVEではCVE-2016-5195として管理されています。
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div><p>更に詳しい情報は<code>man mmap</code>で得られます。</p>
-<h2 id="copy-on-write">Copy on Write</h2>
+<h5 id="copy-on-write">Copy on Write</h5>
 <p>Copy on Writeとは書き込みが行われるまでは元から存在するマッピングを利用し、書き込みが起こったと同時にメモリ上に新たに複製が作られるという動作のことをいいます。</p>
 <p>これによってforkするたびに、メモリ上に複製を作るより効率よくメモリを利用することができます。</p>
 <p>書き込みによって作られた新たな複製は、他のプロセスからは見ることができません。</p>
 <p>ここで実験のために少しコードを書いてみようと思います。</p>
 <p>先ほど説明したように、書き込みが行われるまでは同じマッピングを利用し、書き込みが行われるときに新たな領域が確保され、複製されます。</p>
-<p>プロセスのファイルマッピングは<i>/proc/{pid}/smaps</i>で確認することができます。</p>
+<p>プロセスのファイルマッピングは<!-- raw HTML omitted -->/proc/{pid}/smaps<!-- raw HTML omitted -->で確認することができます。</p>
 <p>出力はだいたいこんなのが得られます。</p>
 <pre><code>Size:                  4 kB
 KernelPageSize:        4 kB
@@ -267,7 +232,7 @@ VmFlags: rd mr mw me
 }
 </code></pre></div><p>マッピングした領域に書き込む前にsleepを挟んでからコンパイルして実行します。</p>
 <p>sleepに入ったらcat /proc/{pid}/smaps | grep -A 20 filenameして子プロセスのマッピングをみます。</p>
-<pre><code>Size:                  4 kB
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Size:                  4 kB
 KernelPageSize:        4 kB
 MMUPageSize:           4 kB
 Rss:                   4 kB
@@ -287,10 +252,10 @@ Swap:                  0 kB
 SwapPss:               0 kB
 Locked:                2 kB
 VmFlags: wr mr mw me ac
-</code></pre><p>Shared_Cleanが4kBになってます。</p>
+</code></pre></div><p>Shared_Cleanが4kBになってます。</p>
 <p>親プロセスと子プロセスで同じファイル触っているので共有されていますね。</p>
 <p>書き込みをしてから親プロセスのマッピングを見てみます。</p>
-<pre><code>Size:                  4 kB
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Size:                  4 kB
 KernelPageSize:        4 kB
 MMUPageSize:           4 kB
 Rss:                   4 kB
@@ -310,9 +275,9 @@ Swap:                  0 kB
 SwapPss:               0 kB
 Locked:                4 kB
 VmFlags: wr mr mw me ac
-</code></pre><p>Private_Dirtyが4kBになりましたね。</p>
+</code></pre></div><p>Private_Dirtyが4kBになりましたね。</p>
 <p>マッピングしていたファイルが新しいプロセスのためにメモリ上に新たに複製されました。</p>
-<h2 id="madvise">madvise</h2>
+<h5 id="madvise">madvise</h5>
 <p>madviseはカーネルに、メモリのページング処理についてアドバイスを出すために使用します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">madvise</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>addr, size_t length, <span style="color:#66d9ef">int</span> advice);
 </code></pre></div><p>addrにはアドレスを、lengthにはサイズ、adviceにはカーネルに対するアドバイスを渡します。詳細は<code>man madvise</code>で。</p>
@@ -320,72 +285,40 @@ VmFlags: wr mr mw me ac
 <p>これは、しばらくは指定されたアドレスへのアクセスはなさそうなのでmmapしたメモリは一旦開放して良いということをカーネルに伝えるものです。</p>
 <p>これによってmmapしたファイルは開放され、次に読み込むときは再びIOが発生し、メモリに読み込まれます。
 元ファイルが削除されていた場合は0fillされます。</p>
-<h1 id="pocコードの解説">PoCコードの解説</h1>
+<h4 id="pocコードの解説">PoCコードの解説</h4>
 <p><a href="https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c">https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c</a></p>
 <p>PoCの大まかな動作としては、mainで読み込みたいファイルをmmap, それからmadviseThread, procselfmemThreadを各スレッドで動かしています。</p>
-<p>madviseThreadではmadviseをループして何度も実行、procselfmemThreadでは自分のプロセスのメモリである<i>/proc/self/mem</i>を開き、mmapされた場所に文字列を書き込み続けています。</p>
+<p>madviseThreadではmadviseをループして何度も実行、procselfmemThreadでは自分のプロセスのメモリである<!-- raw HTML omitted -->/proc/self/mem<!-- raw HTML omitted -->を開き、mmapされた場所に文字列を書き込み続けています。</p>
 <p>この2つの動作が連続することにより競合状態が発生し、プライベートなメモリマップであるはずのものがディスクに書き込まれてしまいます。</p>
 <p>これを理解する上で重要なのはページキャッシュの動作です。</p>
 <p>ページキャッシュの動作として、読み込みが行われると、読み込んだものはキャッシュに置かれ、書き込みが行われると、即座に書き込みは行われず、キャッシュに書き込んだ上で適当なタイミングで書き込みが行われます。Linuxカーネルではキャッシュに書き込みを行うと書き込んだページにDirty bitが立てられます。</p>
 <p>先ほど説明したmadviseとwriteを繰り返すと、writeを行ってからDirty bitを立てる前にmadviseによってページがディスクに書き込まれることによって、権限の無いファイルに書き込みができてしまうというわけです。</p>
 <p>draw.ioで2秒くらいで書いた図によるとこんな感じです。</p>
-<p><img src="./images/describe-dirtycow.png" alt="describe-dirtycow"></p>
-<h1 id="最後に">最後に</h1>
+
+
+
+
+
+<img src="../../post/how-dirtycow-work/describe-dirtycow_hubbf897366c95596523bba6ba4e6c4ca2_17309_600x600_fit_box_2.png" width="600" height="216" vspace="50" alt="describe-dirtycow">
+
+<h4 id="最後に">最後に</h4>
 <p>本当はパッチを読んだりしてたんですがこれ以上長くなるとしんどいのでやめました。</p>
 <p>DirtyCowのパッチには不十分で、THPを使用している場合にはCoWを用いることなくdirty bitを立てることができるらしいですね。</p>
 <p>気が向いたらパッチを読みつつ不十分だった部分など解説します。</p>
-        </div>
-        
 
-    
-
-
-<div class="post-info">
-    
-        <div class="post-date">2018-08-11</div>
-    
-    <div class="post-taxonomies">
-        
-            
-                <ul class="post-tags">
-                    
-                        <li><a href="https://mute1997.github.io/tags/security">#security</a></li>
-                    
-                </ul>
-        
-    </div>
-</div>
-
-    </article>
-
-    
-
-    
-
-
-        </main>
-        
-            <footer class="common-footer">
-    
-    
-
-    <div class="common-footer-bottom">
-        <div class="copyright">
-            <p>© Naoya Miyaguchi, 2020<br>
-            Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.
-            </p>  
-        </div> 
+        </article>
     </div>
 
-    
-
-    
-
-
-    
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2020, Naoya Miyaguchi
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
 </footer>
-
-        
-    </div>
 </body>
 </html>

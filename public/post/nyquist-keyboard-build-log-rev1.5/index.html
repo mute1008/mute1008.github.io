@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>[rev 1.5] Nyquist keyboard build log</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        src="../../images/avatar.png"
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Naoya Miyaguchi
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../tags/" title="Tags">Tags</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/mute1997" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">[rev 1.5] Nyquist keyboard build log</h3>
+            
+            <small class="text-muted">Published March 4, 2018</small>
+        </div>
+
+        <article>
+            
+
+
+
+
+<img src="../../post/nyquist-keyboard-build-log-rev1.5/nyquist_hu5301b67c1672857e62f034a0f914792c_481916_500x500_fit_q75_box.jpg" width="500" height="375" vspace="50" alt="nyquist">
+
+<p>Nyquistキーボードを作ったので僕の失敗談を交えつつBuild logを書いていこうと思います。</p>
+<p>これを読んだ皆さんはしょうもないことでミスって基板を書い直さなくて良いようにBuild logを穴が開くほど読んでください。</p>
+<p>それと僕は入ってないんですが自作キーボードDiscordなるものがあるらしいのでわからなくなったらそういうところで質問するのもいいと思います。</p>
+<p>それではどうぞ。</p>
+<h4 id="準備">準備</h4>
+<h5 id="必要な部品">必要な部品</h5>
+<ul>
+<li>キートップ (aliexpress)</li>
+<li>キースイッチ(aliexpress)</li>
+<li>基板, ケース (keeb.io)</li>
+<li>ProMicro x 2 (keeb.io)</li>
+<li>TRRSケーブル x 1 (amazon)</li>
+<li>Micro USBケーブル x 1 (keeb.io)</li>
+</ul>
+<h5 id="あったら良いものとか">あったら良いものとか</h5>
+<ul>
+<li>クッションゴム</li>
+<li>セメダイン (ProMicroの端子固定用)</li>
+<li>4.7kΩの抵抗(I2C用)</li>
+</ul>
+<h5 id="作るに当たって必要になる道具">作るに当たって必要になる道具</h5>
+<ul>
+<li>半田ごて一式</li>
+<li>ハンダ吸い取り線</li>
+</ul>
+<h5 id="ハマりポイント">ハマりポイント</h5>
+<p>ここからが重要なハマりポイントの説明になります。僕がハマったポイント、調べてるときによく見かけたハマりポイントを列挙して説明するので8億回くらい読んでください。</p>
+<ul>
+<li>ダイオードの向き</li>
+</ul>
+<p>電気電子の人からしたら何言ってるんだという感じかもしれませんがダイオードは向きがあります。ダイオードのカソード（黒い帯がついてる方）はNyquistの基板のパターンが四角になってる方に実装しないといけないです。ダイオードを取り外すのはそこまで難しくないですが、なにぶん数が多いので間違って実装すると面倒です。</p>
+<ul>
+<li>ProMicroをつける順番</li>
+</ul>
+<p>これは僕がハマったやつです。ちゃんとBuild Log読んでたら絶対起こり得ないことだとは思うんですが抵抗なくしてクソーっていいながら作業してたら間違えました。これはProMicroの方を先につけてしまうとキースイッチをつけられなくなってしまうという簡単なことです。ただこれを間違えるとProMicroの取り外しとかいう地獄みたいな作業が待ってるので絶対にミスしないことをおすすめします。ちなみに僕はProMicroのピンヘッダ取るの諦めて基板を書い直しました。</p>
+
+
+
+
+
+<img src="../../post/nyquist-keyboard-build-log-rev1.5/nyquist-with-keyswitch_hud5336ecd661a49ea9e78379675d9f523_446924_500x500_fit_q75_box.jpg" width="375" height="500" vspace="50" alt="nyquist-board-with-keyswitch">
+
+<ul>
+<li>ProMicroの端子</li>
+</ul>
+<p>調べてるときに結構もげてる画像を見かけました。先ほど説明したようにProMicroのピンヘッダの取り外しは本当に地獄なので端子がとれてProMicroの交換をしなくていいように接着剤で固めるのをおすすめします。</p>
+<ul>
+<li>ProMicroのJ1</li>
+</ul>
+<p>僕のProMicroはそうではなかったのですがたまにProMicroのJ1がブリッジされててうまく動作しないことがあるようです。ブリッジされてるようならハンダ吸い取り線などで取ってください。</p>
+<ul>
+<li>ProMicroの裏表</li>
+</ul>
+<p>両方同じ向きで実装しちゃダメらしいです。(自分はミスしてないので両方同じ向きで実装するとどうなるのかわかってない)</p>
+<ul>
+<li>ハンダの盛りすぎ</li>
+</ul>
+<p>これは他の人が書いているのは見たことはないけど自分が少し困ったこと。ハンダを盛りすぎていてキースイッチが奥まで押し込めなかった。（隙間からハンダ入れて少し吸った）キースイッチの実装をする前に基板全体のハンダ盛りすぎているところをチェックすると良いと思います。</p>
+<h4 id="how-to-build">How to build</h4>
+<p>簡単な作業ログです。
+作ってる途中にあんまり写真取ってなくて画像が少ないのですがご了承ください。</p>
+<h5 id="ダイオードの取り付け">ダイオードの取り付け</h5>
+<p>まずはダイオードの取り付けです。ここで注意すべきは先ほど説明したダイオードの向きです。必ず黒い方をパターンが四角になっているところに実装しましょう。
+
+
+
+
+
+<img src="../../post/nyquist-keyboard-build-log-rev1.5/nyquist-board_huaca75169a9d29ef99b1ff97cb26803c1_556139_500x500_fit_q75_box.jpg" width="500" height="375" vspace="50" alt="nyquist-board">
+</p>
+<h5 id="trrs-ピンヘッダリセットスイッチの取り付け">TRRS, ピンヘッダ、リセットスイッチの取り付け</h5>
+<p>画像がなくて申し訳ないんですがパパっと実装するだけという感じです。気をつける点としては同じ向きに実装してしまわないということくらいですかね。</p>
+<h5 id="キースイッチの取り付け">キースイッチの取り付け</h5>
+<p>!!! ProMicroの取り付け前に必ず行ってください。
+この作業自体で特に注意することはないです。四隅から実装して浮かないように実装していくだけです。</p>
+<h5 id="promicroの取り付け">ProMicroの取り付け</h5>
+<p>ここまでくればもうほとんど終わったようなものです。ここで注意するのはProMicroの裏表です。同じ向きに実装してしまわないように気をつけて画像のように実装しましょう。
+
+
+
+
+
+<img src="../../post/nyquist-keyboard-build-log-rev1.5/nyquist-with-micropro_huba58fcda8c094b132c55e822afb8e1a3_599393_500x500_fit_q75_box.jpg" width="500" height="375" vspace="50" alt="nyquist-with-micropro">
+</p>
+<h5 id="promicroにqmkを書き込む">ProMicroにqmkを書き込む</h5>
+<p>今回はarchlinuxについてのみ説明します。Mac, Ubuntuとかは公式のドキュメントに従うだけなのでドキュメントよんでください。</p>
+<blockquote>
+<p>$ git clone <a href="https://github.com/qmk/qmk_firmware.git">https://github.com/qmk/qmk_firmware.git</a></p>
+<p>$ pacman -S &ndash;noconfirm base-devel avr-gcc avr-binutils arv-libc dfu-util arm-none-eabi-gcc arm-none-eabi-binutils arm-none-eabi-newlib git diffutils avrdude</p>
+<p>$ cd qmk_firmware</p>
+<p>$ sudo make nyquist:default:avrdude</p>
+</blockquote>
+<p>だいたいこんな感じです。最後のコマンドの実行時にリセットを求められるので取り付けたボタンを押してください。ここまでの作業で問題がなければ無事書き込まれるはずです。
+あとはqmk_firmware/keyboards/nyquistにあるプロファイルをいじってお好きなキー配置を楽しんでください。</p>
+<h4 id="最後に">最後に</h4>
+<p>初の自作キーボード、失敗したりもしましたが総じて楽しかったです。他にも色々種類があるようなので作ってみたさがある。</p>
+<p>そういえば調べているときにHoltite Socketなるものを見つけて気になっているので次回作る機会があればこういうのにも挑戦してみたい。</p>
+
+        </article>
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright Year, Your Name
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

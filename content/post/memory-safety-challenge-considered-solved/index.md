@@ -7,8 +7,6 @@ tags = [
 ]
 +++
 
-<!--more-->
-
 ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。
 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？
 その辺りがちょっと気になっていた所、この論文を見つけたので読みました。
@@ -25,7 +23,7 @@ tags = [
 
 今回はUse-After-Free, Double-Free辺りの問題を見てみる。
 
-# Use-After-Free
+#### Use-After-Free
 コンストラクタにunsafeを使った場合にUse-After-Freeが発生するということを言ってる。
 
 例として以下のコードを考える。
@@ -48,7 +46,7 @@ fn main() {
 }
 ```
 
-# Double-Free
+#### Double-Free
 Double-Freeはいろいろ起こりうるシチュエーションはあるみたいだけど、とりあえず以下のコードを考える。
 srcがfun1のスコープを抜けるときに開放され、mainのスコープを抜けるときにfooの開放をしようとしてdouble-freeが発生する。
 ```rust
@@ -94,12 +92,11 @@ fn main() {
 }
 ```
 
-# まとめ
+#### まとめ
 この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[1]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。
 
 1番初めの問いである、Rustプロジェクトではファジングによって脆弱性が見つからないか、というのはNoと言えそう。
 
----
 ---
 
 [1] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. "Is Rust Used Safely by Software Developers?." arXiv preprint arXiv:2007.00752 (2020).

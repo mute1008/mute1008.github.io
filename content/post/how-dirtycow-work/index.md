@@ -6,21 +6,19 @@ tags = [
 ]
 +++
 
-<!--more-->
-
 DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。
 
 rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。
 
-# DirtyCowについて
+#### DirtyCowについて
 
 DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。
 CVEではCVE-2016-5195として管理されています。
 [https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]
 
-# 前提知識など
+#### 前提知識など
 
-## mmap
+##### mmap
 
 mmapはファイルやデバイスをメモリにマッピングするためのものです。
 
@@ -84,7 +82,7 @@ int main(int argc, char *argv[]){
 更に詳しい情報は`man mmap`で得られます。
 
 
-## Copy on Write
+##### Copy on Write
 
 Copy on Writeとは書き込みが行われるまでは元から存在するマッピングを利用し、書き込みが起こったと同時にメモリ上に新たに複製が作られるという動作のことをいいます。
 
@@ -212,7 +210,7 @@ int main(int argc, char *argv[]){
 
 sleepに入ったらcat /proc/{pid}/smaps | grep -A 20 filenameして子プロセスのマッピングをみます。
 
-```
+```txt
 Size:                  4 kB
 KernelPageSize:        4 kB
 MMUPageSize:           4 kB
@@ -240,7 +238,7 @@ Shared_Cleanが4kBになってます。
 親プロセスと子プロセスで同じファイル触っているので共有されていますね。
 
 書き込みをしてから親プロセスのマッピングを見てみます。
-```
+```txt
 Size:                  4 kB
 KernelPageSize:        4 kB
 MMUPageSize:           4 kB
@@ -266,7 +264,7 @@ Private_Dirtyが4kBになりましたね。
 
 マッピングしていたファイルが新しいプロセスのためにメモリ上に新たに複製されました。
 
-## madvise
+##### madvise
 madviseはカーネルに、メモリのページング処理についてアドバイスを出すために使用します。
 
 ```c
@@ -281,7 +279,7 @@ DirtyCowではadviceにMADV_DONTNEEDが渡されています。
 これによってmmapしたファイルは開放され、次に読み込むときは再びIOが発生し、メモリに読み込まれます。
 元ファイルが削除されていた場合は0fillされます。
 
-# PoCコードの解説
+#### PoCコードの解説
 https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c
 
 PoCの大まかな動作としては、mainで読み込みたいファイルをmmap, それからmadviseThread, procselfmemThreadを各スレッドで動かしています。
@@ -298,10 +296,10 @@ madviseThreadではmadviseをループして何度も実行、procselfmemThread�
 
 draw.ioで2秒くらいで書いた図によるとこんな感じです。
 
-![describe-dirtycow](./images/describe-dirtycow.png)
+{{< img describe-dirtycow.png "600x600" "describe-dirtycow" >}}
 
 
-# 最後に
+#### 最後に
 本当はパッチを読んだりしてたんですがこれ以上長くなるとしんどいのでやめました。
 
 DirtyCowのパッチには不十分で、THPを使用している場合にはCoWを用いることなくdirty bitを立てることができるらしいですね。

@@ -6,8 +6,6 @@ tags = [
 ]
 +++
 
-<!--more-->
-
 最近AFLを利用していろんなソフトウェアのファジングをしています。
 AFLとは、テスト手法であるファジングの一種でgreybox-fuzzingに分類されるものです。
 詳しい使い方や詳細は以下を参照してください。
@@ -19,7 +17,7 @@ nginxなどのWebサーバーはイベントループがあり、ソケットを
 
 イベントループは自分で即座にbreakすることですぐに終了することが出来ますが、ソケットの問題はpreenyで解決出来ます。
 
-# preenyとは
+#### preenyとは
 
 https://github.com/zardus/preeny
 
@@ -27,9 +25,7 @@ preenyとは、LD_PRELOADでライブラリ関数を上書きするものです�
 いくつかモジュールがありますが、desockというものを利用することで`socket()`、`bind()`、`listen()`、`accept()`あたりが上書きされるようです。
 これを利用することで、ソケット操作はstdin、stdoutを読み書きするようになるので、AFLで利用することができます。
 
----
-
-# shadowsocksで試してみる
+#### shadowsocksで試してみる
 nginxとかでやろうと思ったんですが同じことをやっている英語記事を書いている途中に見つけてしまったのでshadowsocksでやります。
 
 shadowsocksは中国で開発されたプロキシツールです。
@@ -37,7 +33,7 @@ shadowsocksは中国で開発されたプロキシツールです。
 
 https://github.com/shadowsocks/shadowsocks-libev
 
-## イベントループを止める
+##### イベントループを止める
 shadowsocksはlibevを使ってイベントループを処理しています。
 
 `server.c`にエントリーポイントがあるのでここから読み進めていきます。
@@ -62,7 +58,7 @@ new_server(int fd, listen_ctx_t *listener)
 
 こうすることで, リクエストを１つ受け取ったら終了するようになりました。
 
-## afl-gccでコンパイルするように変更
+##### afl-gccでコンパイルするように変更
 src/Makefileを編集してgccと書いてあるところをafl-gccにしていきます。
 ```txt
 ...
@@ -79,7 +75,7 @@ afl-as 2.57b by <lcamtuf@google.com>
 [+] Instrumented 794 locations (64-bit, non-hardened mode, ratio 100%).
 ```
 
-## LD_PRELOADで上書き
+##### LD_PRELOADで上書き
 
 ここまで来ると後は実行するだけです。
 

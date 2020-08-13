@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>paper on メモ帳</title>
+    <link>https://mute1997.github.io/tags/paper/</link>
+    <description>メモ帳 (paper)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
+    
+    <atom:link href="https://mute1997.github.io/tags/paper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
+      <link>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</guid>
+      <description>&lt;p&gt;ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。
+メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ない？
+パニックするパターンは発見できそう。
+ちょっと気になっていた所、この論文を見つけたので読みました。
+正確な翻訳ではなく、ちょっとしたまとめとただの感想です。&lt;/p&gt;
+&lt;p&gt;この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。
+リストは以下の２つ。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/RustSec/advisory-db&#34;&gt;Advisory-db&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/rust-fuzz/trophy-case&#34;&gt;Trophy-cases&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このリストを調査したところ、Rustによってuse-after-free, double-freeの問題を新たに引き起こしてしまう場合があるということを言っている。&lt;/p&gt;
+&lt;p&gt;今回はUse-After-Free, Double-Free辺りの問題を見てみる。&lt;/p&gt;
+&lt;h1 id=&#34;use-after-free&#34;&gt;Use-After-Free&lt;/h1&gt;
+&lt;p&gt;Rustにはlifetimeがあるけど, コンストラクタにunsafeを使うと安全でないと言ってる。&lt;/p&gt;
+&lt;p&gt;例として以下のコードを考える。&lt;/p&gt;
+&lt;p&gt;このコードでは、コンストラクタではポインタの引数をdereferenceして参照を返す。
+しかし、関数の終了時にこの参照が開放されてしまうので、mainで参照するとUse-After-Freeが発生する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;test&lt;/span&gt;() -&amp;gt; Vec&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; String::from(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;lifetime_test&amp;#34;&lt;/span&gt;);
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; ptr &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s.as_mut_ptr();
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;unsafe&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; v &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Vec::from_raw_parts(ptr, s.len(), s.len());
+    v
+  }
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; v &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test();
+  assert_eq&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;l&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;, v[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]); &lt;span style=&#34;color:#75715e&#34;&gt;/*fail*/&lt;/span&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;double-free&#34;&gt;Double-Free&lt;/h1&gt;
+&lt;p&gt;Double-Freeはいろいろ起こりうるシチュエーションはあるみたいだけど、とりあえず以下のコードを考える。
+srcがfun1のスコープを抜けるときに開放され、mainのスコープを抜けるときにfooの開放をしようとしてdouble-freeが発生する。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;impl&lt;/span&gt; Drop &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Foo {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;drop&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; self) { println&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dropping: {}&amp;#34;&lt;/span&gt;,self.s); }
+}
+&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Foo&lt;/span&gt; {s: String}
+&lt;span style=&#34;color:#75715e&#34;&gt;/*fix2:struct Foo {s: mem::ManuallyDrop&amp;lt;String&amp;gt;}*/&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fun2&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; src: &lt;span style=&#34;color:#66d9ef&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;mut&lt;/span&gt; String) -&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Foo&lt;/span&gt; {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;unsafe&lt;/span&gt;{ String::from_raw_parts(src.as_mut_ptr(), src.len(), &lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;) };
+  Foo{s:&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fun1&lt;/span&gt;() -&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Foo&lt;/span&gt; {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; src &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; String::from(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dropped twice!&amp;#34;&lt;/span&gt;);
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; foo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fun2(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; src);
+  &lt;span style=&#34;color:#75715e&#34;&gt;/*fix1:std::mem::forget(src);*/&lt;/span&gt;
+  foo
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; foo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fun1();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;double-freeを発生させるだけならfun1だけでいける気がしたけどなんでfun2に分離されているんだろう。詳しい人いたら教えてください。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;impl&lt;/span&gt; Drop &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; Foo {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;drop&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; self) { println&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dropping: {}&amp;#34;&lt;/span&gt;,self.s); }
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Foo&lt;/span&gt; {s: String}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fun1&lt;/span&gt;() -&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Foo&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;mut&lt;/span&gt; src &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; String::from(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Dropped twice!&amp;#34;&lt;/span&gt;);
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;unsafe&lt;/span&gt;{ String::from_raw_parts(src.as_mut_ptr(), src.len(), &lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;) };
+    Foo{s:&lt;span style=&#34;color:#a6e22e&#34;&gt;s&lt;/span&gt;}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; foo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fun1();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;まとめ&#34;&gt;まとめ&lt;/h1&gt;
+&lt;p&gt;この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[1]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。&lt;/p&gt;
+&lt;p&gt;1番初めの問いである、Rustプロジェクトではファジングによって脆弱性が見つからないか、というのはNoと言えそう。&lt;/p&gt;
+&lt;hr&gt;
+&lt;hr&gt;
+&lt;p&gt;[1] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. &amp;ldquo;Is Rust Used Safely by Software Developers?.&amp;rdquo; arXiv preprint arXiv:2007.00752 (2020).&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

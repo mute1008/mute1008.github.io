@@ -13,6 +13,16 @@
   </url>
   
   <url>
+    <loc>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</loc>
+    <lastmod>2020-08-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mute1997.github.io/tags/paper/</loc>
+    <lastmod>2020-08-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mute1997.github.io/post/fuzz-app-that-use-sockets/</loc>
     <lastmod>2020-08-08T00:00:00+00:00</lastmod>
   </url>

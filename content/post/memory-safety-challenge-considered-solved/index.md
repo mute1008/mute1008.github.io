@@ -9,7 +9,7 @@ tags = [
 
 ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。
 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？
-その辺りがちょっと気になっていた所、この論文を見つけたので読みました。
+その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。
 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。
 
 この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。
@@ -93,10 +93,12 @@ fn main() {
 ```
 
 #### まとめ
-この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[1]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。
+この論文では現在のRustプロジェクトではunsafeを利用するのが一般的[2]で, unsafeとRustのメモリ管理があわさったときに脆弱性が発生しやすいということを言っている。
 
 1番初めの問いである、Rustプロジェクトではファジングによって脆弱性が見つからないか、というのはNoと言えそう。
 
 ---
 
-[1] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. "Is Rust Used Safely by Software Developers?." arXiv preprint arXiv:2007.00752 (2020).
+[1] Xu, Hui, et al. "Memory-Safety Challenge Considered Solved? An Empirical Study with All Rust CVEs." arXiv preprint arXiv:2003.03296 (2020).
+
+[2] Evans, Ana Nora, Bradford Campbell, and Mary Lou Soffa. "Is Rust Used Safely by Software Developers?." arXiv preprint arXiv:2007.00752 (2020).

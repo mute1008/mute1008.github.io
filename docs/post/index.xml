@@ -18,9 +18,8 @@
       
       <guid>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</guid>
       <description>&lt;p&gt;ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。
-メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ない？
-パニックするパターンは発見できそう。
-ちょっと気になっていた所、この論文を見つけたので読みました。
+メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？
+その辺りがちょっと気になっていた所、この論文を見つけたので読みました。
 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。&lt;/p&gt;
 &lt;p&gt;この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。
 リストは以下の２つ。&lt;/p&gt;
@@ -29,7 +28,7 @@
 &lt;p&gt;このリストを調査したところ、Rustによってuse-after-free, double-freeの問題を新たに引き起こしてしまう場合があるということを言っている。&lt;/p&gt;
 &lt;p&gt;今回はUse-After-Free, Double-Free辺りの問題を見てみる。&lt;/p&gt;
 &lt;h1 id=&#34;use-after-free&#34;&gt;Use-After-Free&lt;/h1&gt;
-&lt;p&gt;Rustにはlifetimeがあるけど, コンストラクタにunsafeを使うと安全でないと言ってる。&lt;/p&gt;
+&lt;p&gt;コンストラクタにunsafeを使った場合にUse-After-Freeが発生するということを言ってる。&lt;/p&gt;
 &lt;p&gt;例として以下のコードを考える。&lt;/p&gt;
 &lt;p&gt;このコードでは、コンストラクタではポインタの引数をdereferenceして参照を返す。
 しかし、関数の終了時にこの参照が開放されてしまうので、mainで参照するとUse-After-Freeが発生する。&lt;/p&gt;

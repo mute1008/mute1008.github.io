@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mute1997.github.io/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>
+      <link>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</link>
+      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</guid>
+      <description>androidのブートローダ周りの脆弱性やファジングってどうやってるんだろうっての気になってたらこの論文を見つけました。
+いつもどおり適当なのでちゃんと知りたかったら論文読んでください。
+Introduction androidではchain-of-trustを通してセキュアブートを実装している。
+PBLが次のブートローダの真正性を検証してSBLが起動、SBLがABOOTを検証するというのを続ける。 簡単にするとPBL -&amp;gt; SBL -&amp;gt; ABOOT -&amp;gt; boot.imgみたいな感じで起動していくっぽい。
+ABOOTには通常モードとfastbootモードの2つのモードがある。 ABOOTはOSの実行前に実行されているため脆弱性も重要な深刻度を持っている。
+この論文では例をいくつか紹介する。
+fastbootの起動 fastbootは様々な方法で起動できると言ってる。
+ キーの組み合わせ USBデバッグを有効にした状態でadb reboot  キーの組み合わせっていうのは何を指してるのかよくわからなかったので調べてみた所、以下のドキュメントを見つけた。
+https://source.android.google.cn/setup/build/running?hl=ja#booting-into-fastboot-mode
+キーの組み合わせって言うのは物理キーの組み合わせの話らしい。
+自分が持ってるPixel 3a XLだと音量小を押したまま電源を長押しすると起動できるっぽい。
+太古の昔にTWRPを入れるために似たような操作をやっていたけど完全に失念していた。
+ABOOTTOOL OEMコマンドを発見するためにABOOTTOOLというファズツールを開発したらしい。 https://github.com/alephsecurity/abootool
+これっぽい。
+これによってメモリダンプ (ALEPH-2016000)などの脆弱性を発見できたと言ってる。
+そして過去の脆弱性や今回見つかった脆弱性を4種類に分類して説明している。
+ OSの完全性 データの流失 OSの隠れた機能 ICに対する攻撃  今回はOSの完全性の辺りに焦点を当てて見てみる。
+OSの完全性 いくつかあるっぽいけど今回はCVE-2016-10277に注目してみる。
+$ fastboot oem config console &amp;#34;a foo=A &amp;#34; $ fastboot oem config fsg-id &amp;#34;a bar=B&amp;#34; $ fastboot oem config carrier &amp;#34;a baz=C&amp;#34; [...] shamu:/ $ dmesg | grep command [ 0.</description>
+    </item>
     
     <item>
       <title>REST-ler: Automatic Intelligent REST API Fuzzing</title>

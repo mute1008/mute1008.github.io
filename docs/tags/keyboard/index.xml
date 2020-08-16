@@ -14,10 +14,10 @@
     
     <item>
       <title>[rev 1.5] Nyquist keyboard build log</title>
-      <link>https://mute1997.github.io/post/nyquist-keyboard-build-log-rev1.5/</link>
+      <link>https://mute1997.github.io/post/2018-03-04-nyquist-keyboard-build-log-rev1.5/</link>
       <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/nyquist-keyboard-build-log-rev1.5/</guid>
+      <guid>https://mute1997.github.io/post/2018-03-04-nyquist-keyboard-build-log-rev1.5/</guid>
       <description>Nyquistキーボードを作ったので僕の失敗談を交えつつBuild logを書いていこうと思います。
 これを読んだ皆さんはしょうもないことでミスって基板を書い直さなくて良いようにBuild logを穴が開くほど読んでください。
 それと僕は入ってないんですが自作キーボードDiscordなるものがあるらしいのでわからなくなったらそういうところで質問するのもいいと思います。

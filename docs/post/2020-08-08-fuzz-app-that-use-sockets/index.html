@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>preenyを利用したサーバーのファジング</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        src="../../images/avatar.png"
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Naoya Miyaguchi
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../tags/" title="Tags">Tags</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/mute1997" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">preenyを利用したサーバーのファジング</h3>
+            
+            <small class="text-muted">Published August 8, 2020</small>
+        </div>
+
+        <article>
+            <p>最近AFLを利用していろんなソフトウェアのファジングをしています。
+AFLとは、テスト手法であるファジングの一種でgreybox-fuzzingに分類されるものです。
+詳しい使い方や詳細は以下を参照してください。</p>
+<p><a href="https://github.com/google/AFL">https://github.com/google/AFL</a></p>
+<p>このAFLでは標準入力、もしくは引数からファイルとして受け取り、処理をした後に即座に終了するというアプリケーションが期待されます。
+nginxなどのWebサーバーはイベントループがあり、ソケットを利用するためにAFLをそのまま利用することが出来ません。</p>
+<p>イベントループは自分で即座にbreakすることですぐに終了することが出来ますが、ソケットの問題はpreenyで解決出来ます。</p>
+<h4 id="preenyとは">preenyとは</h4>
+<p><a href="https://github.com/zardus/preeny">https://github.com/zardus/preeny</a></p>
+<p>preenyとは、LD_PRELOADでライブラリ関数を上書きするものです。
+いくつかモジュールがありますが、desockというものを利用することで<code>socket()</code>、<code>bind()</code>、<code>listen()</code>、<code>accept()</code>あたりが上書きされるようです。
+これを利用することで、ソケット操作はstdin、stdoutを読み書きするようになるので、AFLで利用することができます。</p>
+<h4 id="shadowsocksで試してみる">shadowsocksで試してみる</h4>
+<p>nginxとかでやろうと思ったんですが同じことをやっている英語記事を書いている途中に見つけてしまったのでshadowsocksでやります。</p>
+<p>shadowsocksは中国で開発されたプロキシツールです。
+オリジナルは中国政府から削除を要請されたようで、今は以下のレポジトリで開発が進んでいます。</p>
+<p><a href="https://github.com/shadowsocks/shadowsocks-libev">https://github.com/shadowsocks/shadowsocks-libev</a></p>
+<h5 id="イベントループを止める">イベントループを止める</h5>
+<p>shadowsocksはlibevを使ってイベントループを処理しています。</p>
+<p><code>server.c</code>にエントリーポイントがあるのでここから読み進めていきます。
+読み進めていくと, <code>server_recv_cb()</code>という関数で受信処理をしているようです。
+この関数をラップして, この関数の終了時にイベントループを終わらせるようにします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">server_recv_once_cb</span>(EV_P_ ev_io <span style="color:#f92672">*</span>w, <span style="color:#66d9ef">int</span> revents) {
+  server_recv_cb(loop, w, revents);
+  ev_break(EV_A_ EVBREAK_ONE);
+}
+
+<span style="color:#66d9ef">static</span> server_t <span style="color:#f92672">*</span>
+<span style="color:#a6e22e">new_server</span>(<span style="color:#66d9ef">int</span> fd, listen_ctx_t <span style="color:#f92672">*</span>listener)
+{
+    ...
+
+    ev_io_init(<span style="color:#f92672">&amp;</span>server<span style="color:#f92672">-&gt;</span>recv_ctx<span style="color:#f92672">-&gt;</span>io, server_recv_once_cb, fd, EV_READ);
+    ...
+}
+</code></pre></div><p>こうすることで, リクエストを１つ受け取ったら終了するようになりました。</p>
+<h5 id="afl-gccでコンパイルするように変更">afl-gccでコンパイルするように変更</h5>
+<p>src/Makefileを編集してgccと書いてあるところをafl-gccにしていきます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">...
+CC = afl-gcc
+...
+</code></pre></div><p>コンパイルします。
+コンパイル途中に<code>Instrumented n locations</code>みたいな表示が出てきたらAFLを利用して, コンパイル出来ています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ make
+afl-cc 2.57b by &lt;lcamtuf@google.com&gt;
+afl-as 2.57b by &lt;lcamtuf@google.com&gt;
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Instrumented <span style="color:#ae81ff">794</span> locations <span style="color:#f92672">(</span>64-bit, non-hardened mode, ratio 100%<span style="color:#f92672">)</span>.
+</code></pre></div><h5 id="ld_preloadで上書き">LD_PRELOADで上書き</h5>
+<p>ここまで来ると後は実行するだけです。</p>
+<p>preenyをセットアップ, 適当なconfigファイルを用意して実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ LD_PRELOAD<span style="color:#f92672">=</span>/path/to/desock.so afl-fuzz -i in -o out ss-server -c config.json
+</code></pre></div><p>終わり。</p>
+<p>クラッシュするのを待ちましょう。</p>
+
+        </article>
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2020, Naoya Miyaguchi
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

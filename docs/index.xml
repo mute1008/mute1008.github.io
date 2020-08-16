@@ -7,17 +7,30 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mute1997.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>REST-ler: Automatic Intelligent REST API Fuzzing</title>
+      <link>https://mute1997.github.io/post/2020-08-13-rest-ler/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-08-13-rest-ler/</guid>
+      <description>fuzzingみたいな感じで脆弱性発見の自動化をWebアプリとかにはうまく適用できないんだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
+今回はアルゴリズム部分に注目して読んでみます。
+この論文ではswaggerの静的分析を行いテストケースを生成しているらしい。
+pythonっぽく書かれたアルゴリズムの疑似コードは以下の通り。
+Inputs: swaggerspec, maxLength # Swaggerから作成したリクエストの集合 reqSet = PROCESS(swaggerspec) # リクエストシーケンスの集合 (最初は空) seqSet = {} # メインループ n = 1 while (n &amp;lt;= maxLength): seqSet = EXTEND(seqSet, reqSet) seqSet = RENDER(seqSet) n = n + 1 # 依存関係が満たされている新しいリクエストを追加することで、 # seqSet内のすべてのシーケンスを拡張する def EXTEND(seqSet, reqSet): newSeqSet = {} for seq in seqSet: for req in reqSet: if DEPENDENCIES(seq, req): newSeqSet = newSeqSet + concat(seq, req) return newSeqSet # 辞書を利用して新たに追加されたすべてのリクエストを具体化し、 # それぞれの新しいリクエストシーケンスを実行し、有効なものを保持する def RENDER(seqSet): newSeqSet = {} for seq in seqSet: req = last_request_in(seq) ~V = tuple_of_fuzzable_types_in(req) for ~v in ~V: newReq = concretize(req,~v) newSeq = concat(seq, newReq) response = EXECUTE(newSeq) if response has a valid code: newSeqSet = newSeqSet + newSeq else: log error return newSeqSet # リクエストで参照されるすべてのオブジェクトが、 # 以前のリクエストシーケンスの何らかのレスポンスによって生成されたものであることをチェックします。 def DEPENDENCIES(seq, req): if CONSUMES(req)⊆PRODUCES(seq): return True else: return False # リクエストに必要なオブジェクト def CONSUMES(req): return object_types_required_in(req) # 一連のリクエストのレスポンスで生成されたオブジェクト def PRODUCES(seq): dynamicObjects ={} for req in seq: newObjs = objects_produced_in_response_of(req) dynamicObjects = dynamicObjects + newObjs return dynamicObjects パパっと見てみると、</description>
+    </item>
+    
+    <item>
       <title>Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
-      <link>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</link>
+      <link>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</link>
       <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/memory-safety-challenge-considered-solved/</guid>
+      <guid>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</guid>
       <description>ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？ その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。
 この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。 リストは以下の２つ。
 Advisory-db
@@ -33,10 +46,10 @@ impl Drop for Foo { fn drop(&amp;amp;mut self) { println!(&amp;#34;Dropping: {}&
     
     <item>
       <title>preenyを利用したサーバーのファジング</title>
-      <link>https://mute1997.github.io/post/fuzz-app-that-use-sockets/</link>
+      <link>https://mute1997.github.io/post/2020-08-08-fuzz-app-that-use-sockets/</link>
       <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/fuzz-app-that-use-sockets/</guid>
+      <guid>https://mute1997.github.io/post/2020-08-08-fuzz-app-that-use-sockets/</guid>
       <description>最近AFLを利用していろんなソフトウェアのファジングをしています。 AFLとは、テスト手法であるファジングの一種でgreybox-fuzzingに分類されるものです。 詳しい使い方や詳細は以下を参照してください。
 https://github.com/google/AFL
 このAFLでは標準入力、もしくは引数からファイルとして受け取り、処理をした後に即座に終了するというアプリケーションが期待されます。 nginxなどのWebサーバーはイベントループがあり、ソケットを利用するためにAFLをそのまま利用することが出来ません。
@@ -65,10 +78,10 @@ $ make afl-cc 2.</description>
     
     <item>
       <title>Dirtycowはどのように動くか</title>
-      <link>https://mute1997.github.io/post/how-dirtycow-work/</link>
+      <link>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</link>
       <pubDate>Sat, 11 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/how-dirtycow-work/</guid>
+      <guid>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</guid>
       <description>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。
 rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。
 DirtyCowについて DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。 CVEではCVE-2016-5195として管理されています。 [https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]
@@ -90,10 +103,10 @@ mmapを利用した簡単なファイルを読み込むをするサンプルを�
     
     <item>
       <title>[rev 1.5] Nyquist keyboard build log</title>
-      <link>https://mute1997.github.io/post/nyquist-keyboard-build-log-rev1.5/</link>
+      <link>https://mute1997.github.io/post/2018-03-04-nyquist-keyboard-build-log-rev1.5/</link>
       <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/nyquist-keyboard-build-log-rev1.5/</guid>
+      <guid>https://mute1997.github.io/post/2018-03-04-nyquist-keyboard-build-log-rev1.5/</guid>
       <description>Nyquistキーボードを作ったので僕の失敗談を交えつつBuild logを書いていこうと思います。
 これを読んだ皆さんはしょうもないことでミスって基板を書い直さなくて良いようにBuild logを穴が開くほど読んでください。
 それと僕は入ってないんですが自作キーボードDiscordなるものがあるらしいのでわからなくなったらそういうところで質問するのもいいと思います。

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Sat, 22 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GOT/PLTとは</title>
+      <link>https://mute1997.github.io/post/2020-08-23-got-and-plt/</link>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-08-23-got-and-plt/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>スタックと呼び出し規約</title>
@@ -35,7 +44,7 @@ push ebp mov ebp,esp Function epilogue Function epilogueは関数の最後に行
 leave ret このleaveという命令は、
 mov esp ebp pop ebp と同等の処理を行うものです。
 これらは、espをebpに戻して、スタックからebpの値を復元します。 retでは、前のeipの値をスタックからポップして元のコードに戻ります。
-calling convention スタックに引数を積む場合には、呼び出し規則(calling convention)と呼ばれる方法があります。 32bitバイナリでは、関数の引数は逆順に渡されます。 64bitバイナリでは、関数の引数を渡すのにスタックは使わず、レジスタを利用します。 渡される順番は以下の通りです。
+calling convention スタックに引数を積む場合には、呼び出し規則(calling convention)と呼ばれる方法があります。 32bitバイナリでは、関数の引数は逆順にスタックに渡されます。 64bitバイナリでは、関数の引数を渡すのにスタックは使わず、レジスタを利用します。 渡される順番は以下の通りです。
  rdi rsi rdx r8 r9  5個を超えるような場合には32bitバイナリと同様にスタックにプッシュされます。</description>
     </item>
     

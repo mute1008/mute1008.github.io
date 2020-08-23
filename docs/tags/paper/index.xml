@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>
+      <title>論文紹介: fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>
       <link>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</link>
       <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
       
@@ -40,7 +40,7 @@ $ fastboot oem config console &amp;#34;a foo=A &amp;#34; $ fastboot oem config f
     </item>
     
     <item>
-      <title>REST-ler: Automatic Intelligent REST API Fuzzing</title>
+      <title>論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing</title>
       <link>https://mute1997.github.io/post/2020-08-13-rest-ler/</link>
       <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
       
@@ -53,9 +53,9 @@ Inputs: swaggerspec, maxLength # Swaggerから作成したリクエストの集�
     </item>
     
     <item>
-      <title>Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
+      <title>論文紹介: Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
       <link>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</link>
-      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</guid>
       <description>ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？ その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。

@@ -1,6 +1,6 @@
 +++
-title = "Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs"
-date = "2020-08-08"
+title = "論文紹介: Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs"
+date = "2020-08-09"
 tags = [
     "paper",
     "security",

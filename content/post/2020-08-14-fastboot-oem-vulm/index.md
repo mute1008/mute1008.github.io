@@ -1,5 +1,5 @@
 +++
-title = "fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations"
+title = "論文紹介: fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations"
 date = "2020-08-14"
 tags = [
     "security",

@@ -1,0 +1,14 @@
+          |                           |  low address
+          |                           |
+          |                           |
+          |                           |
+          |                           |
+  esp ->  +---------------------------+
+          |                           |
+          |  function 2 stack frame   |
+          |                           |
+  ebp ->  +---------------------------+
+          |                           |
+          |  function 1 stack frame   |
+          |                           |
+          +---------------------------+  high address

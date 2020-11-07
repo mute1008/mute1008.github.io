@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Fri, 14 Aug 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 07 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>イベントハンドラでの実体参照の扱い</title>
+      <link>https://mute1997.github.io/post/2020-11-07-entity-reference-in-event-handler/</link>
+      <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-11-07-entity-reference-in-event-handler/</guid>
+      <description>以下の記事を読んでいて気になったことがあるので調べてみた。
+https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output
+気になったのは以下の部分。
+Sometimes you&amp;#39;ll need to apply multiple layers of encoding, in the correct order. For example, to safely embed user input inside an event handler, you need to deal with both the JavaScript context and the HTML context. So you need to first Unicode-escape the input, and then HTML-encode it: &amp;lt;a href=&amp;#34;#&amp;#34; onclick=&amp;#34;x=&amp;#39;This string needs two layers of escaping&amp;#39;&amp;#34;&amp;gt;test&amp;lt;/a&amp;gt; イベントハンドラにJavaScriptを書いている所にユーザーの入力を埋め込む場合は、unicodeエスケープをしてからHTMLエンコードする必要があると書いてある。
+個人的にはunicodeエスケープだけではダメなのか気になったので実験してみた。
+アラートを実行するために&#39;;alert(1);&#39;を入力したことを考える。
+以下がunicodeエスケープのみを行って埋め込んだ場合。
+&amp;lt;a href=&amp;#34;#&amp;#34; onclick=&amp;#34;x=&amp;#39;&amp;amp;#x0027;&amp;amp;#x003b;alert&amp;amp;#x0028;1&amp;amp;#x0029;&amp;amp;#x003b;&amp;amp;#x0027;&amp;#39;;&amp;#34;&amp;gt;link&amp;lt;/a&amp;gt; 以下はunicodeエスケープした後にHTMLエンコードを行ったもの。
+&amp;lt;a href=&amp;#34;#&amp;#34; onclick=&amp;#34;x=&amp;#39;&amp;amp;#38;&amp;amp;#35;x0027&amp;amp;#59;&amp;amp;#38;&amp;amp;#35;x003b&amp;amp;#59;alert&amp;amp;#38;&amp;amp;#35;x0028&amp;amp;#59;1&amp;amp;#38;&amp;amp;#35;x0029&amp;amp;#59;&amp;amp;#38;&amp;amp;#35;x003b&amp;amp;#59;&amp;amp;#38;&amp;amp;#35;x0027&amp;amp;#59;&amp;#39;;&amp;#34;&amp;gt;link&amp;lt;/a&amp;gt; unicodeエスケープとHTMLエンコードには以下の関数を用いた。</description>
+    </item>
     
     <item>
       <title>論文紹介: fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>

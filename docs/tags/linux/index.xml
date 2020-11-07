@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Sat, 22 Aug 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://mute1997.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 22 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>スタックと呼び出し規約</title>
       <link>https://mute1997.github.io/post/2020-08-22-stack-and-calling-conventions/</link>

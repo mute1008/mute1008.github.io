@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>イベントハンドラでの実体参照の扱い</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        src="../../images/avatar.png"
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Naoya Miyaguchi
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../tags/" title="Tags">Tags</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="https://github.com/mute1997" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">イベントハンドラでの実体参照の扱い</h3>
+            
+            <small class="text-muted">Published November 7, 2020</small>
+        </div>
+
+        <article>
+            <p>以下の記事を読んでいて気になったことがあるので調べてみた。</p>
+<p><a href="https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output">https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output</a></p>
+<p>気になったのは以下の部分。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Sometimes you&#39;ll need to apply multiple layers of encoding, in the correct order. For example, to safely embed user input inside an event handler, you need to deal with both the JavaScript context and the HTML context. So you need to first Unicode-escape the input, and then HTML-encode it:
+
+&lt;a href=&#34;#&#34; onclick=&#34;x=&#39;This string needs two layers of escaping&#39;&#34;&gt;test&lt;/a&gt;
+</code></pre></div><p>イベントハンドラにJavaScriptを書いている所にユーザーの入力を埋め込む場合は、unicodeエスケープをしてからHTMLエンコードする必要があると書いてある。</p>
+<p>個人的にはunicodeエスケープだけではダメなのか気になったので実験してみた。</p>
+<p>アラートを実行するために<code>';alert(1);'</code>を入力したことを考える。</p>
+<p>以下がunicodeエスケープのみを行って埋め込んだ場合。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;#&#34;</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x=&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;;&#34;</span>&gt;link&lt;/<span style="color:#f92672">a</span>&gt;
+</code></pre></div><p>以下はunicodeエスケープした後にHTMLエンコードを行ったもの。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;#&#34;</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x=&#39;&amp;#38;&amp;#35;x0027&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;alert&amp;#38;&amp;#35;x0028&amp;#59;1&amp;#38;&amp;#35;x0029&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;&amp;#38;&amp;#35;x0027&amp;#59;&#39;;&#34;</span>&gt;link&lt;/<span style="color:#f92672">a</span>&gt;
+</code></pre></div><p>unicodeエスケープとHTMLエンコードには以下の関数を用いた。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">htmlEncode</span>(<span style="color:#a6e22e">str</span>){
+  <span style="color:#66d9ef">return</span> String(<span style="color:#a6e22e">str</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/[^\w. ]/gi</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">c</span>){
+     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&amp;#&#39;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#39;;&#39;</span>;
+  });
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">jsEscape</span>(<span style="color:#a6e22e">str</span>){
+  <span style="color:#66d9ef">return</span> String(<span style="color:#a6e22e">str</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/[^\w. ]/gi</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">c</span>){
+     <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&amp;#x&#39;</span><span style="color:#f92672">+</span>(<span style="color:#e6db74">&#39;0000&#39;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>).<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">16</span>)).<span style="color:#a6e22e">slice</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#39;;&#39;</span>;
+  });
+}
+</code></pre></div><p>これらをブラウザで開いてからクリックすると、前者はアラートが実行され、後者は何も起こらない。</p>
+<p>これはイベントハンドラでのみ起こるのか調べるために、unicodeエスケープのみを行った<code>&lt;img src=x onerror=alert(1)&gt;</code>をページに書き込んで開いてみる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&amp;#x003c;img src&amp;#x003d;x onerror&amp;#x003d;alert&amp;#x0028;1&amp;#x0029;&amp;#x003e;
+</code></pre></div><p><code>&lt;img src=x onerror=alert(1)&gt;</code>と表示され、アラートは発火しない。</p>
+<p>イベントハンドラと同じJavaScriptコードがscriptタグに埋め込まれている場合を考える。</p>
+<p>以下のようなHTMLがサーバーによって生成される。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#a6e22e">x</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;</span>;
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>これを開いてもアラートは実行されない。</p>
+<p>これらからイベントハンドラでのみ実体参照が評価された状態でJavaScriptが実行されることがわかる。</p>
+
+        </article>
+    </div>
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2020, Naoya Miyaguchi
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>

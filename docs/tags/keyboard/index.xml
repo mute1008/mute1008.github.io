@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Sun, 04 Mar 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://mute1997.github.io/tags/keyboard/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 04 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/keyboard/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[rev 1.5] Nyquist keyboard build log</title>
       <link>https://mute1997.github.io/post/2018-03-04-nyquist-keyboard-build-log-rev1.5/</link>

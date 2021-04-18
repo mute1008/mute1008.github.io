@@ -1,5 +1,5 @@
 +++
-title = "Dirtycowはどのように動くか"
+title = "DirtycowのPoCを読む"
 date = "2018-08-11"
 tags = [
     "security",
@@ -8,13 +8,14 @@ tags = [
 
 DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。
 
-rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。
+rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC(https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c)についてまとめます。
 
 #### DirtyCowについて
 
 DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。
 CVEではCVE-2016-5195として管理されています。
-[https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]
+
+https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html
 
 #### 前提知識など
 
@@ -270,7 +271,7 @@ madviseはカーネルに、メモリのページング処理についてアド�
 ```c
 int madvise(void *addr, size_t length, int advice);
 ```
-addrにはアドレスを、lengthにはサイズ、adviceにはカーネルに対するアドバイスを渡します。詳細は`man madvise`で。
+addrにはアドレスを、lengthにはサイズ、adviceにはカーネルに対するアドバイスを渡します。詳細は`man madvise`で確認することが出来ます。
 
 DirtyCowではadviceにMADV_DONTNEEDが渡されています。
 

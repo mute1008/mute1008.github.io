@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head>
-    <title>Dirtycowはどのように動くか</title>
+    <title>DirtycowのPoCを読む</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../../css/theme.css"/>
@@ -63,18 +63,18 @@
 <div class="container">
     <div class="pl-sm-2">
         <div class="mb-3">
-            <h3 class="mb-0">Dirtycowはどのように動くか</h3>
+            <h3 class="mb-0">DirtycowのPoCを読む</h3>
             
             <small class="text-muted">Published August 11, 2018</small>
         </div>
 
         <article>
             <p>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。</p>
-<p>rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。</p>
+<p>rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC(<a href="https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c">https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c</a>)についてまとめます。</p>
 <h4 id="dirtycowについて">DirtyCowについて</h4>
 <p>DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。
-CVEではCVE-2016-5195として管理されています。
-[https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]</p>
+CVEではCVE-2016-5195として管理されています。</p>
+<p><a href="https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html">https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html</a></p>
 <h4 id="前提知識など">前提知識など</h4>
 <h5 id="mmap">mmap</h5>
 <p>mmapはファイルやデバイスをメモリにマッピングするためのものです。</p>
@@ -280,7 +280,7 @@ VmFlags: wr mr mw me ac
 <h5 id="madvise">madvise</h5>
 <p>madviseはカーネルに、メモリのページング処理についてアドバイスを出すために使用します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">madvise</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>addr, size_t length, <span style="color:#66d9ef">int</span> advice);
-</code></pre></div><p>addrにはアドレスを、lengthにはサイズ、adviceにはカーネルに対するアドバイスを渡します。詳細は<code>man madvise</code>で。</p>
+</code></pre></div><p>addrにはアドレスを、lengthにはサイズ、adviceにはカーネルに対するアドバイスを渡します。詳細は<code>man madvise</code>で確認することが出来ます。</p>
 <p>DirtyCowではadviceにMADV_DONTNEEDが渡されています。</p>
 <p>これは、しばらくは指定されたアドレスへのアクセスはなさそうなのでmmapしたメモリは一旦開放して良いということをカーネルに伝えるものです。</p>
 <p>これによってmmapしたファイルは開放され、次に読み込むときは再びIOが発生し、メモリに読み込まれます。

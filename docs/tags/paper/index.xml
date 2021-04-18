@@ -7,64 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Copyright 2020, Naoya Miyaguchi</copyright>
-    <lastBuildDate>Fri, 14 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/paper/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>論文紹介: fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>
-      <link>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</link>
-      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</guid>
-      <description>androidのブートローダ周りの脆弱性やファジングってどうやってるんだろうっての気になってたらこの論文を見つけました。
-いつもどおり適当なのでちゃんと知りたかったら論文読んでください。
-Introduction androidではchain-of-trustを通してセキュアブートを実装している。
-PBLが次のブートローダの真正性を検証してSBLが起動、SBLがABOOTを検証するというのを続ける。 簡単にするとPBL -&amp;gt; SBL -&amp;gt; ABOOT -&amp;gt; boot.imgみたいな感じで起動していくっぽい。
-ABOOTには通常モードとfastbootモードの2つのモードがある。 ABOOTはOSの実行前に実行されているため脆弱性も重要な深刻度を持っている。
-この論文では例をいくつか紹介する。
-fastbootの起動 fastbootは様々な方法で起動できると言ってる。
- キーの組み合わせ USBデバッグを有効にした状態でadb reboot  キーの組み合わせっていうのは何を指してるのかよくわからなかったので調べてみた所、以下のドキュメントを見つけた。
-https://source.android.google.cn/setup/build/running?hl=ja#booting-into-fastboot-mode
-キーの組み合わせって言うのは物理キーの組み合わせの話らしい。
-自分が持ってるPixel 3a XLだと音量小を押したまま電源を長押しすると起動できるっぽい。
-太古の昔にTWRPを入れるために似たような操作をやっていたけど完全に失念していた。
-ABOOTTOOL OEMコマンドを発見するためにABOOTTOOLというファズツールを開発したらしい。 https://github.com/alephsecurity/abootool
-これっぽい。
-これによってメモリダンプ (ALEPH-2016000)などの脆弱性を発見できたと言ってる。
-そして過去の脆弱性や今回見つかった脆弱性を4種類に分類して説明している。
- OSの完全性 データの流失 OSの隠れた機能 ICに対する攻撃  今回はOSの完全性の辺りに焦点を当てて見てみる。
-OSの完全性 いくつかあるっぽいけど今回はCVE-2016-10277に注目してみる。
-$ fastboot oem config console &amp;#34;a foo=A &amp;#34; $ fastboot oem config fsg-id &amp;#34;a bar=B&amp;#34; $ fastboot oem config carrier &amp;#34;a baz=C&amp;#34; [...] shamu:/ $ dmesg | grep command [ 0.</description>
-    </item>
-    
+    <lastBuildDate>Thu, 13 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing</title>
       <link>https://mute1997.github.io/post/2020-08-13-rest-ler/</link>
       <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2020-08-13-rest-ler/</guid>
-      <description>fuzzingみたいな感じで脆弱性発見の自動化をWebアプリとかにはうまく適用できないんだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
+      <description>バイナリのFuzzingのようなものを、Webアプリにも適用できないだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
 今回はアルゴリズム部分に注目して読んでみます。
 この論文ではswaggerの静的分析を行いテストケースを生成しているらしい。
 pythonっぽく書かれたアルゴリズムの疑似コードは以下の通り。
 Inputs: swaggerspec, maxLength # Swaggerから作成したリクエストの集合 reqSet = PROCESS(swaggerspec) # リクエストシーケンスの集合 (最初は空) seqSet = {} # メインループ n = 1 while (n &amp;lt;= maxLength): seqSet = EXTEND(seqSet, reqSet) seqSet = RENDER(seqSet) n = n + 1 # 依存関係が満たされている新しいリクエストを追加することで、 # seqSet内のすべてのシーケンスを拡張する def EXTEND(seqSet, reqSet): newSeqSet = {} for seq in seqSet: for req in reqSet: if DEPENDENCIES(seq, req): newSeqSet = newSeqSet + concat(seq, req) return newSeqSet # 辞書を利用して新たに追加されたすべてのリクエストを具体化し、 # それぞれの新しいリクエストシーケンスを実行し、有効なものを保持する def RENDER(seqSet): newSeqSet = {} for seq in seqSet: req = last_request_in(seq) ~V = tuple_of_fuzzable_types_in(req) for ~v in ~V: newReq = concretize(req,~v) newSeq = concat(seq, newReq) response = EXECUTE(newSeq) if response has a valid code: newSeqSet = newSeqSet + newSeq else: log error return newSeqSet # リクエストで参照されるすべてのオブジェクトが、 # 以前のリクエストシーケンスの何らかのレスポンスによって生成されたものであることをチェックします。 def DEPENDENCIES(seq, req): if CONSUMES(req)⊆PRODUCES(seq): return True else: return False # リクエストに必要なオブジェクト def CONSUMES(req): return object_types_required_in(req) # 一連のリクエストのレスポンスで生成されたオブジェクト def PRODUCES(seq): dynamicObjects ={} for req in seq: newObjs = objects_produced_in_response_of(req) dynamicObjects = dynamicObjects + newObjs return dynamicObjects パパっと見てみると、</description>
-    </item>
-    
-    <item>
-      <title>論文紹介: Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
-      <link>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</link>
-      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</guid>
-      <description>ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？ その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。
-この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。 リストは以下の２つ。
-Advisory-db
-Trophy-cases
-このリストを調査したところ、Rustによってuse-after-free, double-freeの問題を新たに引き起こしてしまう場合があるということを言っている。
-今回はUse-After-Free, Double-Free辺りの問題を見てみる。
-Use-After-Free コンストラクタにunsafeを使った場合にUse-After-Freeが発生するということを言ってる。
-例として以下のコードを考える。
-このコードでは、コンストラクタではポインタの引数をdereferenceして参照を返す。 しかし、関数の終了時にこの参照が開放されてしまうので、mainで参照するとUse-After-Freeが発生する。
-fn test() -&amp;gt; Vec&amp;lt;u8&amp;gt; { let mut s = String::from(&amp;#34;lifetime_test&amp;#34;); let ptr = s.as_mut_ptr(); unsafe { let v = Vec::from_raw_parts(ptr, s.len(), s.len()); v } } fn main() { let v = test(); assert_eq!(&amp;#39;l&amp;#39; as u8, v[0]); /*fail*/ } Double-Free Double-Freeはいろいろ起こりうるシチュエーションはあるみたいだけど、とりあえず以下のコードを考える。 srcがfun1のスコープを抜けるときに開放され、mainのスコープを抜けるときにfooの開放をしようとしてdouble-freeが発生する。
-impl Drop for Foo { fn drop(&amp;amp;mut self) { println!(&amp;#34;Dropping: {}&amp;#34;,self.s); } } struct Foo {s: String} /*fix2:struct Foo {s: mem::ManuallyDrop&amp;lt;String&amp;gt;}*/ fn fun2(mut src: &amp;amp;mut String) -&amp;gt; Foo { let s = unsafe{ String::from_raw_parts(src.</description>
     </item>
     
   </channel>

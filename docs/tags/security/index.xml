@@ -26,39 +26,12 @@ Sometimes you&amp;#39;ll need to apply multiple layers of encoding, in the corre
     </item>
     
     <item>
-      <title>論文紹介: fastboot oem vuln:Android Bootloader Vulnerabilities in Vendor Customizations</title>
-      <link>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</link>
-      <pubDate>Fri, 14 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2020-08-14-fastboot-oem-vulm/</guid>
-      <description>androidのブートローダ周りの脆弱性やファジングってどうやってるんだろうっての気になってたらこの論文を見つけました。
-いつもどおり適当なのでちゃんと知りたかったら論文読んでください。
-Introduction androidではchain-of-trustを通してセキュアブートを実装している。
-PBLが次のブートローダの真正性を検証してSBLが起動、SBLがABOOTを検証するというのを続ける。 簡単にするとPBL -&amp;gt; SBL -&amp;gt; ABOOT -&amp;gt; boot.imgみたいな感じで起動していくっぽい。
-ABOOTには通常モードとfastbootモードの2つのモードがある。 ABOOTはOSの実行前に実行されているため脆弱性も重要な深刻度を持っている。
-この論文では例をいくつか紹介する。
-fastbootの起動 fastbootは様々な方法で起動できると言ってる。
- キーの組み合わせ USBデバッグを有効にした状態でadb reboot  キーの組み合わせっていうのは何を指してるのかよくわからなかったので調べてみた所、以下のドキュメントを見つけた。
-https://source.android.google.cn/setup/build/running?hl=ja#booting-into-fastboot-mode
-キーの組み合わせって言うのは物理キーの組み合わせの話らしい。
-自分が持ってるPixel 3a XLだと音量小を押したまま電源を長押しすると起動できるっぽい。
-太古の昔にTWRPを入れるために似たような操作をやっていたけど完全に失念していた。
-ABOOTTOOL OEMコマンドを発見するためにABOOTTOOLというファズツールを開発したらしい。 https://github.com/alephsecurity/abootool
-これっぽい。
-これによってメモリダンプ (ALEPH-2016000)などの脆弱性を発見できたと言ってる。
-そして過去の脆弱性や今回見つかった脆弱性を4種類に分類して説明している。
- OSの完全性 データの流失 OSの隠れた機能 ICに対する攻撃  今回はOSの完全性の辺りに焦点を当てて見てみる。
-OSの完全性 いくつかあるっぽいけど今回はCVE-2016-10277に注目してみる。
-$ fastboot oem config console &amp;#34;a foo=A &amp;#34; $ fastboot oem config fsg-id &amp;#34;a bar=B&amp;#34; $ fastboot oem config carrier &amp;#34;a baz=C&amp;#34; [...] shamu:/ $ dmesg | grep command [ 0.</description>
-    </item>
-    
-    <item>
       <title>論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing</title>
       <link>https://mute1997.github.io/post/2020-08-13-rest-ler/</link>
       <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2020-08-13-rest-ler/</guid>
-      <description>fuzzingみたいな感じで脆弱性発見の自動化をWebアプリとかにはうまく適用できないんだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
+      <description>バイナリのFuzzingのようなものを、Webアプリにも適用できないだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
 今回はアルゴリズム部分に注目して読んでみます。
 この論文ではswaggerの静的分析を行いテストケースを生成しているらしい。
 pythonっぽく書かれたアルゴリズムの疑似コードは以下の通り。
@@ -66,56 +39,15 @@ Inputs: swaggerspec, maxLength # Swaggerから作成したリクエストの集�
     </item>
     
     <item>
-      <title>論文紹介: Memory-Safety Challenge Considered Solved? An In-DepthExperience Report with All Rust CVEs</title>
-      <link>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</link>
-      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2020-08-08-memory-safety-challenge-considered-solved/</guid>
-      <description>ふとRustで書かれたソフトウェアでは絶対にメモリ系のバグが起こらないのか気になりました。 メモリ系のバグが起こらないとしたらファジングで脆弱性を見つけることは出来ないがパニックするパターンは発見できる？ その辺りがちょっと気になっていた所、この論文[1]を見つけたので読みました。 正確な翻訳ではなく、ちょっとしたまとめとただの感想です。
-この論文ではRustに存在する脆弱性のリストを調査して, メモリ安全性を達成出来るのかどうかを調査している。 リストは以下の２つ。
-Advisory-db
-Trophy-cases
-このリストを調査したところ、Rustによってuse-after-free, double-freeの問題を新たに引き起こしてしまう場合があるということを言っている。
-今回はUse-After-Free, Double-Free辺りの問題を見てみる。
-Use-After-Free コンストラクタにunsafeを使った場合にUse-After-Freeが発生するということを言ってる。
-例として以下のコードを考える。
-このコードでは、コンストラクタではポインタの引数をdereferenceして参照を返す。 しかし、関数の終了時にこの参照が開放されてしまうので、mainで参照するとUse-After-Freeが発生する。
-fn test() -&amp;gt; Vec&amp;lt;u8&amp;gt; { let mut s = String::from(&amp;#34;lifetime_test&amp;#34;); let ptr = s.as_mut_ptr(); unsafe { let v = Vec::from_raw_parts(ptr, s.len(), s.len()); v } } fn main() { let v = test(); assert_eq!(&amp;#39;l&amp;#39; as u8, v[0]); /*fail*/ } Double-Free Double-Freeはいろいろ起こりうるシチュエーションはあるみたいだけど、とりあえず以下のコードを考える。 srcがfun1のスコープを抜けるときに開放され、mainのスコープを抜けるときにfooの開放をしようとしてdouble-freeが発生する。
-impl Drop for Foo { fn drop(&amp;amp;mut self) { println!(&amp;#34;Dropping: {}&amp;#34;,self.s); } } struct Foo {s: String} /*fix2:struct Foo {s: mem::ManuallyDrop&amp;lt;String&amp;gt;}*/ fn fun2(mut src: &amp;amp;mut String) -&amp;gt; Foo { let s = unsafe{ String::from_raw_parts(src.</description>
-    </item>
-    
-    <item>
-      <title>preenyを利用したサーバーのファジング</title>
-      <link>https://mute1997.github.io/post/2020-08-08-fuzz-app-that-use-sockets/</link>
-      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2020-08-08-fuzz-app-that-use-sockets/</guid>
-      <description>最近AFLを利用していろんなソフトウェアのファジングをしています。 AFLとは、テスト手法であるファジングの一種でgreybox-fuzzingに分類されるものです。 詳しい使い方や詳細は以下を参照してください。
-https://github.com/google/AFL
-このAFLでは標準入力、もしくは引数からファイルとして受け取り、処理をした後に即座に終了するというアプリケーションが期待されます。 nginxなどのWebサーバーはイベントループがあり、ソケットを利用するためにAFLをそのまま利用することが出来ません。
-イベントループは自分で即座にbreakすることですぐに終了することが出来ますが、ソケットの問題はpreenyで解決出来ます。
-preenyとは https://github.com/zardus/preeny
-preenyとは、LD_PRELOADでライブラリ関数を上書きするものです。 いくつかモジュールがありますが、desockというものを利用することでsocket()、bind()、listen()、accept()あたりが上書きされるようです。 これを利用することで、ソケット操作はstdin、stdoutを読み書きするようになるので、AFLで利用することができます。
-shadowsocksで試してみる nginxとかでやろうと思ったんですが同じことをやっている英語記事を書いている途中に見つけてしまったのでshadowsocksでやります。
-shadowsocksは中国で開発されたプロキシツールです。 オリジナルは中国政府から削除を要請されたようで、今は以下のレポジトリで開発が進んでいます。
-https://github.com/shadowsocks/shadowsocks-libev
-イベントループを止める shadowsocksはlibevを使ってイベントループを処理しています。
-server.cにエントリーポイントがあるのでここから読み進めていきます。 読み進めていくと, server_recv_cb()という関数で受信処理をしているようです。 この関数をラップして, この関数の終了時にイベントループを終わらせるようにします。
-static void server_recv_once_cb(EV_P_ ev_io *w, int revents) { server_recv_cb(loop, w, revents); ev_break(EV_A_ EVBREAK_ONE); } static server_t * new_server(int fd, listen_ctx_t *listener) { ... ev_io_init(&amp;amp;server-&amp;gt;recv_ctx-&amp;gt;io, server_recv_once_cb, fd, EV_READ); ... } こうすることで, リクエストを１つ受け取ったら終了するようになりました。
-afl-gccでコンパイルするように変更 src/Makefileを編集してgccと書いてあるところをafl-gccにしていきます。
-... CC = afl-gcc ... コンパイルします。 コンパイル途中にInstrumented n locationsみたいな表示が出てきたらAFLを利用して, コンパイル出来ています。
-$ make afl-cc 2.</description>
-    </item>
-    
-    <item>
-      <title>Dirtycowはどのように動くか</title>
+      <title>DirtycowのPoCを読む</title>
       <link>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</link>
       <pubDate>Sat, 11 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</guid>
       <description>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。
-rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC([https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c:title])についてまとめます。
-DirtyCowについて DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。 CVEではCVE-2016-5195として管理されています。 [https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html:title]
+rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC(https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c)についてまとめます。
+DirtyCowについて DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。 CVEではCVE-2016-5195として管理されています。
+https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html
 前提知識など mmap mmapはファイルやデバイスをメモリにマッピングするためのものです。
 readやwriteを使うとカーネル空間からユーザープロセスへのコピーが発生しますが、mmapはマッピングしたアドレスを返すだけでユーザー空間へのコピーが発生しません。
 そのためreadやwriteを使うよりも効率期にファイルの読み書きが可能になるようです。

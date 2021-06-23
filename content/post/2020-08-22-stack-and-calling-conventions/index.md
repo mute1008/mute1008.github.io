@@ -13,7 +13,7 @@ tags = [
 
 テキストセグメントには実行されるコード、データセグメントは初期化済みのグローバル変数、bssセグメントには初期化されていないグローバル変数、ヒープセグメントは、mallocなどで動的に確保される変数が配置されます。
 
-{{< img memory.png "700x900" "memory" >}}
+<img src=./memory.png>
 
 今回はスタックに焦点をあてて説明していきます。
 
@@ -36,14 +36,14 @@ pushすると値がスタックに追加されたあとにespが4(x86_64の場�
 callの場合には、eipをリターンアドレスとしてpush, eipを呼び出し関数の先頭にセットします。
 retすると、スタックからアドレスを取得してeipにセットします。
 
-{{< img stack.png "700x900" "stack" >}}
+<img src=./stack.png>
 
 #### スタックフレーム
 スタックフレームは以下の様になってます。
 
 リターンアドレスはcall命令によるもので、ebpのアドレスがあるのは、`Function prologue`によるものです。
 
-{{< img stackframe.png "700x900" "stack frame" >}}
+<img src=./stackframe.png>
 
 
 #### Function prologue

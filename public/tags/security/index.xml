@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>security on mute1997.github.io</title>
+    <link>https://mute1997.github.io/tags/security/</link>
+    <description>Recent content in security on mute1997.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>イベントハンドラでの実体参照の扱い</title>
+      <link>https://mute1997.github.io/post/2020-11-07-entity-reference-in-event-handler/</link>
+      <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-11-07-entity-reference-in-event-handler/</guid>
+      <description>以下の記事を読んでいて気になったことがあるので調べてみた。
+https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output
+気になったのは以下の部分。
+1 2 3  Sometimes you&amp;#39;ll need to apply multiple layers of encoding, in the correct order. For example, to safely embed user input inside an event handler, you need to deal with both the JavaScript context and the HTML context. So you need to first Unicode-escape the input, and then HTML-encode it: &amp;lt;a href=&amp;#34;#&amp;#34; onclick=&amp;#34;x=&amp;#39;This string needs two layers of escaping&amp;#39;&amp;#34;&amp;gt;test&amp;lt;/a&amp;gt;   イベントハンドラにJavaScriptを書いている所にユーザーの入力を埋め込む場合は、unicodeエスケープをしてからHTMLエンコードする必要があると書いてある。
+個人的にはunicodeエスケープだけではダメなのか気になったので実験してみた。
+アラートを実行するために&#39;;alert(1);&#39;を入力したことを考える。</description>
+    </item>
+    
+    <item>
+      <title>論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing</title>
+      <link>https://mute1997.github.io/post/2020-08-13-rest-ler/</link>
+      <pubDate>Thu, 13 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2020-08-13-rest-ler/</guid>
+      <description>バイナリのFuzzingのようなものを、Webアプリにも適用できないだろうかと思って調べていた所見つけたのでちょっと読んでみようと思います。
+今回はアルゴリズム部分に注目して読んでみます。
+この論文ではswaggerの静的分析を行いテストケースを生成しているらしい。
+pythonっぽく書かれたアルゴリズムの疑似コードは以下の通り。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58  Inputs: swaggerspec, maxLength # Swaggerから作成したリクエストの集合 reqSet = PROCESS(swaggerspec) # リクエストシーケンスの集合 (最初は空) seqSet = {} # メインループ n = 1 while (n &amp;lt;= maxLength): seqSet = EXTEND(seqSet, reqSet) seqSet = RENDER(seqSet) n = n + 1 # 依存関係が満たされている新しいリクエストを追加することで、 # seqSet内のすべてのシーケンスを拡張する def EXTEND(seqSet, reqSet): newSeqSet = {} for seq in seqSet: for req in reqSet: if DEPENDENCIES(seq, req): newSeqSet = newSeqSet + concat(seq, req) return newSeqSet # 辞書を利用して新たに追加されたすべてのリクエストを具体化し、 # それぞれの新しいリクエストシーケンスを実行し、有効なものを保持する def RENDER(seqSet): newSeqSet = {} for seq in seqSet: req = last_request_in(seq) ~V = tuple_of_fuzzable_types_in(req) for ~v in ~V: newReq = concretize(req,~v) newSeq = concat(seq, newReq) response = EXECUTE(newSeq) if response has a valid code: newSeqSet = newSeqSet + newSeq else: log error return newSeqSet # リクエストで参照されるすべてのオブジェクトが、 # 以前のリクエストシーケンスの何らかのレスポンスによって生成されたものであることをチェックします。 def DEPENDENCIES(seq, req): if CONSUMES(req)⊆PRODUCES(seq): return True else: return False # リクエストに必要なオブジェクト def CONSUMES(req): return object_types_required_in(req) # 一連のリクエストのレスポンスで生成されたオブジェクト def PRODUCES(seq): dynamicObjects ={} for req in seq: newObjs = objects_produced_in_response_of(req) dynamicObjects = dynamicObjects + newObjs return dynamicObjects   パパっと見てみると、</description>
+    </item>
+    
+    <item>
+      <title>DirtycowのPoCを読む</title>
+      <link>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</link>
+      <pubDate>Sat, 11 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2018-08-11-how-dirtycow-work/</guid>
+      <description>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。
+rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC(https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c)についてまとめます。
+DirtyCowについて DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。 CVEではCVE-2016-5195として管理されています。
+https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html
+前提知識など mmap mmapはファイルやデバイスをメモリにマッピングするためのものです。
+readやwriteを使うとカーネル空間からユーザープロセスへのコピーが発生しますが、mmapはマッピングしたアドレスを返すだけでユーザー空間へのコピーが発生しません。
+そのためreadやwriteを使うよりも効率期にファイルの読み書きが可能になるようです。
+&amp;ldquo;なるようです&amp;quot;と書いたのはどの場合においてもmmapのほうが早いわけではないからです。
+日本語で詳しく解説されている記事があったのでどうぞ。
+man mmapしてでてくる情報を簡単にまとめます。 プロトタイプ宣言は次のようになっています。
+1  void *mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t off);   addrにはマッピングするアドレスを指定します。NULLを指定するとマッピングするアドレスをカーネルが決定してくれます。
+lenにはマッピングするサイズを指定します。
+protにはPROT_EXEC, PROT_READ, PROT_WRITE, PROT_NONEを指定します。それぞれ、実行可能、読み書き可能、書き込み可能、アクセス不可能を表します。
+flagsには、MAP_SHARED, MAP_PRIVATE, MAP_FIXEDが指定できます。MAP_PRIVATEが指定されるとCopy on Writeでファイルがマッピングされます。
+fildesにはファイルディスクリプタを指定します。
+offにはファイルのオフセットを指定します。
+mmapを利用した簡単なファイルを読み込むをするサンプルを書いてみました。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28  #include &amp;lt;stdio.</description>
+    </item>
+    
+    <item>
+      <title>prototype pollutionを自動で見つけてみる</title>
+      <link>https://mute1997.github.io/post/2021-06-23-prototype-pollution/</link>
+      <pubDate>Sat, 11 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2021-06-23-prototype-pollution/</guid>
+      <description>prototype pollutionとは </description>
+    </item>
+    
+  </channel>
+</rss>

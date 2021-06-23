@@ -297,8 +297,7 @@ madviseThreadではmadviseをループして何度も実行、procselfmemThread�
 
 draw.ioで2秒くらいで書いた図によるとこんな感じです。
 
-{{< img describe-dirtycow.png "600x600" "describe-dirtycow" >}}
-
+<img src=./describe-dirtycow.png>
 
 #### 最後に
 本当はパッチを読んだりしてたんですがこれ以上長くなるとしんどいのでやめました。

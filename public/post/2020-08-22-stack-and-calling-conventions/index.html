@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>スタックと呼び出し規約 | mute1997.github.io</title>
+
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="スタックと呼び出し規約 | mute1997.github.io"/>
+    <meta itemprop="name" content="スタックと呼び出し規約 | mute1997.github.io" />
+    <meta name="twitter:title" content="スタックと呼び出し規約 | mute1997.github.io" />
+    <meta name="application-name" content="スタックと呼び出し規約 | mute1997.github.io" />
+
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=2020-08-22T00:00:00Z />
+<meta property="article:published_time" content=2020-08-22T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "スタックと呼び出し規約",
+    "author": {
+      "@type": "Person",
+      "name": ""
+    },
+    "datePublished": "2020-08-22",
+    "description": "",
+    "wordCount":  74 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "2020-08-22",
+    "publisher": {
+      "@type": "Organization",
+      "name": "",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/mute1997.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.40aeb6acef96d81040c330db146a4d454b7f961bd5de06d6a1957365ac9232d5.css">
+</head>
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    <span class="emoji">
+                        😎
+                    </span>
+                    
+                    
+                    mute1997.github.io
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                <button id="dark-mode-button">
+                  <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                  <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                </button>
+            </div>
+            </div>
+    </div>
+</nav>
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>スタックと呼び出し規約</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By  | <time>August 22, 2020</time>
+                            | 1 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="/tags/linux/">linux</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p>以下の文書はx86についての説明です。</p>
+<h4 id="メモリ配置">メモリ配置</h4>
+<p>メモリ配置は以下の図のようになっています。</p>
+<p>テキストセグメントには実行されるコード、データセグメントは初期化済みのグローバル変数、bssセグメントには初期化されていないグローバル変数、ヒープセグメントは、mallocなどで動的に確保される変数が配置されます。</p>
+<img src=./memory.png>
+<p>今回はスタックに焦点をあてて説明していきます。</p>
+<h4 id="スタック">スタック</h4>
+<p>スタックとはメモリ上の領域の1つで、</p>
+<ul>
+<li>引数の保存</li>
+<li>ローカル変数の保存</li>
+<li>関数呼び出し</li>
+</ul>
+<p>に利用されます。</p>
+<p>スタックのアドレスは高値から低位に伸びていき、ebp, espレジスタにスタックのアドレスが保存されます。
+以下の画像の様に、ebpは現在の関数のスタックの底を、espはスタックのトップを表しています。</p>
+<p>これらのレジスタの値はpush, pop, call, retによって操作されます。</p>
+<p>pushすると値がスタックに追加されたあとにespが4(x86_64の場合は8)だけデクリメントされ、popすると値がレジスタに読み込まれてespがインクリメントされます。</p>
+<p>callの場合には、eipをリターンアドレスとしてpush, eipを呼び出し関数の先頭にセットします。
+retすると、スタックからアドレスを取得してeipにセットします。</p>
+<img src=./stack.png>
+<h4 id="スタックフレーム">スタックフレーム</h4>
+<p>スタックフレームは以下の様になってます。</p>
+<p>リターンアドレスはcall命令によるもので、ebpのアドレスがあるのは、<code>Function prologue</code>によるものです。</p>
+<img src=./stackframe.png>
+<h4 id="function-prologue">Function prologue</h4>
+<p>Function prologueは関数の先頭で行われる処理のことです。
+実際には以下のような処理を行います。
+<code>push ebp</code>では、関数の終了時にebpを復元するために一旦スタックに退避しています。
+<code>mov ebp,esp</code>では、現在のebpをespに代入することで、現在のスタックトップをベースにしています。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">push</span>   <span class="no">ebp</span>
+<span class="nf">mov</span>    <span class="no">ebp</span><span class="p">,</span><span class="no">esp</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="function-epilogue">Function epilogue</h4>
+<p>Function epilogueは関数の最後に行われる処理のことです。
+実際には以下のような処理が行われています。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">leave</span>
+<span class="nf">ret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>このleaveという命令は、</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">mov</span> <span class="no">esp</span> <span class="no">ebp</span>
+<span class="nf">pop</span> <span class="no">ebp</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>と同等の処理を行うものです。</p>
+<p>これらは、espをebpに戻して、スタックからebpの値を復元します。
+retでは、前のeipの値をスタックからポップして元のコードに戻ります。</p>
+<h4 id="calling-convention">calling convention</h4>
+<p>スタックに引数を積む場合には、呼び出し規則(calling convention)と呼ばれる方法があります。
+32bitバイナリでは、関数の引数は逆順にスタックに渡されます。
+64bitバイナリでは、関数の引数を渡すのにスタックは使わず、レジスタを利用します。
+渡される順番は以下の通りです。</p>
+<ol>
+<li>rdi</li>
+<li>rsi</li>
+<li>rdx</li>
+<li>r8</li>
+<li>r9</li>
+</ol>
+<p>5個を超えるような場合には32bitバイナリと同様にスタックにプッシュされます。</p>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="/post/2020-08-13-rest-ler/" title="Previous post (older)">
+            <span>Previous</span>
+            論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing
+            </a>
+        
+        
+        
+        <a rel="next" href="/post/2020-11-07-entity-reference-in-event-handler/" title="Next post (newer)">
+            <span>Next</span>
+            イベントハンドラでの実体参照の扱い
+            </a> 
+        
+    </nav>
+    
+</div>
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+            <a href="/index.xml">RSS</a>
+            
+        </nav>
+    </section>
+    <script async src="/ts/features.aae54872a4ce10f31183401ffe494fdc7160fa4925869741aee7ab580afc9908.js" data-enable-footnotes="true"></script>
+</footer>
+    </body>
+</html>

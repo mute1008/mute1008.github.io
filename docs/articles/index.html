@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>Projects | mute1997.github.io</title>
+    <title>Articles | mute1997.github.io</title>
 
     <meta property="og:site_name" content="" />
-    <meta property="og:title" content="Projects | mute1997.github.io"/>
-    <meta itemprop="name" content="Projects | mute1997.github.io" />
-    <meta name="twitter:title" content="Projects | mute1997.github.io" />
-    <meta name="application-name" content="Projects | mute1997.github.io" />
+    <meta property="og:title" content="Articles | mute1997.github.io"/>
+    <meta itemprop="name" content="Articles | mute1997.github.io" />
+    <meta name="twitter:title" content="Articles | mute1997.github.io" />
+    <meta name="application-name" content="Articles | mute1997.github.io" />
 
 
     <meta name="description" content="" />
@@ -45,7 +45,7 @@
             </div>
             <div class="flex">
                 
-                <a href="/articles/">Articles</a>
+                <a href="/articles/" aria-current="page">Articles</a>
                 
                 <button id="dark-mode-button">
                   <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
@@ -58,39 +58,81 @@
         <main>
             
 
-
-
-
 <header>
-  <div class="container">
-    <h1>Projects</h1>
-    <p class="subtitle">
-      <span class="count">1</span> posts found.
-    </p>
-  </div>
+    <div class="container">
+        <h1>Articles</h1>
+        <p class="subtitle"></p>
+    </div>
 </header>
 
+
+
 <section>
-  <div class="container">
-    <section>
-      <section>
-        <div class="posts">
+    <div class="container">
+        <div class="filter-container">
           
-          <div class="post">
-            <a href="/projects/a_project/">
-              <div class="post-row">
-                <time>Jan 01</time>
-                <h3></h3>
-              </div>
-              
-            </a>
-          </div>
           
         </div>
-      </section>
-    </section>
-  </div>
+        <input id="search-query" type="search" placeholder="Search for anything...">
+        
+        <div id="search-results">
+        </div>
+        <section id="articles-list">
+            
+            <section>
+                <h2>2020</h2>
+                <div class="posts">
+                    
+                    <div class="post">
+                        <a href="/post/2020-11-07-entity-reference-in-event-handler/">
+                            <div class="post-row">
+                                <time>Nov 07</time>
+                                <h3>イベントハンドラでの実体参照の扱い</h3>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="post">
+                        <a href="/post/2020-08-22-stack-and-calling-conventions/">
+                            <div class="post-row">
+                                <time>Aug 22</time>
+                                <h3>スタックと呼び出し規約</h3>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="post">
+                        <a href="/post/2020-08-13-rest-ler/">
+                            <div class="post-row">
+                                <time>Aug 13</time>
+                                <h3>論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing</h3>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <section>
+                <h2>2018</h2>
+                <div class="posts">
+                    
+                    <div class="post">
+                        <a href="/post/2018-08-11-how-dirtycow-work/">
+                            <div class="post-row">
+                                <time>Aug 11</time>
+                                <h3>DirtycowのPoCを読む</h3>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+        </section>
+    </div>
 </section>
+<script async src="/ts/search.5f20df3c15ab6438bcb3cf344eb793b6494f63248f2dd12700dad2c377352c69.js"></script>
 
 
         </main>

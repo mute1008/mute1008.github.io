@@ -6,7 +6,23 @@
     <description>Recent content in security on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>prototype pollutionを自動で見つける</title>
+      <link>https://mute1997.github.io/post/2021-06-23-prototype-pollution/</link>
+      <pubDate>Wed, 23 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2021-06-23-prototype-pollution/</guid>
+      <description>prototype pollutionについて調べていたところ、単純なパターンであれば自動で検知出来るのではと考えたので実際に実装してみることにしました。
+prototype pollutionとは JavaScriptでは、オブジェクトのプロパティにアクセスを試みた際、プロトタイプをたどり、nullに到達するまで探索が続きます。 これはプロトタイプチェーンと呼ばれます。
+例として以下のようなコードを考えます。
+1 2 3 4 5 6 7 8  const a = {&amp;#39;p&amp;#39;: 1} const b = Object.create(a) // bにプロパティはない console.log(b) // {}  // aまで探索され、1と表示される console.log(b.p) // 1   JavaScriptでは、上記のような挙動を実現するために、各オブジェクトは__proto__プロパティを保持しており、これは他オブジェクトへリンクされています。
+1  console.log(b.__proto__ == a) // true   一般的なオブジェクトであれば、__proto__プロパティはObject.prototypeにリンクされています。
+1  console.log(({}).__proto__ == Object.prototype) // true   そのため、Object.prototypeのプロパティを上書きすることが出来れば、各オブジェクトに任意のプロパティを生やすことができます。これはprototype pollutionと呼ばれています。
+このようなObject.prototypeを上書きするような挙動は、以下のようなオブジェクトをコピーするコードで発生することがあります。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14  function isObject(obj) { return obj !</description>
+    </item>
+    
     <item>
       <title>イベントハンドラでの実体参照の扱い</title>
       <link>https://mute1997.github.io/post/2020-11-07-entity-reference-in-event-handler/</link>

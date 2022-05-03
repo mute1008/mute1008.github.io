@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 20 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation)</title>
-      <link>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-#1/</link>
+      <link>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-1/</link>
       <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-#1/</guid>
+      <guid>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-1/</guid>
       <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。
 このリポジトリの、検出ルールと脆弱なコードを読んでいくことで、スマートコントラクトの脆弱性を学びます。今回は、以下のルールを読んでいきます。
  basic-oracle-manipulation.yaml basic-oracle-manipulation.sol     検出ルール  まず、semgrepのルールを理解するために、ルールを日本語として表現します。

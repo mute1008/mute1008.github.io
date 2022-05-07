@@ -193,7 +193,7 @@
 詳細は以下のドキュメントを参照してください。
 <a href="https://docs.soliditylang.org/en/develop/types.html#members-of-addresses">https://docs.soliditylang.org/en/develop/types.html#members-of-addresses</a></p>
 <p>この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。</p>
-<p>攻撃者は、他のスマートコントラクト関数を呼び出し、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。</p>
+<p>攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。</p>
 <h4 id="li-financeでの事例">
     <a href="#li-finance%e3%81%a7%e3%81%ae%e4%ba%8b%e4%be%8b" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -260,8 +260,8 @@
     <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>攻撃者は、callToをスマートコントラクトの呼び出しが許可されているアドレスに、
-callDataに<code>transferFrom</code>関数を利用することで、自身のアドレスへの送金を行うことが可能でした。</p>
+</div><p>攻撃者は、<code>callTo</code>をスマートコントラクトの呼び出しが許可されているアドレスに、
+<code>callData</code>に<code>transferFrom</code>関数を利用することで、自身のアドレスへの送金を行うことが可能でした。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1

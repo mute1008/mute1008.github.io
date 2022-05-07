@@ -38,7 +38,7 @@ https://docs.soliditylang.org/en/develop/types.html#members-of-addresses
 
 この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。
 
-攻撃者は、他のスマートコントラクト関数を呼び出し、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
+攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
 
 #### Li Financeでの事例
 
@@ -76,8 +76,8 @@ function swapAndStartBridgeTokensViaCBridge(
     }
 ```
 
-攻撃者は、callToをスマートコントラクトの呼び出しが許可されているアドレスに、
-callDataに`transferFrom`関数を利用することで、自身のアドレスへの送金を行うことが可能でした。
+攻撃者は、`callTo`をスマートコントラクトの呼び出しが許可されているアドレスに、
+`callData`に`transferFrom`関数を利用することで、自身のアドレスへの送金を行うことが可能でした。
 
 ```solidity
 _swapData[1].callTo = address(MATIC);

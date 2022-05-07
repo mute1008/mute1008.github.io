@@ -57,7 +57,7 @@
 詳細は以下のドキュメントを参照してください。
 &lt;a href=&#34;https://docs.soliditylang.org/en/develop/types.html#members-of-addresses&#34;&gt;https://docs.soliditylang.org/en/develop/types.html#members-of-addresses&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。&lt;/p&gt;
-&lt;p&gt;攻撃者は、他のスマートコントラクト関数を呼び出し、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。&lt;/p&gt;
+&lt;p&gt;攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。&lt;/p&gt;
 &lt;h4 id=&#34;li-financeでの事例&#34;&gt;
     &lt;a href=&#34;#li-finance%e3%81%a7%e3%81%ae%e4%ba%8b%e4%be%8b&#34; class=&#34;anchor&#34;&gt;
         &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
@@ -124,8 +124,8 @@
     &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;攻撃者は、callToをスマートコントラクトの呼び出しが許可されているアドレスに、
-callDataに&lt;code&gt;transferFrom&lt;/code&gt;関数を利用することで、自身のアドレスへの送金を行うことが可能でした。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;攻撃者は、&lt;code&gt;callTo&lt;/code&gt;をスマートコントラクトの呼び出しが許可されているアドレスに、
+&lt;code&gt;callData&lt;/code&gt;に&lt;code&gt;transferFrom&lt;/code&gt;関数を利用することで、自身のアドレスへの送金を行うことが可能でした。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1

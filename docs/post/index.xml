@@ -20,7 +20,7 @@
 1 2 3 4 5 6 7  patterns:- pattern-either:- pattern-inside:|function $F(..., $ADDR, ...) external { ... }- pattern-inside:|function $F(..., $ADDR, ...) public { ... }- pattern:$ADDR.call($DATA);  この脆弱性は、引数で渡されたアドレスに対し、call関数が呼ばれた場合に検知するものです。
 call関数は、アドレス型の関数で、別スマートコントラクトの関数を呼び出すためのものです。 詳細は以下のドキュメントを参照してください。 https://docs.soliditylang.org/en/develop/types.html#members-of-addresses
 この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。
-攻撃者は、他のスマートコントラクト関数を呼び出し、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
+攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
    Li Financeでの事例  この脆弱性を悪用された攻撃が、Li Financeで発生しました。 攻撃トランザクションとエクスプロイトコードは以下の通りです。
  Transaction Exploit  問題が起こったのは、swapAndStartBridgeTokensViaCBridge関数です。
 この関数は、_swapDataという関数を受け取り、callDataを引数としてcallToに対して関数が呼び出されています。

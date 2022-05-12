@@ -16,6 +16,11 @@ titleLogo = ""
 # Default to 5
 maxCategoryToShow = 10
 
+[params.colorScheme]
+toggle = false
+default = "dark"
+
+
 # Show your social information with icon on index bio with `_index.md` content.
 [params.socialOptions]
 github = "https://github.com/mute1997"

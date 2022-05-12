@@ -6,7 +6,19 @@
     <description>Recent content in Posts on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
+      <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>
+      <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</guid>
+      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。
+今回は、arbitrary-low-level-callというルールを読んでみます。
+ arbitrary-low-level-call.yaml arbitrary-low-level-call.sol     検出ルール  検出ルールは、以下の通りです。
+      事例  </description>
+    </item>
+    
     <item>
       <title>Security Innovation Blockchain CTF - Donation</title>
       <link>https://mute1997.github.io/post/2022-05-12-donation-writeup/</link>

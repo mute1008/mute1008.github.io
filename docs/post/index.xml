@@ -6,7 +6,23 @@
     <description>Recent content in Posts on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
+      <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>
+      <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</guid>
+      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
+今回は、basic-reentrancyというルールを読んでみます。
+ basic-reentrancy.yaml basic-reentrancy.sol     検出ルール  検出ルールは、以下の通りです。
+このルールはまだBETAであり、まだsemgrepでは検出できません。
+1 2 3 4 5 6 7 8 9  patterns:- pattern-either:- pattern-inside:|function $F(..., $X, ...) external { ... }- pattern-inside:|function $F(..., $X, ...) public { ... }- pattern-not-inside:|function $F(..., $X, ...) onlyOwner { ... }- pattern:$X.$M(...)     Reentrancy attackとは  reentrant (再入可能性) とは、ある関数の実行中に、同じ関数を実行しても安全であるという性質のことを指します。
+スマートコントラクトにおいては、攻撃対象から、任意のコントラクトを呼び出し可能な場合にReentrancy attackが発生する恐れがあります。
+この攻撃は、以下の論文で詳細に解説されています。
+Reentrancy Vulnerability Identification in Ethereum Smart Contracts</description>
+    </item>
+    
     <item>
       <title>Security Innovation Blockchain CTF - Donation</title>
       <link>https://mute1997.github.io/post/2022-05-12-donation-writeup/</link>
@@ -27,15 +43,15 @@ Donate 0.1 Ether!をクリックするとMetaMaskが起動し、0.1 Etherが寄�
       <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2022-05-04-semgrep-smart-contracts-2/</guid>
-      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。
+      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
 今回は、arbitrary-low-level-callというルールを読んでみます。
  arbitrary-low-level-call.yaml arbitrary-low-level-call.sol     検出ルール  検出ルールは、以下の通りです。
 このルールは、betaであり、semgrepではまだ検出は出来ないようです。
 1 2 3 4 5 6 7  patterns:- pattern-either:- pattern-inside:|function $F(..., $ADDR, ...) external { ... }- pattern-inside:|function $F(..., $ADDR, ...) public { ... }- pattern:$ADDR.call($DATA);  この脆弱性は、引数で渡されたアドレスに対し、call関数が呼ばれた場合に検知するものです。
 call関数は、アドレス型の関数で、別スマートコントラクトの関数を呼び出すためのものです。 詳細は以下のドキュメントを参照してください。 https://docs.soliditylang.org/en/develop/types.html#members-of-addresses
 この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。
-攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
-   Li Financeでの事例  この脆弱性を悪用された攻撃が、Li Financeで発生しました。 攻撃トランザクションとエクスプロイトコードは以下の通りです。
+攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金を盗むことが可能になります。
+   Li Financeでの事例  この脆弱性を悪用した攻撃が、Li Financeで発生しました。 攻撃トランザクションとエクスプロイトコードは以下の通りです。
  Transaction Exploit  問題が起こったのは、swapAndStartBridgeTokensViaCBridge関数です。
 この関数は、_swapDataという関数を受け取り、callDataを引数としてcallToに対して関数が呼び出されています。
 1 2 3 4 5 6 7 8 9 10 11  function swapAndStartBridgeTokensViaCBridge( LiFiData memory _lifiData, LibSwap.</description>
@@ -47,7 +63,7 @@ call関数は、アドレス型の関数で、別スマートコントラクト�
       <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-1/</guid>
-      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。
+      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
 このリポジトリの、検出ルールと脆弱なコードを読んでいくことで、スマートコントラクトの脆弱性を学びます。今回は、以下のルールを読んでいきます。
  basic-oracle-manipulation.yaml basic-oracle-manipulation.sol     検出ルール  まず、semgrepのルールを理解するために、ルールを日本語として表現します。
  関数内の処理であること 関数の名称が (?i)get([a-z0-9_])*price にマッチすること $X.div($Y)、もしくは$X / $Yであること $Xは以下の文字列のどれかを含むこと  underlying underlyingUnit pair reserve reserve0 reserve1   $Yは.*totalSupply.*にマッチすること  このルールを実行すると、以下の2つがsemgrepによって検出されます。

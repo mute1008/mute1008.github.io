@@ -44,7 +44,7 @@
     },
     "datePublished": "2022-05-04",
     "description": "",
-    "wordCount":  130 ,
+    "wordCount":  132 ,
     "mainEntityOfPage": "True",
     "dateModified": "2022-05-04",
     "publisher": {
@@ -143,7 +143,7 @@
 
     <div class="article-post">
     <p><a href="https://github.com/Raz0r/semgrep-smart-contracts">semgrep-smart-contracts</a> というリポジトリがあります。
-これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。</p>
+これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。</p>
 <p>今回は、arbitrary-low-level-callというルールを読んでみます。</p>
 <ul>
 <li><a href="https://github.com/Raz0r/semgrep-smart-contracts/blob/master/solidity/arbitrary-low-level-call.yaml">arbitrary-low-level-call.yaml</a></li>
@@ -186,7 +186,7 @@
 詳細は以下のドキュメントを参照してください。
 <a href="https://docs.soliditylang.org/en/develop/types.html#members-of-addresses">https://docs.soliditylang.org/en/develop/types.html#members-of-addresses</a></p>
 <p>この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。</p>
-<p>攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。</p>
+<p>攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金を盗むことが可能になります。</p>
 <h4 id="li-financeでの事例">
     <a href="#li-finance%e3%81%a7%e3%81%ae%e4%ba%8b%e4%be%8b" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -197,7 +197,7 @@
     </a>
     Li Financeでの事例
 </h4>
-<p>この脆弱性を悪用された攻撃が、Li Financeで発生しました。
+<p>この脆弱性を悪用した攻撃が、Li Financeで発生しました。
 攻撃トランザクションとエクスプロイトコードは以下の通りです。</p>
 <ul>
 <li><a href="https://versatile.blocksecteam.com/tx/eth/0x4b4143cbe7f5475029cf23d6dcbb56856366d91794426f2e33819b9b1aac4e96">Transaction</a></li>
@@ -253,8 +253,12 @@
     <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>攻撃者は、<code>callTo</code>をスマートコントラクトの呼び出しが許可されているアドレスに、
-<code>callData</code>に<code>transferFrom</code>関数を利用することで、自身のアドレスへの送金を行うことが可能でした。</p>
+</div><p>攻撃者は、</p>
+<ul>
+<li><code>callTo</code>をスマートコントラクトの呼び出しが許可されているアドレスに設定</li>
+<li><code>callData</code>に<code>transferFrom</code>関数を利用する</li>
+</ul>
+<p>ことで、自身のアドレスへの送金を行うことが可能でした。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1

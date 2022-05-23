@@ -7,7 +7,7 @@ tags = [
 +++
 
 [semgrep-smart-contracts](https://github.com/Raz0r/semgrep-smart-contracts) というリポジトリがあります。
-これは、スマートコントラクトの脆弱性を発見するための、semgrepルールをまとめたものです。
+これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
 
 今回は、arbitrary-low-level-callというルールを読んでみます。
 
@@ -38,11 +38,11 @@ https://docs.soliditylang.org/en/develop/types.html#members-of-addresses
 
 この脆弱性は、特定のスマートコントラクトやユーザーに対してのみ許可している操作を、攻撃者が任意で呼び出せてしまうことに問題があります。
 
-攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金が盗むことが可能になります。
+攻撃者は、transferFromなどの送金用関数を自分のアドレスに対して利用することで、資金を盗むことが可能になります。
 
 #### Li Financeでの事例
 
-この脆弱性を悪用された攻撃が、Li Financeで発生しました。
+この脆弱性を悪用した攻撃が、Li Financeで発生しました。
 攻撃トランザクションとエクスプロイトコードは以下の通りです。
 
 - [Transaction](https://versatile.blocksecteam.com/tx/eth/0x4b4143cbe7f5475029cf23d6dcbb56856366d91794426f2e33819b9b1aac4e96)
@@ -76,8 +76,11 @@ function swapAndStartBridgeTokensViaCBridge(
     }
 ```
 
-攻撃者は、`callTo`をスマートコントラクトの呼び出しが許可されているアドレスに、
-`callData`に`transferFrom`関数を利用することで、自身のアドレスへの送金を行うことが可能でした。
+攻撃者は、
+- `callTo`をスマートコントラクトの呼び出しが許可されているアドレスに設定
+- `callData`に`transferFrom`関数を利用する
+
+ことで、自身のアドレスへの送金を行うことが可能でした。
 
 ```solidity
 _swapData[1].callTo = address(MATIC);

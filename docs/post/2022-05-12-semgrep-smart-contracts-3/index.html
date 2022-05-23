@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy) | mute1997.github.io</title>
+
+    
+    
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="semgrep-smart-contractsをすべて読む #03 (basic-reentrancy) | mute1997.github.io"/>
+    <meta itemprop="name" content="semgrep-smart-contractsをすべて読む #03 (basic-reentrancy) | mute1997.github.io" />
+    <meta name="twitter:title" content="semgrep-smart-contractsをすべて読む #03 (basic-reentrancy) | mute1997.github.io" />
+    <meta name="application-name" content="semgrep-smart-contractsをすべて読む #03 (basic-reentrancy) | mute1997.github.io" /><meta name="twitter:card" content="summary"/>
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=2022-05-12T00:00:00Z />
+<meta property="article:published_time" content=2022-05-12T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)",
+    "author": {
+      "@type": "Person",
+      "name": ""
+    },
+    "datePublished": "2022-05-12",
+    "description": "",
+    "wordCount":  291 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "2022-05-12",
+    "publisher": {
+      "@type": "Organization",
+      "name": "",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/mute1997.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
+    
+</head>
+    
+    <script>
+        (function() {
+            const colorSchemeKey = 'ThemeColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.userColorScheme = 'dark';
+        } else {
+            document.documentElement.dataset.userColorScheme = 'light';
+        }
+    })();
+</script>
+
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    <span class="emoji">
+                        😎
+                    </span>
+                    
+                    
+                    mute1997.github.io
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                
+            </div>
+            </div>
+    </div>
+</nav>
+
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By  | <time>May 12, 2022</time>
+                            | 2 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="/tags/security/">security</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p><a href="https://github.com/Raz0r/semgrep-smart-contracts">semgrep-smart-contracts</a> というリポジトリがあります。
+これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。</p>
+<p>今回は、basic-reentrancyというルールを読んでみます。</p>
+<ul>
+<li><a href="https://github.com/Raz0r/semgrep-smart-contracts/blob/master/solidity/basic-reentrancy.yaml">basic-reentrancy.yaml</a></li>
+<li><a href="https://github.com/Raz0r/semgrep-smart-contracts/blob/master/solidity/basic-reentrancy.sol">basic-reentrancy.sol</a></li>
+</ul>
+<h4 id="検出ルール">
+    <a href="#%e6%a4%9c%e5%87%ba%e3%83%ab%e3%83%bc%e3%83%ab" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    検出ルール
+</h4>
+<p>検出ルールは、以下の通りです。</p>
+<p>このルールはまだBETAであり、まだsemgrepでは検出できません。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">patterns</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) external { ... }</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) public { ... }</span><span class="w">
+</span><span class="w"></span>- <span class="nt">pattern-not-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">    </span><span class="w">    </span><span class="l">function $F(..., $X, ...) onlyOwner { ... }</span><span class="w">
+</span><span class="w"></span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$X.$M(...)</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="reentrancy-attackとは">
+    <a href="#reentrancy-attack%e3%81%a8%e3%81%af" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Reentrancy attackとは
+</h4>
+<p>reentrant (再入可能性) とは、ある関数の実行中に、同じ関数を実行しても安全であるという性質のことを指します。</p>
+<p>スマートコントラクトにおいては、攻撃対象から、任意のコントラクトを呼び出し可能な場合にReentrancy attackが発生する恐れがあります。</p>
+<p>この攻撃は、以下の論文で詳細に解説されています。</p>
+<p><a href="https://arxiv.org/abs/2105.02881">Reentrancy Vulnerability Identification in Ethereum Smart Contracts</a></p>
+<p>論文では、</p>
+<ul>
+<li>Single Function Reentrancy attack</li>
+<li>Cross Function Reentrancy attack</li>
+</ul>
+<p>という２つの攻撃に分類されています。</p>
+<h5 id="fallback--receive関数">
+    <a href="#fallback--receive%e9%96%a2%e6%95%b0" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    fallback / receive関数
+</h5>
+<p>この攻撃を理解する前に、前提条件としてfallback / receive関数について知る必要があります。</p>
+<p>receive関数は、スマートコントラクトが送金を受け取った時に呼び出される関数です。
+receive関数が定義されていないなどで呼び出せなかった場合には、fallback関数が呼び出されます。</p>
+<p>それぞれ、以下のような特殊な関数として記述されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity">
+<span class="kd">contract</span> <span class="nc">Sample</span> <span class="p">{</span>
+    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="n">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="single-function-reentrancy-attack">
+    <a href="#single-function-reentrancy-attack" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Single Function Reentrancy attack
+</h5>
+<p>Single Function Reentrancy attackは、単一の関数で発生するReentrancy attackです。</p>
+<p>具体例として、以下のようなスマートコントラクトを考えます。
+これは、預け入れたものをwithdraw関数で引き出すことが可能なスマートコントラクトになります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// 被害者コード
+</span><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// 引き出し
+</span><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>攻撃のためのエクスプロイトコードは以下の通りです。</p>
+<p>receiveという関数があり、その関数内では他コントラクトが呼び出されています。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// 攻撃者コード
+</span><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractB</span> <span class="p">{</span>
+    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+        <span class="n">contractA</span><span class="p">.</span><span class="n">withdraw</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>エクスプロイトの流れを以下に記しました。</p>
+<pre><code>
+        1 ) 攻撃者がcontractBを呼び出し
+
+        2 ) contractBがwithdraw関数を呼び出し
+
+        3 ) contractAに制御が移り、送金が行われる
+
+        4 ) 送金により、contractBのreceive関数が呼び出される
+
+        5 ) receive関数内で、再度withdraw関数の呼び出し
+
+        6 ) 繰り返し
+
+        ...
+        ...
+        ...
+
+</code></pre><p>上記に記載した流れが続くことで、攻撃者は無限に引き出しを行うことが出来ます。</p>
+<p>これは、状態を更新する前に送金を行ってしまっているために起こっています。</p>
+<p>以下のように修正することで、攻撃を防ぐことが可能になります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// 引き出し
+</span><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="cross-function-reentrancy-attack">
+    <a href="#cross-function-reentrancy-attack" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    Cross Function Reentrancy attack
+</h5>
+<p>Cross Function Reentrancy attackも基本は同じで、状態を共有する2つの関数がある場合に起こります。</p>
+<p>具体例として、以下のようなスマートコントラクトがあることを考えます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="k">private</span> <span class="nb">balance</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">){</span>
+        <span class="nb">balance</span><span class="p">[</span><span class="n">to</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+        <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">];</span>
+    <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">call</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="n">amount</span><span class="p">)());</span>
+    <span class="cm">/* At this point, the caller’s code is executed, and can call transfer() */</span>
+    <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>攻撃者がwithdrawを呼び出した段階で残高が更新されていないため、receive関数がtransferを呼び出すことで資金の抜き取りが可能となります。</p>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="/post/2022-05-12-donation-writeup/" title="Previous post (older)">
+            <span>Previous</span>
+            Security Innovation Blockchain CTF - Donation
+            </a>
+        
+        
+        
+    </nav>
+    
+</div>
+ 
+<div class="container">
+    
+</div>
+
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+            <a href="/index.xml">RSS</a>
+            
+        </nav>
+
+        
+    </section>
+    <script defer src="/ts/features.c81551cd4dbef120af278f16966a41142c02be9ff5d6a669be09820fbf047456.js" 
+    data-enable-footnotes="true"
+    ></script>
+</footer>
+
+    </body>
+</html>

@@ -6,7 +6,39 @@
     <description>Recent content in Posts on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Security Innovation Blockchain CTF - Lock Box</title>
+      <link>https://mute1997.github.io/post/2022-05-24-lockbox-writeup/</link>
+      <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-05-24-lockbox-writeup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>スマートコントラクトの検査ツール調査</title>
+      <link>https://mute1997.github.io/post/2022-05-18-solidity-tools/</link>
+      <pubDate>Wed, 18 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-05-18-solidity-tools/</guid>
+      <description>スマートコントラクトに対する検査ツールについて調査しました。
+   Mythril  MythrilはEVMバイトコードに対する検査ツールです。 Symbolic execution / SMT resolver / taint analysisを使用して、問題の検出を行います。
+検出可能なモジュールは以下のページで確認できます。
+Analysis Modules
+   MythX  複数の静的解析ツールを組み合わせたSaaSサービスです。
+詳細は以下のブログで確認できます。
+MythX Tech: Behind the Scenes of Smart Contract Security Analysis
+このブログによると、内部的には以下のツールが用いられているようです。
+ Maru (Static code analysis) Harvey (Greybox Fuzzing) Mythril (Symbolic Execution and SMT Solving)  Maruについては情報が見つかりませんでしたが、Harveyというツールは、論文として発表されているツールのようです。
+Harvey: A Greybox Fuzzer for Smart Contracts
+   slither  SlithIRという中間表現を利用し、テイント解析を行うツールです。
+2022年5月現在、76のDetectorに対応しているようです。
+以下のページで、今まで検出した脆弱性の一覧がリストされています。
+https://github.com/crytic/slither/blob/master/trophies.md
+   Echidna  スマートコントラクトのファジングツールです。古典的なファザーのようにクラッシュを探すのではなく、不変状態を破ろうとするプロパティベースのファジングツールです。</description>
+    </item>
+    
     <item>
       <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
       <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>

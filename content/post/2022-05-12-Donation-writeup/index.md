@@ -3,6 +3,7 @@ title = "Security Innovation Blockchain CTF - Donation"
 date = "2022-05-11"
 tags = [
     "security",
+    "ctf",
 ]
 +++
 

@@ -5,7 +5,107 @@
     <description>Recent content on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+    <title>Security Innovation Blockchain CTF - Lock Box</title>
+    <link>https://mute1997.github.io/post/2022-05-24-lockbox-writeup/</link>
+    <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
+    
+    <guid>https://mute1997.github.io/post/2022-05-24-lockbox-writeup/</guid>
+    <description>
+        
+    </description>
+    </item>
+    
+    <item>
+    <title>スマートコントラクトの検査ツール調査</title>
+    <link>https://mute1997.github.io/post/2022-05-18-solidity-tools/</link>
+    <pubDate>Wed, 18 May 2022 00:00:00 +0000</pubDate>
+    
+    <guid>https://mute1997.github.io/post/2022-05-18-solidity-tools/</guid>
+    <description>
+        &lt;p&gt;スマートコントラクトに対する検査ツールについて調査しました。&lt;/p&gt;
+&lt;h5 id=&#34;mythrilhttpsgithubcomconsensysmythril&#34;&gt;
+    &lt;a href=&#34;#mythrilhttpsgithubcomconsensysmythril&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&#34;https://github.com/ConsenSys/mythril&#34;&gt;Mythril&lt;/a&gt;
+&lt;/h5&gt;
+&lt;p&gt;MythrilはEVMバイトコードに対する検査ツールです。
+Symbolic execution / SMT resolver / taint analysisを使用して、問題の検出を行います。&lt;/p&gt;
+&lt;p&gt;検出可能なモジュールは以下のページで確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mythril-classic.readthedocs.io/en/master/analysis-modules.html&#34;&gt;Analysis Modules&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;mythxhttpsmythxio&#34;&gt;
+    &lt;a href=&#34;#mythxhttpsmythxio&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&#34;https://mythx.io/&#34;&gt;MythX&lt;/a&gt;
+&lt;/h5&gt;
+&lt;p&gt;複数の静的解析ツールを組み合わせたSaaSサービスです。&lt;/p&gt;
+&lt;p&gt;詳細は以下のブログで確認できます。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://blog.mythx.io/features/mythx-tech-behind-the-scenes-of-smart-contract-analysis/&#34;&gt;MythX Tech: Behind the Scenes of Smart Contract Security Analysis&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このブログによると、内部的には以下のツールが用いられているようです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Maru (Static code analysis)&lt;/li&gt;
+&lt;li&gt;Harvey (Greybox Fuzzing)&lt;/li&gt;
+&lt;li&gt;Mythril (Symbolic Execution and SMT Solving)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Maruについては情報が見つかりませんでしたが、Harveyというツールは、論文として発表されているツールのようです。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1905.06944&#34;&gt;Harvey: A Greybox Fuzzer for Smart Contracts&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;slitherhttpsgithubcomcryticslither&#34;&gt;
+    &lt;a href=&#34;#slitherhttpsgithubcomcryticslither&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&#34;https://github.com/crytic/slither&#34;&gt;slither&lt;/a&gt;
+&lt;/h5&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/crytic/slither/wiki/SlithIR&#34;&gt;SlithIR&lt;/a&gt;という中間表現を利用し、テイント解析を行うツールです。&lt;/p&gt;
+&lt;p&gt;2022年5月現在、76の&lt;a href=&#34;https://github.com/crytic/slither/wiki/Detector-Documentation&#34;&gt;Detector&lt;/a&gt;に対応しているようです。&lt;/p&gt;
+&lt;p&gt;以下のページで、今まで検出した脆弱性の一覧がリストされています。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/crytic/slither/blob/master/trophies.md&#34;&gt;https://github.com/crytic/slither/blob/master/trophies.md&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;echidnahttpsgithubcomcryticechidna&#34;&gt;
+    &lt;a href=&#34;#echidnahttpsgithubcomcryticechidna&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&#34;https://github.com/crytic/echidna&#34;&gt;Echidna&lt;/a&gt;
+&lt;/h5&gt;
+&lt;p&gt;スマートコントラクトのファジングツールです。古典的なファザーのようにクラッシュを探すのではなく、不変状態を破ろうとするプロパティベースのファジングツールです。&lt;/p&gt;
+&lt;p&gt;以下のサイトにチュートリアルがあります。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/crytic/building-secure-contracts/tree/master/program-analysis/echidna&#34;&gt;https://github.com/crytic/building-secure-contracts/tree/master/program-analysis/echidna&lt;/a&gt;&lt;/p&gt;
+&lt;h5 id=&#34;manticorehttpsgithubcomtrailofbitsmanticore&#34;&gt;
+    &lt;a href=&#34;#manticorehttpsgithubcomtrailofbitsmanticore&#34; class=&#34;anchor&#34;&gt;
+        &lt;svg class=&#34;icon&#34; aria-hidden=&#34;true&#34; focusable=&#34;false&#34; height=&#34;16&#34; version=&#34;1.1&#34; viewBox=&#34;0 0 16 16&#34; width=&#34;16&#34;&gt;
+            &lt;path fill-rule=&#34;evenodd&#34;
+                d=&#34;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&#34;&gt;
+            &lt;/path&gt;
+        &lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a href=&#34;https://github.com/trailofbits/manticore&#34;&gt;Manticore&lt;/a&gt;
+&lt;/h5&gt;
+&lt;p&gt;シンボリック実行を利用した検査ツールです。&lt;/p&gt;
+&lt;p&gt;詳細は以下の論文に記述してあります。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1907.03890&#34;&gt;https://arxiv.org/abs/1907.03890&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;論文によると、Manticoreは平均65.64%のカバレッジを達成しているそうです。&lt;/p&gt;
+&lt;p&gt;こちらに&lt;a href=&#34;https://github.com/trailofbits/manticore/wiki/Tutorial:-Exercise&#34;&gt;チュートリアル&lt;/a&gt;があり、使う際にはこちらも利用できそうです。&lt;/p&gt;
+
+    </description>
+    </item>
+    
     <item>
     <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
     <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>

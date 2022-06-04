@@ -6,7 +6,22 @@
     <description>Recent content in Posts on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Security Innovation Blockchain CTF - Lock Box</title>
+      <link>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</link>
+      <pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</guid>
+      <description>概要  Security Innovation Blockchain CTF
+Security Innovationという企業が開催している、常設のCTFがあります。 今回は、Lock Boxという問題を解きました。
+   問題  問題を開くと、以下のような画面が出てきます。
+ピンを入力してUnlockボタンを押すと、スマートコントラクトが保有している資産を取得できるというアプリのようです。
+   ソースコードを読む  constructorではアンロックするためのpinが生成されており、unlock関数で資金を送金するというコードのようです。
+unlock関数はpinを受け取り、constructorで生成したpinと同一であれば、資金が送金されるようです。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  pragma solidity 0.4.24; import &amp;#34;../CtfFramework.sol&amp;#34;; contract Lockbox1 is CtfFramework{ uint256 private pin; constructor(address _ctfLauncher, address _player) public payable CtfFramework(_ctfLauncher, _player) { pin = now%10000; } function unlock(uint256 _pin) external ctf{ require(pin == _pin, &amp;#34;Incorrect PIN&amp;#34;); msg.</description>
+    </item>
+    
     <item>
       <title>スマートコントラクトの検査ツール調査</title>
       <link>https://mute1997.github.io/post/2022-05-18-solidity-tools/</link>

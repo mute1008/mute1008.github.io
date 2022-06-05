@@ -6,11 +6,27 @@
     <description>Recent content in Posts on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Security Innovation Blockchain CTF - Piggy Bank</title>
+      <link>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</link>
+      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</guid>
+      <description>概要  Security Innovation Blockchain CTF
+Security Innovationという企業が開催している、常設のCTFがあります。 今回は、Piggy Bankという問題を解きました。
+   問題  貯金箱のようなアプリで、ownerのみが資金を出し入れできる実装になっています。
+   ソースコードを読む  PiggyBankというコントラクトが本体の実装になっており、CharliesPiggyBankはそれを継承したアプリです。
+CharliesPiggyBankは、collectFundsという資金引き出し用の関数のみをoverrideしています。
+PiggyBankにはonlyOwnerというmodifierが付いているものの、CharliesPiggyBankでoverrideされた関数では、modifierが付与されていません。
+そのため、継承先のアプリではcollectFundsが誰でも呼び出し可能になっているようです。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59  pragma solidity 0.</description>
+    </item>
+    
     <item>
       <title>Security Innovation Blockchain CTF - Lock Box</title>
       <link>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</link>
-      <pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</guid>
       <description>概要  Security Innovation Blockchain CTF

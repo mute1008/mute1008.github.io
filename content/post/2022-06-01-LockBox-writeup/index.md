@@ -1,6 +1,6 @@
 +++
 title = "Security Innovation Blockchain CTF - Lock Box"
-date = "2022-05-30"
+date = "2022-06-01"
 tags = [
     "security",
     "ctf",

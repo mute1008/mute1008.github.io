@@ -6,7 +6,23 @@
     <description>Recent content in security on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 07 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>semgrep-smart-contractsをすべて読む #04 (basic-arithmetic-underflow)</title>
+      <link>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</guid>
+      <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
+今回は、basic-arithmetic-underflowというルールを読んでみます。
+ basic-arithmetic-underflow.yaml basic-arithmetic-underflow.sol     検出ルール  検出ルールは、以下の通りです。
+このルールはまだBETAであり、まだsemgrepでは検出できません。
+1 2 3 4 5 6 7 8  pattern-sinks:- pattern:$Y - $Xpattern-sources:- pattern-either:- pattern-inside:|function $F(..., $X, ...) external { ... }- pattern-inside:|function $F(..., $X, ...) public { ... }     underflowとは  solidityの特定のバージョンでは、型の下限値を超えてデクリメントをしてしまった場合、意図しない動作を誘発する恐れがあります。
+例として、solidityでuint8の変数を使うことを考えます。
+このuint8の変数が0のとき、デクリメントすると255になってしまいます。
+1 2  uint8 balance = 0; balance--; // balance == 255   この挙動は、solidity &amp;gt;= 0.</description>
+    </item>
+    
     <item>
       <title>Security Innovation Blockchain CTF - Piggy Bank</title>
       <link>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</link>

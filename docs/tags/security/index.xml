@@ -6,7 +6,23 @@
     <description>Recent content in security on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>セキュアなソフトウェア開発とは何かをNIST SSDF v1.1から読み解く</title>
+      <link>https://mute1997.github.io/post/2022-10-15-nist-ssdf-v1.1/</link>
+      <pubDate>Fri, 14 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2022-10-15-nist-ssdf-v1.1/</guid>
+      <description>NIST SSDF v1.1の概要  この文書は、以下の4つのグループから構成されています。
+ Prepare the Organization (組織を準備する) Protect the Software (ソフトウェアを守る) Produce Well-Secured Software (セキュアなソフトウェアを作る) Respond to Vulnerabilities (脆弱性に対処する)  これらのグループには、いくつかのプラクティスが含まれます。 プラクティスには、タスク、想定される実施例、参考文献が含まれます。
+この記事では、プラクティスに焦点を当て、プラクティスを実践するためのツールやフレームワークについて記述します。 プラクティスの翻訳や解釈には独自の考えを含むので、組織や状況によって上手く変更して適用してください。 断りがない場合、基本的にはWebアプリケーション開発を想定して記述します。
+   Prepare the Organization (PO)  PO.1: ソフトウェア開発のためのセキュリティ要件を定義する PO.2: 役割と責任を導入する PO.3: サポートツールチェーンを導入する PO.4: ソフトウェアのセキュリティチェックのための基準を定義し使用する PO.5: ソフトウェア開発のための安全な環境を実装し維持する この章では、セキュアな開発に取り組む上で必要となる事柄について記述されています。
+PO.1でセキュリティ要件を定義すると記述されていますが、一から要件を作って行くのは大変です。 組織で作っているものがWebアプリケーションである場合は、OWASP ASVSなどが使えそうです。 OWASP ASVSは一般的なWebアプリケーションに利用する想定なので、組織固有の要件を洗い出すには脅威モデリングなどが活用できそうです。
+PO.2は、セキュリティチャンピオンの指名や教育というアクションが適当そうです。 セキュリティチャンピオンについては、以下のような資料が参考になります。
+ OWASP Security Culture メルカリで「セキュリティチャンピオン」育成プログラムが開始！その内容と“発足した理由”を紹介  PO.3は、DAST / SAST / SCAや、その他ツール類の導入が適当そうです。 このあたりのツールは無数にあるので、開発の邪魔にならない範囲で順番に対処していくのが良さそうです。
+PO.4、PO.5は組織やアプリケーションによって異なります。</description>
+    </item>
+    
     <item>
       <title>semgrep-smart-contractsをすべて読む #04 (basic-arithmetic-underflow)</title>
       <link>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</link>

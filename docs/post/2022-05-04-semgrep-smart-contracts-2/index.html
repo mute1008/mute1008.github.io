@@ -44,7 +44,7 @@
     },
     "datePublished": "2022-05-04",
     "description": "",
-    "wordCount":  132 ,
+    "wordCount":  141 ,
     "mainEntityOfPage": "True",
     "dateModified": "2022-05-04",
     "publisher": {
@@ -168,7 +168,7 @@
 <p>このルールは、betaであり、semgrepではまだ検出は出来ないようです。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -177,14 +177,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">patterns</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $ADDR, ...) external { ... }</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $ADDR, ...) public { ... }</span><span class="w">
-</span><span class="w">    </span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$ADDR.call($DATA);</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">patterns</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $ADDR, ...) external { ... }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $ADDR, ...) public { ... }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$ADDR.call($DATA);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>この脆弱性は、引数で渡されたアドレスに対し、<code>call</code>関数が呼ばれた場合に検知するものです。</p>
 <p><code>call</code>関数は、アドレス型の関数で、別スマートコントラクトの関数を呼び出すためのものです。
@@ -212,7 +212,7 @@
 <p>この関数は、<code>_swapData</code>という関数を受け取り、<code>callData</code>を引数として<code>callTo</code>に対して関数が呼び出されています。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -225,22 +225,22 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">function</span> <span class="nf">swapAndStartBridgeTokensViaCBridge</span><span class="p">(</span>
-    <span class="n">LiFiData</span> <span class="k">memory</span> <span class="n">_lifiData</span><span class="p">,</span>
-    <span class="n">LibSwap</span><span class="p">.</span><span class="n">SwapData</span><span class="p">[]</span> <span class="n">calldata</span> <span class="n">_swapData</span><span class="p">,</span>
-    <span class="n">CBridgeData</span> <span class="k">memory</span> <span class="n">_cBridgeData</span>
-<span class="p">)</span> <span class="k">public</span> <span class="k">payable</span> <span class="p">{</span>
-            <span class="p">...</span>
-
-            <span class="n">LibSwap</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">_lifiData</span><span class="p">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="n">_swapData</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-
-            <span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">swapAndStartBridgeTokensViaCBridge</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LiFiData</span> <span class="k">memory</span> <span class="n">_lifiData</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LibSwap</span><span class="p">.</span><span class="n">SwapData</span><span class="p">[]</span> <span class="n">calldata</span> <span class="n">_swapData</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CBridgeData</span> <span class="k">memory</span> <span class="n">_cBridgeData</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">LibSwap</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">_lifiData</span><span class="p">.</span><span class="n">transactionId</span><span class="p">,</span> <span class="n">_swapData</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -249,14 +249,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity">    <span class="kd">function</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">transactionId</span><span class="p">,</span> <span class="n">SwapData</span> <span class="n">calldata</span> <span class="n">_swapData</span><span class="p">)</span> <span class="k">internal</span> <span class="p">{</span>
-        <span class="p">...</span>
-
-        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">memory</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">_swapData</span><span class="p">.</span><span class="n">callTo</span><span class="p">.</span><span class="nb">call</span><span class="p">{</span> <span class="nb">value</span><span class="o">:</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="p">}(</span><span class="n">_swapData</span><span class="p">.</span><span class="n">callData</span><span class="p">);</span>
-
-        <span class="p">...</span>
-    <span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">bytes32</span> <span class="n">transactionId</span><span class="p">,</span> <span class="n">SwapData</span> <span class="n">calldata</span> <span class="n">_swapData</span><span class="p">)</span> <span class="k">internal</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="kt">bytes</span> <span class="k">memory</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">_swapData</span><span class="p">.</span><span class="n">callTo</span><span class="p">.</span><span class="nb">call</span><span class="p">{</span> <span class="nb">value</span><span class="o">:</span> <span class="nb">msg</span><span class="p">.</span><span class="nb">value</span> <span class="p">}(</span><span class="n">_swapData</span><span class="p">.</span><span class="n">callData</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>攻撃者は、</p>
 <ul>
@@ -266,7 +266,7 @@
 <p>ことで、自身のアドレスへの送金を行うことが可能でした。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -275,14 +275,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">_swapData</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">callTo</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="n">MATIC</span><span class="p">);</span>
-<span class="n">_swapData</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">callData</span> <span class="o">=</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encodeWithSignature</span><span class="p">(</span>
-    <span class="s">&#34;transferFrom(address,address,uint256)&#34;</span><span class="p">,</span>
-    <span class="mh">0x445C21166a3Cb20b14FA84Cfc5D122F6bd3fFa17</span><span class="p">,</span>
-    <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span>
-    <span class="n">transferAmount</span><span class="p">(</span><span class="n">MATIC</span><span class="p">,</span> <span class="mh">0x445C21166a3Cb20b14FA84Cfc5D122F6bd3fFa17</span><span class="p">)</span>
-<span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">_swapData</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">callTo</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="n">MATIC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">_swapData</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">callData</span> <span class="o">=</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encodeWithSignature</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;transferFrom(address,address,uint256)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mh">0x445C21166a3Cb20b14FA84Cfc5D122F6bd3fFa17</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span><span class="p">(</span><span class="nb">this</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">transferAmount</span><span class="p">(</span><span class="n">MATIC</span><span class="p">,</span> <span class="mh">0x445C21166a3Cb20b14FA84Cfc5D122F6bd3fFa17</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -326,7 +326,7 @@
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

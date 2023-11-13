@@ -1,5 +1,5 @@
 +++
-title = "Security Innovation Blockchain CTF - Lock Box"
+title = "[Security Innovation Blockchain CTF] Lock Box"
 date = "2022-06-01"
 tags = [
     "security",

@@ -1,5 +1,5 @@
 +++
-title = "Security Innovation Blockchain CTF - Piggy Bank"
+title = "[Security Innovation Blockchain CTF] Piggy Bank"
 date = "2022-06-04"
 tags = [
     "security",

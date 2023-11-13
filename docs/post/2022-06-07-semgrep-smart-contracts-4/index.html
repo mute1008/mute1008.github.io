@@ -44,7 +44,7 @@
     },
     "datePublished": "2022-06-07",
     "description": "",
-    "wordCount":  111 ,
+    "wordCount":  121 ,
     "mainEntityOfPage": "True",
     "dateModified": "2022-06-07",
     "publisher": {
@@ -168,7 +168,7 @@
 <p>このルールはまだBETAであり、まだsemgrepでは検出できません。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -178,15 +178,15 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">pattern-sinks</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$Y - $X</span><span class="w">
-</span><span class="w"></span><span class="nt">pattern-sources</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) external { ... }</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) public { ... }</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">pattern-sinks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$Y - $X</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">pattern-sources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $X, ...) external { ... }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $X, ...) public { ... }</span><span class="w">            
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="underflowとは">
     <a href="#underflow%e3%81%a8%e3%81%af" class="anchor">
@@ -203,27 +203,27 @@
 <p>このuint8の変数が0のとき、デクリメントすると255になってしまいます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kt">uint8</span> <span class="nb">balance</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="nb">balance</span><span class="o">--</span><span class="p">;</span> <span class="c1">// balance == 255
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kt">uint8</span> <span class="nb">balance</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">balance</span><span class="o">--</span><span class="p">;</span> <span class="c1">// balance == 255
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>この挙動は、<a href="https://github.com/ethereum/solidity/releases/tag/v0.8.0">solidity &gt;= 0.8</a> からデフォルトでチェックされるように修正されたそうです。</p>
 <p>このチェックを除外してコンパイルするためには、以下のように<code>unchecked</code>という構文を利用できるようです。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kr">unchecked</span> <span class="p">{</span>
-    <span class="nb">balance</span><span class="o">--</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kr">unchecked</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">balance</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="remittancetokenでの事例">
     <a href="#remittancetoken%e3%81%a7%e3%81%ae%e4%ba%8b%e4%be%8b" class="anchor">
@@ -240,7 +240,7 @@
 <p>burn関数のソースコードは以下の通りです。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -250,24 +250,24 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">//Burn tokens from owner account
-</span><span class="c1"></span><span class="kd">function</span> <span class="nf">burn</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_count</span><span class="p">)</span> <span class="k">public</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span><span class="kt">uint112</span><span class="p">(</span> <span class="n">_count</span><span class="p">);</span>
-    <span class="n">deleteToken</span> <span class="o">=</span> <span class="n">_count</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">deleteToken</span><span class="p">).</span><span class="n">toUINT112</span><span class="p">();</span>
-    <span class="n">_totalSupply</span> <span class="o">=</span> <span class="n">_totalSupply</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">_count</span><span class="p">).</span><span class="n">toUINT112</span><span class="p">();</span>
-    <span class="n">Burn</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_count</span><span class="p">);</span>
-    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">//Burn tokens from owner account
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nf">burn</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">_count</span><span class="p">)</span> <span class="k">public</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span><span class="kt">uint112</span><span class="p">(</span> <span class="n">_count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deleteToken</span> <span class="o">=</span> <span class="n">_count</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">deleteToken</span><span class="p">).</span><span class="n">toUINT112</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_totalSupply</span> <span class="o">=</span> <span class="n">_totalSupply</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">_count</span><span class="p">).</span><span class="n">toUINT112</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Burn</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">,</span> <span class="n">_count</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>2行目の計算にバグがあります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span><span class="kt">uint112</span><span class="p">(</span> <span class="n">_count</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">balanceOf</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span><span class="kt">uint112</span><span class="p">(</span> <span class="n">_count</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>このトークンを持っていない場合、<code>0-_count</code>の計算が発生するため、underflowが発生します。</p>
 <p>その結果、攻撃者はこのトークンを無限に手に入れることが出来ます。</p>
@@ -285,11 +285,6 @@
             </a>
         
         
-        
-        <a rel="next" href="/post/2022-10-15-nist-ssdf-v1.1/" title="Next post (newer)">
-            <span>Next</span>
-            セキュアなソフトウェア開発とは何かをNIST SSDF v1.1から読み解く
-            </a> 
         
     </nav>
     
@@ -313,7 +308,7 @@
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

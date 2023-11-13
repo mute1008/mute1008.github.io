@@ -178,7 +178,7 @@
 <p>このアプリケーションのソースコードとして、以下のSolidityファイルが渡されます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -207,34 +207,34 @@
 </span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="k">pragma solidity</span> <span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">24</span><span class="p">;</span>
-
-<span class="kn">import</span> <span class="s">&#34;../CtfFramework.sol&#34;</span><span class="p">;</span>
-<span class="kn">import</span> <span class="s">&#34;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&#34;</span><span class="p">;</span>
-
-<span class="kd">contract</span> <span class="nc">Donation</span> <span class="k">is</span> <span class="n">CtfFramework</span><span class="p">{</span>
-
-    <span class="kn">using</span> <span class="n">SafeMath</span> <span class="k">for</span> <span class="kt">uint256</span><span class="p">;</span>
-
-    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">funds</span><span class="p">;</span>
-
-    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
-        <span class="n">CtfFramework</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">funds</span> <span class="o">=</span> <span class="n">funds</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="n">funds</span> <span class="o">=</span> <span class="n">funds</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nf">withdrawDonationsFromTheSuckersWhoFellForIt</span><span class="p">()</span> <span class="k">external</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">funds</span><span class="p">);</span>
-        <span class="n">funds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="k">pragma solidity</span> <span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">24</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;../CtfFramework.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Donation</span> <span class="k">is</span> <span class="n">CtfFramework</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">using</span> <span class="n">SafeMath</span> <span class="k">for</span> <span class="kt">uint256</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">funds</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
+</span></span><span class="line"><span class="cl">        <span class="n">CtfFramework</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">funds</span> <span class="o">=</span> <span class="n">funds</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">funds</span> <span class="o">=</span> <span class="n">funds</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">withdrawDonationsFromTheSuckersWhoFellForIt</span><span class="p">()</span> <span class="k">external</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">funds</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">funds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>コードを読んでみると、<code>withdrawDonationsFromTheSuckersWhoFellForIt</code>という関数があるのが分かります。</p>
 <p>この関数は、<code>msg.sender</code>に今まで寄付された<code>funds</code>を送信する関数で、呼び出し可能なユーザーに制限がありません。</p>
@@ -253,7 +253,7 @@
 今回はあえて<a href="https://web3js.readthedocs.io/en/v1.7.3/">web3.js</a>を使って書いてみます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -268,20 +268,20 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">const</span> <span class="n">Web3</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;web3&#39;</span><span class="p">)</span>
-<span class="n">const</span> <span class="n">HDWalletProvider</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#34;@truffle/hdwallet-provider&#34;</span><span class="p">)</span>
-<span class="n">const</span> <span class="n">fs</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;fs&#39;</span><span class="p">);</span>
-
-<span class="nb">require</span><span class="p">(</span><span class="s">&#39;dotenv&#39;</span><span class="p">).</span><span class="n">config</span><span class="p">()</span>
-
-<span class="n">const</span> <span class="n">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Web3</span><span class="p">(</span><span class="k">new</span> <span class="n">HDWalletProvider</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PRIVATE_KEY</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PROVIDER_URL</span><span class="p">))</span>
-<span class="n">const</span> <span class="nb">abi</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&#39;./src/abi.json&#39;</span><span class="p">))</span>
-<span class="n">const</span> <span class="kd">contract</span> <span class="o">=</span> <span class="k">new</span> <span class="n">web3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">Contract</span><span class="p">(</span><span class="nb">abi</span><span class="p">,</span> <span class="s">&#39;0xaa51c14d9ff94ee5a5674ee0af8257f1665956f3&#39;</span><span class="p">)</span>
-
-<span class="c1">// withdrawDonationsFromTheSuckersWhoFellForIt関数の呼び出し
-</span><span class="c1"></span><span class="n">const</span> <span class="n">option</span> <span class="o">=</span> <span class="p">{</span><span class="k">from</span><span class="o">:</span> <span class="s">&#39;0xd7544D522B75347b48917649ebc5D334b3D43445&#39;</span><span class="p">}</span>
-<span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">withdrawDonationsFromTheSuckersWhoFellForIt</span><span class="p">().</span><span class="nb">send</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">const</span> <span class="n">Web3</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;web3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">HDWalletProvider</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#34;@truffle/hdwallet-provider&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">fs</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;fs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">require</span><span class="p">(</span><span class="s">&#39;dotenv&#39;</span><span class="p">).</span><span class="n">config</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Web3</span><span class="p">(</span><span class="k">new</span> <span class="n">HDWalletProvider</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PRIVATE_KEY</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PROVIDER_URL</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="nb">abi</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&#39;./src/abi.json&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="kd">contract</span> <span class="o">=</span> <span class="k">new</span> <span class="n">web3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">Contract</span><span class="p">(</span><span class="nb">abi</span><span class="p">,</span> <span class="s">&#39;0xaa51c14d9ff94ee5a5674ee0af8257f1665956f3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// withdrawDonationsFromTheSuckersWhoFellForIt関数の呼び出し
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">const</span> <span class="n">option</span> <span class="o">=</span> <span class="p">{</span><span class="k">from</span><span class="o">:</span> <span class="s">&#39;0xd7544D522B75347b48917649ebc5D334b3D43445&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">withdrawDonationsFromTheSuckersWhoFellForIt</span><span class="p">().</span><span class="nb">send</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="どう実装されているべきか">
     <a href="#%e3%81%a9%e3%81%86%e5%ae%9f%e8%a3%85%e3%81%95%e3%82%8c%e3%81%a6%e3%81%84%e3%82%8b%e3%81%b9%e3%81%8d%e3%81%8b" class="anchor">
@@ -302,7 +302,7 @@
 <p><a href="https://docs.openzeppelin.com/contracts/2.x/access-control">https://docs.openzeppelin.com/contracts/2.x/access-control</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -311,14 +311,14 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kn">import</span> <span class="s">&#34;@openzeppelin/contracts/ownership/Ownable.sol&#34;</span><span class="p">;</span>
-
-<span class="kd">contract</span> <span class="nc">A</span> <span class="k">is</span> <span class="n">Ownable</span> <span class="p">{</span>
-    <span class="kd">function</span> <span class="nf">somethingSecret</span><span class="p">()</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="p">{</span>
-        <span class="c1">// オーナーからの呼び出しのみを許可
-</span><span class="c1"></span>    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;@openzeppelin/contracts/ownership/Ownable.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">A</span> <span class="k">is</span> <span class="n">Ownable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">somethingSecret</span><span class="p">()</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// オーナーからの呼び出しのみを許可
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -362,7 +362,7 @@
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

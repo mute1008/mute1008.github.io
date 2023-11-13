@@ -190,7 +190,7 @@
 <p>そのため、継承先のアプリでは<code>collectFunds</code>が誰でも呼び出し可能になっているようです。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -251,66 +251,66 @@
 </span><span class="lnt">59
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="k">pragma solidity</span> <span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">24</span><span class="p">;</span>
-
-<span class="kn">import</span> <span class="s">&#34;../CtfFramework.sol&#34;</span><span class="p">;</span>
-<span class="kn">import</span> <span class="s">&#34;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&#34;</span><span class="p">;</span>
-
-<span class="kd">contract</span> <span class="nc">PiggyBank</span> <span class="k">is</span> <span class="n">CtfFramework</span><span class="p">{</span>
-
-    <span class="kn">using</span> <span class="n">SafeMath</span> <span class="k">for</span> <span class="kt">uint256</span><span class="p">;</span>
-
-    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">piggyBalance</span><span class="p">;</span>
-    <span class="kt">string</span> <span class="k">public</span> <span class="nb">name</span><span class="p">;</span>
-    <span class="kt">address</span> <span class="k">public</span> <span class="n">owner</span><span class="p">;</span>
-
-    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">,</span> <span class="kt">string</span> <span class="n">_name</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
-        <span class="n">CtfFramework</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nb">name</span><span class="o">=</span><span class="n">_name</span><span class="p">;</span>
-        <span class="n">owner</span><span class="o">=</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
-        <span class="n">piggyBalance</span><span class="o">=</span><span class="n">piggyBalance</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="n">piggyBalance</span><span class="o">=</span><span class="n">piggyBalance</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
-    <span class="p">}</span>
-
-
-    <span class="kd">modifier</span> <span class="nf">onlyOwner</span><span class="p">(){</span>
-        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span> <span class="o">==</span> <span class="n">owner</span><span class="p">,</span> <span class="s">&#34;Unauthorized: Not Owner&#34;</span><span class="p">);</span>
-        <span class="k">_</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">internal</span><span class="p">{</span>
-        <span class="n">piggyBalance</span> <span class="o">=</span> <span class="n">piggyBalance</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-        <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
-        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-
-<span class="kd">contract</span> <span class="nc">CharliesPiggyBank</span> <span class="k">is</span> <span class="n">PiggyBank</span><span class="p">{</span>
-
-    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">withdrawlCount</span><span class="p">;</span>
-
-    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
-        <span class="n">PiggyBank</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">,</span> <span class="s">&#34;Charlie&#34;</span><span class="p">)</span> 
-    <span class="p">{</span>
-        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
-        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="n">withdrawlCount</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="k">pragma solidity</span> <span class="mi">0</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">24</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;../CtfFramework.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">PiggyBank</span> <span class="k">is</span> <span class="n">CtfFramework</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">using</span> <span class="n">SafeMath</span> <span class="k">for</span> <span class="kt">uint256</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">piggyBalance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">string</span> <span class="k">public</span> <span class="nb">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">address</span> <span class="k">public</span> <span class="n">owner</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">,</span> <span class="kt">string</span> <span class="n">_name</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
+</span></span><span class="line"><span class="cl">        <span class="n">CtfFramework</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">name</span><span class="o">=</span><span class="n">_name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">owner</span><span class="o">=</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">piggyBalance</span><span class="o">=</span><span class="n">piggyBalance</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">piggyBalance</span><span class="o">=</span><span class="n">piggyBalance</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">modifier</span> <span class="nf">onlyOwner</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span> <span class="o">==</span> <span class="n">owner</span><span class="p">,</span> <span class="s">&#34;Unauthorized: Not Owner&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">_</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">internal</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">piggyBalance</span> <span class="o">=</span> <span class="n">piggyBalance</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">CharliesPiggyBank</span> <span class="k">is</span> <span class="n">PiggyBank</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">withdrawlCount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">constructor</span><span class="p">(</span><span class="kt">address</span> <span class="n">_ctfLauncher</span><span class="p">,</span> <span class="kt">address</span> <span class="n">_player</span><span class="p">)</span> <span class="k">public</span> <span class="k">payable</span>
+</span></span><span class="line"><span class="cl">        <span class="n">PiggyBank</span><span class="p">(</span><span class="n">_ctfLauncher</span><span class="p">,</span> <span class="n">_player</span><span class="p">,</span> <span class="s">&#34;Charlie&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="n">withdrawlCount</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="エクスプロイト">
     <a href="#%e3%82%a8%e3%82%af%e3%82%b9%e3%83%97%e3%83%ad%e3%82%a4%e3%83%88" class="anchor">
@@ -324,7 +324,7 @@
 </h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -339,20 +339,20 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">const</span> <span class="n">Web3</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;web3&#39;</span><span class="p">)</span>
-<span class="n">const</span> <span class="n">HDWalletProvider</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#34;@truffle/hdwallet-provider&#34;</span><span class="p">)</span>
-<span class="n">const</span> <span class="n">fs</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;fs&#39;</span><span class="p">);</span>
-
-<span class="nb">require</span><span class="p">(</span><span class="s">&#39;dotenv&#39;</span><span class="p">).</span><span class="n">config</span><span class="p">()</span>
-
-<span class="n">const</span> <span class="n">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Web3</span><span class="p">(</span><span class="k">new</span> <span class="n">HDWalletProvider</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PRIVATE_KEY</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PROVIDER_URL</span><span class="p">))</span>
-<span class="n">const</span> <span class="nb">abi</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&#39;./src/abi.json&#39;</span><span class="p">))</span>
-<span class="n">const</span> <span class="kd">contract</span> <span class="o">=</span> <span class="k">new</span> <span class="n">web3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">Contract</span><span class="p">(</span><span class="nb">abi</span><span class="p">,</span> <span class="s">&#39;0x27e03071617a155c88603ffc322262c47b209d03&#39;</span><span class="p">)</span>
-<span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">piggyBalance</span><span class="p">().</span><span class="nb">call</span><span class="p">().</span><span class="n">then</span><span class="p">(</span><span class="kc">wei</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="n">const</span> <span class="n">option</span> <span class="o">=</span> <span class="p">{</span><span class="k">from</span><span class="o">:</span> <span class="s">&#39;0xd7544D522B75347b48917649ebc5D334b3D43445&#39;</span><span class="p">}</span>
-  <span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">collectFunds</span><span class="p">(</span><span class="kc">wei</span><span class="p">).</span><span class="nb">send</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
-<span class="p">})</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">const</span> <span class="n">Web3</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;web3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">HDWalletProvider</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#34;@truffle/hdwallet-provider&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">fs</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s">&#39;fs&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">require</span><span class="p">(</span><span class="s">&#39;dotenv&#39;</span><span class="p">).</span><span class="n">config</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="n">web3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Web3</span><span class="p">(</span><span class="k">new</span> <span class="n">HDWalletProvider</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PRIVATE_KEY</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">PROVIDER_URL</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="nb">abi</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&#39;./src/abi.json&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">const</span> <span class="kd">contract</span> <span class="o">=</span> <span class="k">new</span> <span class="n">web3</span><span class="p">.</span><span class="n">eth</span><span class="p">.</span><span class="n">Contract</span><span class="p">(</span><span class="nb">abi</span><span class="p">,</span> <span class="s">&#39;0x27e03071617a155c88603ffc322262c47b209d03&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">piggyBalance</span><span class="p">().</span><span class="nb">call</span><span class="p">().</span><span class="n">then</span><span class="p">(</span><span class="kc">wei</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">const</span> <span class="n">option</span> <span class="o">=</span> <span class="p">{</span><span class="k">from</span><span class="o">:</span> <span class="s">&#39;0xd7544D522B75347b48917649ebc5D334b3D43445&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">contract</span><span class="p">.</span><span class="n">methods</span><span class="p">.</span><span class="n">collectFunds</span><span class="p">(</span><span class="kc">wei</span><span class="p">).</span><span class="nb">send</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="どう実装されているべきか">
     <a href="#%e3%81%a9%e3%81%86%e5%ae%9f%e8%a3%85%e3%81%95%e3%82%8c%e3%81%a6%e3%81%84%e3%82%8b%e3%81%b9%e3%81%8d%e3%81%8b" class="anchor">
@@ -367,19 +367,19 @@
 <p>modifierはoverrideされた関数には継承されないため、overrideした関数にも正しいmodifierを付与する必要があります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity">    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="n">ctf</span><span class="p">{</span>
-        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
-        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="n">withdrawlCount</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-    <span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nf">collectFunds</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="n">onlyOwner</span> <span class="n">ctf</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">require</span><span class="p">(</span><span class="n">amount</span><span class="o">&lt;=</span><span class="n">piggyBalance</span><span class="p">,</span> <span class="s">&#34;Insufficient Funds in Contract&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdrawlCount</span> <span class="o">=</span> <span class="n">withdrawlCount</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withdraw</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
     </div>
@@ -423,7 +423,7 @@
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

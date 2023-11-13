@@ -152,15 +152,15 @@
 <p>気になったのは以下の部分。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-text" data-lang="text">Sometimes you&#39;ll need to apply multiple layers of encoding, in the correct order. For example, to safely embed user input inside an event handler, you need to deal with both the JavaScript context and the HTML context. So you need to first Unicode-escape the input, and then HTML-encode it:
-
-&lt;a href=&#34;#&#34; onclick=&#34;x=&#39;This string needs two layers of escaping&#39;&#34;&gt;test&lt;/a&gt;
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Sometimes you&#39;ll need to apply multiple layers of encoding, in the correct order. For example, to safely embed user input inside an event handler, you need to deal with both the JavaScript context and the HTML context. So you need to first Unicode-escape the input, and then HTML-encode it:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;a href=&#34;#&#34; onclick=&#34;x=&#39;This string needs two layers of escaping&#39;&#34;&gt;test&lt;/a&gt;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>イベントハンドラにJavaScriptを書いている所にユーザーの入力を埋め込む場合は、unicodeエスケープをしてからHTMLエンコードする必要があると書いてある。</p>
 <p>個人的にはunicodeエスケープだけではダメなのか気になったので実験してみた。</p>
@@ -168,78 +168,78 @@
 <p>以下がunicodeエスケープのみを行って埋め込んだ場合。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;x=&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;;&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;x=&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;;&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>以下はunicodeエスケープした後にHTMLエンコードを行ったもの。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;x=&#39;&amp;#38;&amp;#35;x0027&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;alert&amp;#38;&amp;#35;x0028&amp;#59;1&amp;#38;&amp;#35;x0029&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;&amp;#38;&amp;#35;x0027&amp;#59;&#39;;&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;x=&#39;&amp;#38;&amp;#35;x0027&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;alert&amp;#38;&amp;#35;x0028&amp;#59;1&amp;#38;&amp;#35;x0029&amp;#59;&amp;#38;&amp;#35;x003b&amp;#59;&amp;#38;&amp;#35;x0027&amp;#59;&#39;;&#34;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>unicodeエスケープとHTMLエンコードには以下の関数を用いた。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">htmlEncode</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
-  <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^\w. ]/gi</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">){</span>
-     <span class="k">return</span> <span class="s1">&#39;&amp;#&#39;</span><span class="o">+</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;;&#39;</span><span class="p">;</span>
-  <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">htmlEncode</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^\w. ]/gi</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="s1">&#39;&amp;#&#39;</span><span class="o">+</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">jsEscape</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
-  <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^\w. ]/gi</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">){</span>
-     <span class="k">return</span> <span class="s1">&#39;&amp;#x&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;0000&#39;</span><span class="o">+</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">)).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;;&#39;</span><span class="p">;</span>
-  <span class="p">});</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">jsEscape</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">str</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^\w. ]/gi</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="s1">&#39;&amp;#x&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">&#39;0000&#39;</span><span class="o">+</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">)).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>これらをブラウザで開いてからクリックすると、前者はアラートが実行され、後者は何も起こらない。</p>
 <p>これはイベントハンドラでのみ起こるのか調べるために、unicodeエスケープのみを行った<code>&lt;img src=x onerror=alert(1)&gt;</code>をページに書き込んで開いてみる。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-html" data-lang="html"><span class="ni">&amp;#x003c;</span>img src<span class="ni">&amp;#x003d;</span>x onerror<span class="ni">&amp;#x003d;</span>alert<span class="ni">&amp;#x0028;</span>1<span class="ni">&amp;#x0029;&amp;#x003e;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="ni">&amp;#x003c;</span>img src<span class="ni">&amp;#x003d;</span>x onerror<span class="ni">&amp;#x003d;</span>alert<span class="ni">&amp;#x0028;</span>1<span class="ni">&amp;#x0029;&amp;#x003e;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>&lt;img src=x onerror=alert(1)&gt;</code>と表示され、アラートは発火しない。</p>
 <p>イベントハンドラと同じJavaScriptコードがscriptタグに埋め込まれている場合を考える。</p>
 <p>以下のようなHTMLがサーバーによって生成される。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="nx">x</span><span class="o">=</span><span class="s1">&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;</span><span class="p">;</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">x</span><span class="o">=</span><span class="s1">&#39;&amp;#x0027;&amp;#x003b;alert&amp;#x0028;1&amp;#x0029;&amp;#x003b;&amp;#x0027;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>これを開いてもアラートは実行されない。</p>
 <p>これらからイベントハンドラでのみ実体参照が評価された状態でJavaScriptが実行されることがわかる。</p>
@@ -285,7 +285,7 @@
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

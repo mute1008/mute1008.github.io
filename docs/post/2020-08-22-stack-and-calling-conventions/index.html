@@ -215,13 +215,13 @@ retすると、スタックからアドレスを取得してeipにセットし�
 <code>mov ebp,esp</code>では、現在のebpをespに代入することで、現在のスタックトップをベースにしています。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">push</span>   <span class="no">ebp</span>
-<span class="nf">mov</span>    <span class="no">ebp</span><span class="p">,</span><span class="no">esp</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="nf">push</span>   <span class="no">ebp</span>
+</span></span><span class="line"><span class="cl"><span class="nf">mov</span>    <span class="no">ebp</span><span class="p">,</span><span class="no">esp</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="function-epilogue">
     <a href="#function-epilogue" class="anchor">
@@ -237,24 +237,24 @@ retすると、スタックからアドレスを取得してeipにセットし�
 実際には以下のような処理が行われています。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">leave</span>
-<span class="nf">ret</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="nf">leave</span>
+</span></span><span class="line"><span class="cl"><span class="nf">ret</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>このleaveという命令は、</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="nf">mov</span> <span class="no">esp</span> <span class="no">ebp</span>
-<span class="nf">pop</span> <span class="no">ebp</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="nf">mov</span> <span class="no">esp</span> <span class="no">ebp</span>
+</span></span><span class="line"><span class="cl"><span class="nf">pop</span> <span class="no">ebp</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>と同等の処理を行うものです。</p>
 <p>これらは、espをebpに戻して、スタックからebpの値を復元します。
@@ -323,7 +323,7 @@ retでは、前のeipの値をスタックからポップして元のコード�
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

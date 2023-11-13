@@ -44,7 +44,7 @@
     },
     "datePublished": "2022-05-12",
     "description": "",
-    "wordCount":  291 ,
+    "wordCount":  303 ,
     "mainEntityOfPage": "True",
     "dateModified": "2022-05-12",
     "publisher": {
@@ -168,7 +168,7 @@
 <p>このルールはまだBETAであり、まだsemgrepでは検出できません。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -179,16 +179,16 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">patterns</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) external { ... }</span><span class="w">
-</span><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">            </span><span class="w">            </span><span class="l">function $F(..., $X, ...) public { ... }</span><span class="w">
-</span><span class="w"></span>- <span class="nt">pattern-not-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span><span class="sd">    </span><span class="w">    </span><span class="l">function $F(..., $X, ...) onlyOwner { ... }</span><span class="w">
-</span><span class="w"></span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$X.$M(...)</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">patterns</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">pattern-either</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $X, ...) external { ... }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">pattern-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            function $F(..., $X, ...) public { ... }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">pattern-not-inside</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">    function $F(..., $X, ...) onlyOwner { ... }</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l">$X.$M(...)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h4 id="reentrancy-attackとは">
     <a href="#reentrancy-attack%e3%81%a8%e3%81%af" class="anchor">
@@ -226,7 +226,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 <p>それぞれ、以下のような特殊な関数として記述されます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -235,14 +235,14 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity">
-<span class="kd">contract</span> <span class="nc">Sample</span> <span class="p">{</span>
-    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
-    <span class="p">}</span>
-    <span class="n">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">Sample</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="single-function-reentrancy-attack">
     <a href="#single-function-reentrancy-attack" class="anchor">
@@ -259,7 +259,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 これは、預け入れたものをwithdraw関数で引き出すことが可能なスマートコントラクトになります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -273,25 +273,25 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// 被害者コード
-</span><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
-    <span class="p">...</span>
-
-    <span class="c1">// 引き出し
-</span><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
-        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// 被害者コード
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引き出し
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>攻撃のためのエクスプロイトコードは以下の通りです。</p>
 <p>receiveという関数があり、その関数内では他コントラクトが呼び出されています。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -299,16 +299,16 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="c1">// 攻撃者コード
-</span><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractB</span> <span class="p">{</span>
-    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
-        <span class="n">contractA</span><span class="p">.</span><span class="n">withdraw</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="c1">// 攻撃者コード
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">contract</span> <span class="nc">ContractB</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">contractA</span><span class="p">.</span><span class="n">withdraw</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>エクスプロイトの流れを以下に記しました。</p>
-<pre><code>
+<pre tabindex="0"><code>
         1 ) 攻撃者がcontractBを呼び出し
 
         2 ) contractBがwithdraw関数を呼び出し
@@ -324,13 +324,12 @@ receive関数が定義されていないなどで呼び出せなかった場合�
         ...
         ...
         ...
-
 </code></pre><p>上記に記載した流れが続くことで、攻撃者は無限に引き出しを行うことが出来ます。</p>
 <p>これは、状態を更新する前に送金を行ってしまっているために起こっています。</p>
 <p>以下のように修正することで、攻撃を防ぐことが可能になります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -343,18 +342,18 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
-    <span class="p">...</span>
-
-    <span class="c1">// 引き出し
-</span><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
-        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
-        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">contract</span> <span class="nc">ContractA</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引き出し
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">balances</span><span class="p">[</span><span class="n">receiver</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">receiver</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h5 id="cross-function-reentrancy-attack">
     <a href="#cross-function-reentrancy-attack" class="anchor">
@@ -370,7 +369,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 <p>具体例として、以下のようなスマートコントラクトがあることを考えます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -387,22 +386,22 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-solidity" data-lang="solidity"><span class="kd">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="k">private</span> <span class="nb">balance</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nf">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">){</span>
-        <span class="nb">balance</span><span class="p">[</span><span class="n">to</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
-        <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
-    <span class="kt">uint</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">];</span>
-    <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">call</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="n">amount</span><span class="p">)());</span>
-    <span class="cm">/* At this point, the caller’s code is executed, and can call transfer() */</span>
-    <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-solidity" data-lang="solidity"><span class="line"><span class="cl"><span class="kd">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="k">private</span> <span class="nb">balance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">to</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">balance</span><span class="p">[</span><span class="n">to</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nf">withdraw</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">uint</span> <span class="n">amount</span> <span class="o">=</span> <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">require</span><span class="p">(</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">.</span><span class="nb">call</span><span class="p">.</span><span class="nb">value</span><span class="p">(</span><span class="n">amount</span><span class="p">)());</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* At this point, the caller’s code is executed, and can call transfer() */</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">balance</span><span class="p">[</span><span class="nb">msg</span><span class="p">.</span><span class="nb">sender</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>攻撃者がwithdrawを呼び出した段階で残高が更新されていないため、receive関数がtransferを呼び出すことで資金の抜き取りが可能となります。</p>
 
@@ -420,9 +419,9 @@ receive関数が定義されていないなどで呼び出せなかった場合�
         
         
         
-        <a rel="next" href="/post/2022-05-18-solidity-tools/" title="Next post (newer)">
+        <a rel="next" href="/post/2022-06-01-lockbox-writeup/" title="Next post (newer)">
             <span>Next</span>
-            スマートコントラクトの検査ツール調査
+            Security Innovation Blockchain CTF - Lock Box
             </a> 
         
     </nav>
@@ -447,7 +446,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
 
         
     </section>
-    <script defer src="/ts/features.6bec993050976e7360ece802de9df50f61459197c14bd32823dc2d8da0ee964c.js" 
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
     data-enable-footnotes="true"
     ></script>
 </footer>

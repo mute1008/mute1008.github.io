@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Security Innovation Blockchain CTF - Piggy Bank</title>
+      <title>[Security Innovation Blockchain CTF] Piggy Bank</title>
       <link>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</link>
       <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
       
@@ -24,7 +24,7 @@ PiggyBankにはonlyOwnerというmodifierが付いているものの、CharliesP
     </item>
     
     <item>
-      <title>Security Innovation Blockchain CTF - Lock Box</title>
+      <title>[Security Innovation Blockchain CTF] Lock Box</title>
       <link>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</link>
       <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
       
@@ -39,7 +39,7 @@ unlock関数はpinを受け取り、constructorで生成したpinと同一であ
     </item>
     
     <item>
-      <title>Security Innovation Blockchain CTF - Donation</title>
+      <title>[Security Innovation Blockchain CTF] Donation</title>
       <link>https://mute1997.github.io/post/2022-05-12-donation-writeup/</link>
       <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       

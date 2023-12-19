@@ -3,24 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mute1997.github.io/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mute1997.github.io/post/2023-12-24-cross-request-state-pollution/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mute1997.github.io/post/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mute1997.github.io/tags/security/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mute1997.github.io/tags/</loc>
+    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mute1997.github.io/tags/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mute1997.github.io/tags/ctf/</loc>
+    <loc>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</loc>
+    <loc>https://mute1997.github.io/tags/ctf/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</loc>

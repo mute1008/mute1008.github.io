@@ -6,7 +6,22 @@
     <description>Recent content in security on mute1997.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://mute1997.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cross-request state pollution とは</title>
+      <link>https://mute1997.github.io/post/2023-12-24-cross-request-state-pollution/</link>
+      <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mute1997.github.io/post/2023-12-24-cross-request-state-pollution/</guid>
+      <description>これは この記事はカンムアドベンドカレンダー24日目の記事です。最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。
+cross-request state pollution とは これはVue.jsのSSRにおいてサーバー側で作成したStateを他のリクエストにも利用してしまう脆弱性です。 この脆弱性によって、別のリクエストで使われたStateに含まれる情報が他のリクエストにも伝わってしまう可能性があります。
+cf. https://ja.vuejs.org/guide/scaling-up/ssr#cross-request-state-pollution
+実例 どのように発生するのか理解するために、実際にコードを書いてみました。
+https://github.com/mute1997/crsp-demo-for-advent-calendar このアプリケーションには大きく2つのページがあります。
+/ : カウンタ機能のあるページ /store : Stateを返すだけのページ このアプリケーションを使って、cross request state pollution が発生する状況を再現してみます。 以下はブラウザでの操作をコードで示したものです。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 user1 = requests.Session() user2 = requests.Session() # ユーザー1でインクリメント操作を1回行う ... user1.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 1} # ユーザー2でインクリメント操作を2回行う ... user2.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 2} # ユーザー1がアクセスした後、ユーザー2のセッションでユーザー1の結果が返却されている user1.</description>
+    </item>
+    
     <item>
       <title>semgrep-smart-contractsをすべて読む #04 (basic-arithmetic-underflow)</title>
       <link>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</link>
@@ -26,7 +41,7 @@ basic-arithmetic-underflow.yaml basic-arithmetic-underflow.sol 検出ルール �
     </item>
     
     <item>
-      <title>Security Innovation Blockchain CTF - Piggy Bank</title>
+      <title>[Security Innovation Blockchain CTF] Piggy Bank</title>
       <link>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</link>
       <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
       
@@ -42,7 +57,7 @@ PiggyBankにはonlyOwnerというmodifierが付いているものの、CharliesP
     </item>
     
     <item>
-      <title>Security Innovation Blockchain CTF - Lock Box</title>
+      <title>[Security Innovation Blockchain CTF] Lock Box</title>
       <link>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</link>
       <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
       
@@ -73,7 +88,7 @@ Reentrancy Vulnerability Identification in Ethereum Smart Contracts</description
     </item>
     
     <item>
-      <title>Security Innovation Blockchain CTF - Donation</title>
+      <title>[Security Innovation Blockchain CTF] Donation</title>
       <link>https://mute1997.github.io/post/2022-05-12-donation-writeup/</link>
       <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       

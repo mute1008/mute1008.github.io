@@ -41,37 +41,6 @@ basic-arithmetic-underflow.yaml basic-arithmetic-underflow.sol 検出ルール �
     </item>
     
     <item>
-      <title>[Security Innovation Blockchain CTF] Piggy Bank</title>
-      <link>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</link>
-      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2022-06-04-piggybank-writeup/</guid>
-      <description>概要 Security Innovation Blockchain CTF
-Security Innovationという企業が開催している、常設のCTFがあります。 今回は、Piggy Bankという問題を解きました。
-問題 貯金箱のようなアプリで、ownerのみが資金を出し入れできる実装になっています。
-ソースコードを読む PiggyBankというコントラクトが本体の実装になっており、CharliesPiggyBankはそれを継承したアプリです。
-CharliesPiggyBankは、collectFundsという資金引き出し用の関数のみをoverrideしています。
-PiggyBankにはonlyOwnerというmodifierが付いているものの、CharliesPiggyBankでoverrideされた関数では、modifierが付与されていません。
-そのため、継承先のアプリではcollectFundsが誰でも呼び出し可能になっているようです。
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 pragma solidity 0.</description>
-    </item>
-    
-    <item>
-      <title>[Security Innovation Blockchain CTF] Lock Box</title>
-      <link>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</link>
-      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2022-06-01-lockbox-writeup/</guid>
-      <description>概要 Security Innovation Blockchain CTF
-Security Innovationという企業が開催している、常設のCTFがあります。 今回は、Lock Boxという問題を解きました。
-問題 問題を開くと、以下のような画面が出てきます。
-ピンを入力してUnlockボタンを押すと、スマートコントラクトが保有している資産を取得できるというアプリのようです。
-ソースコードを読む constructorではアンロックするためのpinが生成されており、unlock関数で資金を送金するというコードのようです。
-unlock関数はpinを受け取り、constructorで生成したpinと同一であれば、資金が送金されるようです。
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 pragma solidity 0.4.24; import &amp;#34;../CtfFramework.sol&amp;#34;; contract Lockbox1 is CtfFramework{ uint256 private pin; constructor(address _ctfLauncher, address _player) public payable CtfFramework(_ctfLauncher, _player) { pin = now%10000; } function unlock(uint256 _pin) external ctf{ require(pin == _pin, &amp;#34;Incorrect PIN&amp;#34;); msg.sender.transfer(address(this).balance); } } エクスプロイト この問題を解くには、uint256 private pinとして格納されているpinを取得出来る必要があります。 この変数はブロックチェーン上に保存されるものなので、読み取り可能です。</description>
-    </item>
-    
-    <item>
       <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
       <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>
       <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
@@ -85,20 +54,6 @@ basic-reentrancy.yaml basic-reentrancy.sol 検出ルール 検出ルールは、
 スマートコントラクトにおいては、攻撃対象から、任意のコントラクトを呼び出し可能な場合にReentrancy attackが発生する恐れがあります。
 この攻撃は、以下の論文で詳細に解説されています。
 Reentrancy Vulnerability Identification in Ethereum Smart Contracts</description>
-    </item>
-    
-    <item>
-      <title>[Security Innovation Blockchain CTF] Donation</title>
-      <link>https://mute1997.github.io/post/2022-05-12-donation-writeup/</link>
-      <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://mute1997.github.io/post/2022-05-12-donation-writeup/</guid>
-      <description>概要 Security Innovation Blockchain CTF
-Security Innovationという企業が開催している、常設のCTFがあります。 今回は、Donationという問題を解きました。
-問題 問題を開くと、寄付をするためのアプリケーションであることが分かります。
-Donate 0.1 Ether!をクリックするとMetaMaskが起動し、0.1 Etherが寄付されます。
-このアプリケーションのソースコードとして、以下のSolidityファイルが渡されます。
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 pragma solidity 0.4.24; import &amp;#34;../CtfFramework.sol&amp;#34;; import &amp;#34;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&amp;#34;; contract Donation is CtfFramework{ using SafeMath for uint256; uint256 public funds; constructor(address _ctfLauncher, address _player) public payable CtfFramework(_ctfLauncher, _player) { funds = funds.</description>
     </item>
     
     <item>

@@ -1,5 +1,5 @@
 +++
-title = "semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation)"
+title = "semgrep-smart-contracts #01 (basic-oracle-manipulation)"
 date = "2022-04-20"
 tags = [
     "security",

@@ -1,5 +1,5 @@
 +++
-title = "semgrep-smart-contractsをすべて読む #02 (arbitrary-low-level-call)"
+title = "semgrep-smart-contracts #02 (arbitrary-low-level-call)"
 date = "2022-05-04"
 tags = [
     "security",

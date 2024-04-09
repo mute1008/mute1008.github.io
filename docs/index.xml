@@ -251,7 +251,7 @@ Stateにユーザーが入力した文字列があるとき、XSSができそう
     </item>
     
     <item>
-    <title>semgrep-smart-contractsをすべて読む #04 (basic-arithmetic-underflow)</title>
+    <title>semgrep-smart-contracts #04 (basic-arithmetic-underflow)</title>
     <link>https://mute1997.github.io/post/2022-06-07-semgrep-smart-contracts-4/</link>
     <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
     
@@ -386,7 +386,7 @@ Stateにユーザーが入力した文字列があるとき、XSSができそう
     </item>
     
     <item>
-    <title>semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)</title>
+    <title>semgrep-smart-contracts #03 (basic-reentrancy)</title>
     <link>https://mute1997.github.io/post/2022-05-12-semgrep-smart-contracts-3/</link>
     <pubDate>Thu, 12 May 2022 00:00:00 +0000</pubDate>
     
@@ -654,7 +654,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
     </item>
     
     <item>
-    <title>semgrep-smart-contractsをすべて読む #02 (arbitrary-low-level-call)</title>
+    <title>semgrep-smart-contracts #02 (arbitrary-low-level-call)</title>
     <link>https://mute1997.github.io/post/2022-05-04-semgrep-smart-contracts-2/</link>
     <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
     
@@ -802,7 +802,7 @@ receive関数が定義されていないなどで呼び出せなかった場合�
     </item>
     
     <item>
-    <title>semgrep-smart-contractsをすべて読む #01 (basic-oracle-manipulation)</title>
+    <title>semgrep-smart-contracts #01 (basic-oracle-manipulation)</title>
     <link>https://mute1997.github.io/post/2022-04-20-semgrep-smart-contracts-1/</link>
     <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
     

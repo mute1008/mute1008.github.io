@@ -1,5 +1,5 @@
 +++
-title = "semgrep-smart-contractsをすべて読む #03 (basic-reentrancy)"
+title = "semgrep-smart-contracts #03 (basic-reentrancy)"
 date = "2022-05-12"
 tags = [
     "security",

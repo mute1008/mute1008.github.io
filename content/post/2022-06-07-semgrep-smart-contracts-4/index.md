@@ -1,5 +1,5 @@
 +++
-title = "semgrep-smart-contractsをすべて読む #04 (basic-arithmetic-underflow)"
+title = "semgrep-smart-contracts #04 (basic-arithmetic-underflow)"
 date = "2022-06-07"
 tags = [
     "security",

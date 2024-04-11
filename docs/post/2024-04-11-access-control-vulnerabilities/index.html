@@ -137,7 +137,7 @@
                         </div>
                         <div class="tags">
                             
-                            <a href="/tags/security/">Security</a>
+                            <a href="/tags/security/">security</a>
                             
                         </div>
                     </div>
@@ -180,12 +180,12 @@
     </a>
     送金系の関数
 </h5>
-<p>これは送金に利用される関数がpublicまたはexternalとなり、外部からアクセスされてしまう脆弱性です。</p>
+<p>これは送金に利用される関数が外部からアクセスされてしまう脆弱性です。</p>
 <ul>
 <li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-transfer.yaml">erc20-public-transfer.yaml</a></li>
 <li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/public-transfer-fees-supporting-tax-tokens.yaml">public-transfer-fees-supporting-tax-tokens.yaml</a></li>
 </ul>
-<p>この脆弱性の悪用により、190万ドルの損害が発生したそうです。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。</p>
+<p>この脆弱性の悪用により、190万ドルの損害が発生しました。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。</p>
 <ul>
 <li><a href="https://medium.com/@Knownsec_Blockchain_Lab/creat-future-was-tragically-transferred-coins-at-will-who-is-the-mastermind-behind-the-scenes-8ad42a7af814">knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!</a></li>
 </ul>
@@ -217,7 +217,7 @@
     オラクル更新用の関数
 </h5>
 <p>これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。
-スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になったりします。</p>
+スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。</p>
 <ul>
 <li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/sense-missing-oracle-access-control.yaml">sense-missing-oracle-access-control.yaml</a></li>
 </ul>

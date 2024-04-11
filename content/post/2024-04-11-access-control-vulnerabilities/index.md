@@ -27,12 +27,12 @@ tags = [
 
 ##### 送金系の関数
 
-これは送金に利用される関数がpublicまたはexternalとなり、外部からアクセスされてしまう脆弱性です。
+これは送金に利用される関数が外部からアクセスされてしまう脆弱性です。
 
 - [erc20-public-transfer.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-transfer.yaml)
 - [public-transfer-fees-supporting-tax-tokens.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/public-transfer-fees-supporting-tax-tokens.yaml)
 
-この脆弱性の悪用により、190万ドルの損害が発生したそうです。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。
+この脆弱性の悪用により、190万ドルの損害が発生しました。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。
 
 - [knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!](https://medium.com/@Knownsec_Blockchain_Lab/creat-future-was-tragically-transferred-coins-at-will-who-is-the-mastermind-behind-the-scenes-8ad42a7af814)
 
@@ -48,7 +48,7 @@ tags = [
 ##### オラクル更新用の関数
 
 これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。
-スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になったりします。
+スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。
 
 - [sense-missing-oracle-access-control.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/sense-missing-oracle-access-control.yaml)
 

@@ -1,6 +1,6 @@
 baseurl = "https://mute1997.github.io"
 languageCode = "en-us"
-title = "mute1997.github.io"
+title = "mute1008.github.io"
 theme = "hugo-tania"
 paginate = 6
 publishdir = "docs"

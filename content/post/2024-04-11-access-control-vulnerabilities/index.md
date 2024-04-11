@@ -32,7 +32,7 @@ tags = [
 - [erc20-public-transfer.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-transfer.yaml)
 - [public-transfer-fees-supporting-tax-tokens.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/public-transfer-fees-supporting-tax-tokens.yaml)
 
-この脆弱性の悪用により、190万ドルの損害が発生しました。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。
+この脆弱性の悪用事例は以下の通り。190万ドルの損害が発生したそうです。
 
 - [knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!](https://medium.com/@Knownsec_Blockchain_Lab/creat-future-was-tragically-transferred-coins-at-will-who-is-the-mastermind-behind-the-scenes-8ad42a7af814)
 
@@ -42,16 +42,20 @@ tags = [
 
 - [erc20-public-burn.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-burn.yaml)
 - [accessible-selfdestruct.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/accessible-selfdestruct.yaml)
-- [oracle-price-update-not-restricted.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/oracle-price-update-not-restricted.yaml)
 - [unrestricted-transferownership.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/unrestricted-transferownership.yaml)
+
+この脆弱性の悪用事例は以下の通り。
+
+- [Decoding Ragnarok Online Invasion $44,222 Exploit| QuillAudits](https://medium.com/quillhash/decoding-ragnarok-online-invasion-44k-exploit-quillaudits-261b7e23b55)
 
 ##### オラクル更新用の関数
 
 これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。
 スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。
 
+- [oracle-price-update-not-restricted.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/oracle-price-update-not-restricted.yaml)
 - [sense-missing-oracle-access-control.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/sense-missing-oracle-access-control.yaml)
 
-バグバウンティで指摘されたようですが、こちらもトークンをほぼ全て盗むことが可能であったことを考えると怖い話です。
+この脆弱性の発見の経緯は以下の通り。
 
 - [Sense Finance Access Control Issue Bugfix Review](https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0)

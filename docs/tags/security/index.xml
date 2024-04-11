@@ -19,10 +19,11 @@ semgrepルールの分類 スマートコントラクトにおけるアクセス
 大別してみると、以下のようになりそうです。
 送金系の関数 管理者用の関数 オラクル更新用の関数 この分類は公式なものではないことに注意してください。
 送金系の関数 これは送金に利用される関数が外部からアクセスされてしまう脆弱性です。
-erc20-public-transfer.yaml public-transfer-fees-supporting-tax-tokens.yaml この脆弱性の悪用により、190万ドルの損害が発生しました。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。
+erc20-public-transfer.yaml public-transfer-fees-supporting-tax-tokens.yaml この脆弱性の悪用事例は以下の通り。190万ドルの損害が発生したそうです。
 knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes! 管理者用の関数 これは管理者用に用意していた関数が外部からアクセスされてしまう脆弱性です。攻撃者にトークンをburnさせられたり、コントラクトのオーナーを切り替えた上でトークンを窃取することが可能になります。
-erc20-public-burn.yaml accessible-selfdestruct.yaml oracle-price-update-not-restricted.yaml unrestricted-transferownership.yaml オラクル更新用の関数 これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。 スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。
-sense-missing-oracle-access-control.yaml バグバウンティで指摘されたようですが、こちらもトークンをほぼ全て盗むことが可能であったことを考えると怖い話です。
+erc20-public-burn.yaml accessible-selfdestruct.yaml unrestricted-transferownership.yaml この脆弱性の悪用事例は以下の通り。
+Decoding Ragnarok Online Invasion $44,222 Exploit| QuillAudits オラクル更新用の関数 これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。 スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。
+oracle-price-update-not-restricted.yaml sense-missing-oracle-access-control.yaml この脆弱性の発見の経緯は以下の通り。
 Sense Finance Access Control Issue Bugfix Review </description>
     </item>
     

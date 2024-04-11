@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="dark">
-    <title>cross-request state pollution とは | mute1997.github.io</title>
+    <title>cross-request state pollution とは | mute1008.github.io</title>
 
     
     
     
     <meta property="og:site_name" content="" />
-    <meta property="og:title" content="cross-request state pollution とは | mute1997.github.io"/>
-    <meta itemprop="name" content="cross-request state pollution とは | mute1997.github.io" />
-    <meta name="twitter:title" content="cross-request state pollution とは | mute1997.github.io" />
-    <meta name="application-name" content="cross-request state pollution とは | mute1997.github.io" /><meta name="twitter:card" content="summary"/>
+    <meta property="og:title" content="cross-request state pollution とは | mute1008.github.io"/>
+    <meta itemprop="name" content="cross-request state pollution とは | mute1008.github.io" />
+    <meta name="twitter:title" content="cross-request state pollution とは | mute1008.github.io" />
+    <meta name="application-name" content="cross-request state pollution とは | mute1008.github.io" /><meta name="twitter:card" content="summary"/>
 
     <meta name="description" content="" />
     <meta name="twitter:description" content=""/>
@@ -44,7 +44,7 @@
     },
     "datePublished": "2023-12-19",
     "description": "",
-    "wordCount":  179 ,
+    "wordCount":  175 ,
     "mainEntityOfPage": "True",
     "dateModified": "2023-12-19",
     "publisher": {
@@ -105,7 +105,7 @@
                     </span>
                     
                     
-                    mute1997.github.io
+                    mute1008.github.io
                     </a>
             </div>
             <div class="flex">
@@ -137,7 +137,7 @@
                         </div>
                         <div class="tags">
                             
-                            <a href="/tags/security/">security</a>
+                            <a href="/tags/security/">Security</a>
                             
                         </div>
                     </div>
@@ -157,7 +157,7 @@
     </a>
     これは
 </h2>
-<p>この記事はカンムアドベンドカレンダー24日目の記事です。最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。</p>
+<p>最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。</p>
 <h2 id="cross-request-state-pollution-とは">
     <a href="#cross-request-state-pollution-%e3%81%a8%e3%81%af" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -375,11 +375,7 @@ Stateの作成が各クライアントで行われるようになれば、この
     </a>
     まとめ
 </h2>
-<p>この脆弱性の原理は非常に簡単に理解できるものでした。
-気を付けていないとそのように実装してしまいそうな危うさがある脆弱性でしたね。</p>
-<p>これ調べているときに、JSON.stringifyを使ってStateを文字列にし、HTMLに埋め込むというサンプルコードをいくつか見かけました。
-Stateにユーザーが入力した文字列があるとき、XSSができそうですね&hellip;
-今回の本筋ではないですが、こちらも気を付けて実装した方が良さそうです。</p>
+<p>この脆弱性の原理は非常に簡単に理解できるものでした。余談になりますが、この脆弱性を調べているときにJSON.stringifyを使ってStateをHTMLに埋め込むサンプルコードをいくつか見かけました。Stateにユーザーが入力した文字列がある場合、XSSができそうなので、こちらも気を付けて実装した方が良さそうです。</p>
 
     </div>
 </div>
@@ -394,6 +390,11 @@ Stateにユーザーが入力した文字列があるとき、XSSができそう
             </a>
         
         
+        
+        <a rel="next" href="/post/2024-04-11-access-control-vulnerabilities/" title="Next post (newer)">
+            <span>Next</span>
+            semgrep-smart-contracts #05 (Access Control Vulnerabilities)
+            </a> 
         
     </nav>
     

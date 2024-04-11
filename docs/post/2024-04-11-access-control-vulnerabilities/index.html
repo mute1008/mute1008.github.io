@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>semgrep-smart-contracts #05 (Access Control Vulnerabilities) | mute1008.github.io</title>
+
+    
+    
+    
+    <meta property="og:site_name" content="" />
+    <meta property="og:title" content="semgrep-smart-contracts #05 (Access Control Vulnerabilities) | mute1008.github.io"/>
+    <meta itemprop="name" content="semgrep-smart-contracts #05 (Access Control Vulnerabilities) | mute1008.github.io" />
+    <meta name="twitter:title" content="semgrep-smart-contracts #05 (Access Control Vulnerabilities) | mute1008.github.io" />
+    <meta name="application-name" content="semgrep-smart-contracts #05 (Access Control Vulnerabilities) | mute1008.github.io" /><meta name="twitter:card" content="summary"/>
+
+    <meta name="description" content="" />
+    <meta name="twitter:description" content=""/>
+    <meta itemprop="description" content=""/>
+    <meta property="og:description" content="" />
+
+    
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=2024-03-11T00:00:00Z />
+<meta property="article:published_time" content=2024-03-11T00:00:00Z />
+
+
+
+
+
+<script defer type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "semgrep-smart-contracts #05 (Access Control Vulnerabilities)",
+    "author": {
+      "@type": "Person",
+      "name": ""
+    },
+    "datePublished": "2024-03-11",
+    "description": "",
+    "wordCount":  60 ,
+    "mainEntityOfPage": "True",
+    "dateModified": "2024-03-11",
+    "publisher": {
+      "@type": "Organization",
+      "name": "",
+      "logo": {
+        "@type": "imageObject",
+        "url": "https:\/\/mute1997.github.io\/favicon.ico"
+      }
+    }
+  }
+</script>
+
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.ab99ff095f832511e24ffb2fba2b51ad473b2f7e9301d674eba2c6c3a6e8bd81.css">
+    <style>
+  :root {
+      --article-font-family: "M PLUS Rounded 1c";
+      --code-font-family: "M PLUS Rounded 1c";
+  }
+</style>
+</head>
+    
+    <script>
+        (function() {
+            const colorSchemeKey = 'ThemeColorScheme';
+            localStorage.setItem(colorSchemeKey, "dark");
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'ThemeColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.userColorScheme = 'dark';
+        } else {
+            document.documentElement.dataset.userColorScheme = 'light';
+        }
+    })();
+</script>
+
+
+    <body class="dark">
+        <nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    <span class="emoji">
+                        😎
+                    </span>
+                    
+                    
+                    mute1008.github.io
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                
+            </div>
+            </div>
+    </div>
+</nav>
+
+        <main>
+            
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>semgrep-smart-contracts #05 (Access Control Vulnerabilities)</h1>
+                    <div class="post-meta">
+                        <div>
+                            
+                            
+                              
+                            
+                            By  | <time>March 11, 2024</time>
+                            | 1 minutes
+                        </div>
+                        <div class="tags">
+                            
+                            <a href="/tags/security/">Security</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </article>
+
+    <div class="article-post">
+    <p><a href="https://github.com/Raz0r/semgrep-smart-contracts">semgrep-smart-contracts</a> というリポジトリがあります。
+これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。</p>
+<p>今回は Access Control Vulnerabilities (CWE-284) に関連するルールを読んでみます。
+この脆弱性は事例が非常に多いため分類を試みました。
+この分類は独自のものであること、正しく全てを網羅していないことに注意が必要です。</p>
+<h4 id="semgrepルールの分類">
+    <a href="#semgrep%e3%83%ab%e3%83%bc%e3%83%ab%e3%81%ae%e5%88%86%e9%a1%9e" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    semgrepルールの分類
+</h4>
+<p>スマートコントラクトにおけるアクセス制御の脆弱性において、semgrepルールを見る限りは関数の可視性に問題がある場合が多いようです。</p>
+<p>大別してみると、以下のようになりそうです。</p>
+<ul>
+<li>送金系の関数</li>
+<li>管理者用の関数</li>
+<li>オラクル更新用の関数</li>
+</ul>
+<p>この分類は公式なものではないことに注意してください。</p>
+<h5 id="送金系の関数">
+    <a href="#%e9%80%81%e9%87%91%e7%b3%bb%e3%81%ae%e9%96%a2%e6%95%b0" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    送金系の関数
+</h5>
+<p>これは送金に利用される関数がpublicまたはexternalとなり、外部からアクセスされてしまう脆弱性です。</p>
+<ul>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-transfer.yaml">erc20-public-transfer.yaml</a></li>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/public-transfer-fees-supporting-tax-tokens.yaml">public-transfer-fees-supporting-tax-tokens.yaml</a></li>
+</ul>
+<p>この脆弱性の悪用により、190万ドルの損害が発生したそうです。関数の可視性を間違えるだけでそれだけの損害が発生してしまうのは怖いですね。</p>
+<ul>
+<li><a href="https://medium.com/@Knownsec_Blockchain_Lab/creat-future-was-tragically-transferred-coins-at-will-who-is-the-mastermind-behind-the-scenes-8ad42a7af814">knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!</a></li>
+</ul>
+<h5 id="管理者用の関数">
+    <a href="#%e7%ae%a1%e7%90%86%e8%80%85%e7%94%a8%e3%81%ae%e9%96%a2%e6%95%b0" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    管理者用の関数
+</h5>
+<p>これは管理者用に用意していた関数が外部からアクセスされてしまう脆弱性です。攻撃者にトークンをburnさせられたり、コントラクトのオーナーを切り替えた上でトークンを窃取することが可能になります。</p>
+<ul>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-burn.yaml">erc20-public-burn.yaml</a></li>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/accessible-selfdestruct.yaml">accessible-selfdestruct.yaml</a></li>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/oracle-price-update-not-restricted.yaml">oracle-price-update-not-restricted.yaml</a></li>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/unrestricted-transferownership.yaml">unrestricted-transferownership.yaml</a></li>
+</ul>
+<h5 id="オラクル更新用の関数">
+    <a href="#%e3%82%aa%e3%83%a9%e3%82%af%e3%83%ab%e6%9b%b4%e6%96%b0%e7%94%a8%e3%81%ae%e9%96%a2%e6%95%b0" class="anchor">
+        <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+            <path fill-rule="evenodd"
+                d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+            </path>
+        </svg>
+    </a>
+    オラクル更新用の関数
+</h5>
+<p>これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。
+スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になったりします。</p>
+<ul>
+<li><a href="https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/sense-missing-oracle-access-control.yaml">sense-missing-oracle-access-control.yaml</a></li>
+</ul>
+<p>バグバウンティで指摘されたようですが、こちらもトークンをほぼ全て盗むことが可能であったことを考えると怖い話です。</p>
+<ul>
+<li><a href="https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0">Sense Finance Access Control Issue Bugfix Review</a></li>
+</ul>
+
+    </div>
+</div>
+
+<div class="container">
+    
+    <nav class="flex container suggested">
+        
+        <a rel="prev" href="/post/2023-12-24-cross-request-state-pollution/" title="Previous post (older)">
+            <span>Previous</span>
+            cross-request state pollution とは
+            </a>
+        
+        
+        
+    </nav>
+    
+</div>
+ 
+<div class="container">
+    
+</div>
+
+</main>
+
+
+        </main>
+        <footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
+            
+            <a href="/index.xml">RSS</a>
+            
+        </nav>
+
+        
+    </section>
+    <script defer src="/ts/features.706a523ba43e6d0427c7fdf2b9d05dbd0920d3f12942b453690b495cb2522743.js" 
+    data-enable-footnotes="true"
+    ></script>
+</footer>
+
+    </body>
+</html>

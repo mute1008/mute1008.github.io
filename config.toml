@@ -24,7 +24,7 @@ default = "dark"
 # Show your social information with icon on index bio with `_index.md` content.
 [params.socialOptions]
 github = "https://github.com/mute1997"
-linkedin = "https://linkedin.com/in/直也-宮口-8250a6134"
+# linkedin = "https://linkedin.com/in/直也-宮口-8250a6134"
 twitter = "https://twitter.com/mute1008"
 
 [menu]

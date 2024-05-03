@@ -295,10 +295,6 @@ madviseThreadではmadviseをループして何度も実行、procselfmemThread�
 
 先ほど説明したmadviseとwriteを繰り返すと、writeを行ってからDirty bitを立てる前にmadviseによってページがディスクに書き込まれることによって、権限の無いファイルに書き込みができてしまうというわけです。
 
-draw.ioで2秒くらいで書いた図によるとこんな感じです。
-
-<img src=./describe-dirtycow.png>
-
 #### 最後に
 本当はパッチを読んだりしてたんですがこれ以上長くなるとしんどいのでやめました。
 

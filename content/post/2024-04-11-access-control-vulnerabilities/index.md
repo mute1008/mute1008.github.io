@@ -11,7 +11,7 @@ tags = [
 
 今回は Access Control Vulnerabilities (CWE-284) に関連するルールを読んでみます。
 この脆弱性は事例が非常に多いため分類を試みました。
-この分類は独自のものであること、正しく全てを網羅していないことに注意が必要です。
+この分類は独自のものであることに注意が必要です。
 
 #### semgrepルールの分類
 
@@ -32,6 +32,21 @@ tags = [
 - [erc20-public-transfer.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/erc20-public-transfer.yaml)
 - [public-transfer-fees-supporting-tax-tokens.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/public-transfer-fees-supporting-tax-tokens.yaml)
 
+例えば以下のような関数があるとき、`public` が指定されているため、外部のコントラクトからの呼び出しが可能になります。
+
+```solidity
+function _transfer(
+    address from,
+    address to,
+    uint256 amount
+) public {
+    ...
+}
+```
+
+solidityでは、`external` / `public` / `internal` / `private` の4つのfunction visibilityを設定でき、`external` / `public` の場合は外部から関数の呼び出しが可能となります。
+`external` / `public` は内部から呼び出せるか否かに違いがありますが、どちらも外部コントラクトからの呼び出しが可能です。
+
 この脆弱性の悪用事例は以下の通り。190万ドルの損害が発生したそうです。
 
 - [knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!](https://medium.com/@Knownsec_Blockchain_Lab/creat-future-was-tragically-transferred-coins-at-will-who-is-the-mastermind-behind-the-scenes-8ad42a7af814)
@@ -44,6 +59,17 @@ tags = [
 - [accessible-selfdestruct.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/accessible-selfdestruct.yaml)
 - [unrestricted-transferownership.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/unrestricted-transferownership.yaml)
 
+以下のように、ownerの移譲を行う関数が誰でも呼び出し可能な状態になっている場合、攻撃者はそのコントラクトを制御することが可能になります。
+
+```solidity
+function transferOwnership(address newOwner) public {
+    ...
+    _owner = newOwner;
+}
+```
+
+本来、この関数には `onlyOwner` という修飾子を付与する必要があります。
+
 この脆弱性の悪用事例は以下の通り。
 
 - [Decoding Ragnarok Online Invasion $44,222 Exploit| QuillAudits](https://medium.com/quillhash/decoding-ragnarok-online-invasion-44k-exploit-quillaudits-261b7e23b55)
@@ -55,6 +81,14 @@ tags = [
 
 - [oracle-price-update-not-restricted.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/oracle-price-update-not-restricted.yaml)
 - [sense-missing-oracle-access-control.yaml](https://github.com/Decurity/semgrep-smart-contracts/blob/fb57672c3dbee3fc1417e95034d80a7a62401c4c/solidity/security/sense-missing-oracle-access-control.yaml)
+
+以下のようにオラクル更新用の関数が外部コントラクトから呼び出すことが可能になっているとき、このオラクルをベースにしたトークンを不当に安く購入することが可能になります。
+
+```solidity
+function setOracleData(address rToken, oracleChainlink _oracle) external {
+    oracleData[rToken] = _oracle;
+}
+```
 
 この脆弱性の発見の経緯は以下の通り。
 

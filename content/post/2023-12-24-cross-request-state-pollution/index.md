@@ -6,7 +6,6 @@ tags = [
 ]
 +++
 
-## これは
 最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。
 
 ## cross-request state pollution とは

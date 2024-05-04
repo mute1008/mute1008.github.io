@@ -14,17 +14,15 @@
       
       <guid>https://mute1997.github.io/post/2024-04-11-access-control-vulnerabilities/</guid>
       <description>semgrep-smart-contracts というリポジトリがあります。 これは、スマートコントラクトの脆弱性を発見するためのsemgrepルールをまとめたものです。
-今回は Access Control Vulnerabilities (CWE-284) に関連するルールを読んでみます。 この脆弱性は事例が非常に多いため分類を試みました。 この分類は独自のものであること、正しく全てを網羅していないことに注意が必要です。
+今回は Access Control Vulnerabilities (CWE-284) に関連するルールを読んでみます。 この脆弱性は事例が非常に多いため分類を試みました。 この分類は独自のものであることに注意が必要です。
 semgrepルールの分類 スマートコントラクトにおけるアクセス制御の脆弱性において、semgrepルールを見る限りは関数の可視性に問題がある場合が多いようです。
 大別してみると、以下のようになりそうです。
 送金系の関数 管理者用の関数 オラクル更新用の関数 この分類は公式なものではないことに注意してください。
 送金系の関数 これは送金に利用される関数が外部からアクセスされてしまう脆弱性です。
-erc20-public-transfer.yaml public-transfer-fees-supporting-tax-tokens.yaml この脆弱性の悪用事例は以下の通り。190万ドルの損害が発生したそうです。
-knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes! 管理者用の関数 これは管理者用に用意していた関数が外部からアクセスされてしまう脆弱性です。攻撃者にトークンをburnさせられたり、コントラクトのオーナーを切り替えた上でトークンを窃取することが可能になります。
-erc20-public-burn.yaml accessible-selfdestruct.yaml unrestricted-transferownership.yaml この脆弱性の悪用事例は以下の通り。
-Decoding Ragnarok Online Invasion $44,222 Exploit| QuillAudits オラクル更新用の関数 これは同じく、オラクル更新用の関数が外部からアクセスされてしまう脆弱性です。 スマートコントラクトの文脈においてのオラクルとは、ブロックチェーン外の情報をコントラクトに提供することを指します。攻撃者がこのオラクルを書き換えることで、基準としている値が信用できなくなり、トークンを不当に安く購入することが可能になります。
-oracle-price-update-not-restricted.yaml sense-missing-oracle-access-control.yaml この脆弱性の発見の経緯は以下の通り。
-Sense Finance Access Control Issue Bugfix Review </description>
+erc20-public-transfer.yaml public-transfer-fees-supporting-tax-tokens.yaml 例えば以下のような関数があるとき、public が指定されているため、外部のコントラクトからの呼び出しが可能になります。
+1 2 3 4 5 6 7 function _transfer( address from, address to, uint256 amount ) public { ... } solidityでは、external / public / internal / private の4つのfunction visibilityを設定でき、external / public の場合は外部から関数の呼び出しが可能となります。 external / public は内部から呼び出せるか否かに違いがありますが、どちらも外部コントラクトからの呼び出しが可能です。
+この脆弱性の悪用事例は以下の通り。190万ドルの損害が発生したそうです。
+knownsec Blockchain Lab | Creat future was tragically transferred coins at will, who is the mastermind behind the scenes!</description>
     </item>
     
     <item>
@@ -33,13 +31,13 @@ Sense Finance Access Control Issue Bugfix Review </description>
       <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
       
       <guid>https://mute1997.github.io/post/2023-12-24-cross-request-state-pollution/</guid>
-      <description>これは 最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。
+      <description>最近 cross-request state pollution という脆弱性を知りました。この脆弱性について理解を深めるため、コードを書いてこの脆弱性の理解を目指します。
 cross-request state pollution とは これはVue.jsのSSRにおいてサーバー側で作成したStateを他のリクエストにも利用してしまう脆弱性です。 この脆弱性によって、別のリクエストで使われたStateに含まれる情報が他のリクエストにも伝わってしまう可能性があります。
 cf. https://ja.vuejs.org/guide/scaling-up/ssr#cross-request-state-pollution
 実例 どのように発生するのか理解するために、実際にコードを書いてみました。
 https://github.com/mute1997/crsp-demo-for-advent-calendar このアプリケーションには大きく2つのページがあります。
 / : カウンタ機能のあるページ /store : Stateを返すだけのページ このアプリケーションを使って、cross request state pollution が発生する状況を再現してみます。 以下はブラウザでの操作をコードで示したものです。
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 user1 = requests.Session() user2 = requests.Session() # ユーザー1でインクリメント操作を1回行う ... user1.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 1} # ユーザー2でインクリメント操作を2回行う ... user2.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 2} # ユーザー1がアクセスした後、ユーザー2のセッションでユーザー1の結果が返却されている user1.</description>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 user1 = requests.Session() user2 = requests.Session() # ユーザー1でインクリメント操作を1回行う ... user1.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 1} # ユーザー2でインクリメント操作を2回行う ... user2.get(&amp;#34;{}{}&amp;#34;.format(target, &amp;#34;/store&amp;#34;)) # =&amp;gt; {&amp;#39;count&amp;#39;: 2} # ユーザー1がアクセスした後、ユーザー2のセッションでユーザー1の結果が返却されている user1.get(target) res = user2.</description>
     </item>
     
     <item>

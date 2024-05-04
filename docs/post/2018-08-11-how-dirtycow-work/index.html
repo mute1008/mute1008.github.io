@@ -44,7 +44,7 @@
     },
     "datePublished": "2018-08-11",
     "description": "",
-    "wordCount":  669 ,
+    "wordCount":  668 ,
     "mainEntityOfPage": "True",
     "dateModified": "2018-08-11",
     "publisher": {
@@ -609,8 +609,6 @@ VmFlags: rd mr mw me
 <p>これを理解する上で重要なのはページキャッシュの動作です。</p>
 <p>ページキャッシュの動作として、読み込みが行われると、読み込んだものはキャッシュに置かれ、書き込みが行われると、即座に書き込みは行われず、キャッシュに書き込んだ上で適当なタイミングで書き込みが行われます。Linuxカーネルではキャッシュに書き込みを行うと書き込んだページにDirty bitが立てられます。</p>
 <p>先ほど説明したmadviseとwriteを繰り返すと、writeを行ってからDirty bitを立てる前にmadviseによってページがディスクに書き込まれることによって、権限の無いファイルに書き込みができてしまうというわけです。</p>
-<p>draw.ioで2秒くらいで書いた図によるとこんな感じです。</p>
-<img src=./describe-dirtycow.png>
 <h4 id="最後に">
     <a href="#%e6%9c%80%e5%be%8c%e3%81%ab" class="anchor">
         <svg class="icon" aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16">
